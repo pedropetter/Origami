@@ -1,0 +1,9 @@
+{
+  "name": "origami-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend seguro para agendamentos e comprovantes da Barbearia Origami",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
