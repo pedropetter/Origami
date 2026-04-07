@@ -1082,6 +1082,17 @@ nav{
 .booking-success.show{display:block}
 .booking-success h4{font-family:var(--serif);font-size:2rem;color:var(--gold)}
 .booking-success p{margin-top:10px;color:var(--white-dim);line-height:1.8}
+.policy-note{
+  margin-top:14px;
+  padding:14px 16px;
+  border:1px solid rgba(139,26,26,.38);
+  background:rgba(139,26,26,.08);
+  color:var(--paper);
+  font-size:.72rem;
+  letter-spacing:.04em;
+  line-height:1.8;
+}
+.policy-note strong{color:var(--gold)}
 .sync-state{
   display:inline-flex;
   align-items:center;
@@ -1361,6 +1372,17 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
   background:rgba(255,255,255,.015);
   text-align:center;
 }
+.payment-policy{
+  margin-top:14px;
+  padding:12px 14px;
+  border:1px solid rgba(139,26,26,.34);
+  background:rgba(139,26,26,.08);
+  color:var(--paper);
+  text-align:left;
+  font-size:.74rem;
+  line-height:1.8;
+}
+.payment-policy strong{color:var(--gold)}
 .pix-amount{font-family:var(--serif);font-style:italic;font-size:2.5rem;color:var(--gold)}
 .pix-key{
   margin-top:14px;
@@ -1551,6 +1573,143 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
   color:var(--white-dim);
   line-height:1.8;
 }
+.proof-upload{
+  margin-top:16px;
+  padding:16px;
+  border:1px solid rgba(201,168,76,.18);
+  background:rgba(255,255,255,.02);
+  display:grid;
+  gap:12px;
+}
+.proof-upload-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.proof-upload-top strong{
+  display:block;
+  font-size:.86rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+.proof-upload-top span{
+  display:block;
+  margin-top:6px;
+  color:var(--white-dim);
+  font-size:.82rem;
+  line-height:1.65;
+}
+.proof-upload-actions{display:flex;gap:10px;flex-wrap:wrap}
+.proof-file-label{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:46px;
+  padding:0 18px;
+  border:1px solid rgba(201,168,76,.24);
+  color:var(--paper);
+  cursor:pointer;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-size:.72rem;
+}
+.proof-file-name{
+  font-size:.8rem;
+  color:var(--white-dim);
+  line-height:1.6;
+  padding:10px 12px;
+  border:1px dashed rgba(201,168,76,.16);
+}
+.proof-textarea{
+  min-height:120px;
+  width:100%;
+  resize:vertical;
+  border:1px solid rgba(201,168,76,.18);
+  background:#111;
+  color:var(--paper);
+  outline:none;
+  padding:12px 14px;
+  line-height:1.65;
+}
+.proof-helper{
+  font-size:.76rem;
+  color:var(--white-dim);
+  line-height:1.7;
+}
+.proof-library-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;
+  margin-top:18px;
+}
+.proof-card{
+  padding:16px;
+  border:1px solid rgba(201,168,76,.16);
+  background:rgba(255,255,255,.02);
+  display:grid;
+  gap:12px;
+}
+.proof-preview{
+  min-height:170px;
+  border:1px solid rgba(201,168,76,.16);
+  background:#101010;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.proof-preview img{
+  width:100%;
+  height:170px;
+  object-fit:cover;
+  display:block;
+}
+.proof-preview-pdf{
+  display:grid;
+  place-items:center;
+  gap:10px;
+  color:var(--gold);
+  text-align:center;
+  padding:24px;
+  font-size:.82rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.proof-preview-pdf svg{
+  width:44px;
+  height:44px;
+}
+.proof-meta{
+  display:grid;
+  gap:6px;
+  color:var(--white-dim);
+  font-size:.84rem;
+  line-height:1.65;
+}
+.proof-meta strong{
+  color:var(--paper);
+  font-size:1rem;
+  font-family:var(--serif);
+  font-weight:600;
+}
+.proof-badges{display:flex;gap:8px;flex-wrap:wrap}
+.proof-badge{
+  display:inline-flex;
+  align-items:center;
+  min-height:28px;
+  padding:0 10px;
+  border:1px solid rgba(201,168,76,.16);
+  font-size:.62rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+.proof-badge.ok{color:#d6ffd6;border-color:rgba(120,210,120,.22)}
+.proof-badge.warn{color:#ffe9a3;border-color:rgba(255,233,163,.22)}
+.proof-badge.risk{color:#ffcccc;border-color:rgba(255,170,170,.22)}
 .stock-grid{display:grid;gap:12px;margin-top:18px}
 .stock-item{
   padding:18px;
@@ -1601,6 +1760,61 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
   letter-spacing:.22em;
   text-transform:uppercase;
 }
+
+/* ===== BOOKING PAYMENT GATE ===== */
+.booking-pix-gate{
+  display:none;
+  margin-top:18px;
+  padding:18px;
+  border:1px solid rgba(201,168,76,.16);
+  background:rgba(255,255,255,.02);
+}
+.booking-pix-gate.show{display:block}
+.booking-pix-gate .pix-box{
+  max-width:340px;
+  margin:14px auto 0;
+}
+.pix-gate-title{
+  font-family:var(--serif);
+  font-size:1.65rem;
+  color:var(--gold);
+  margin-bottom:6px;
+}
+.booking-pix-copy{
+  color:var(--white-dim);
+  font-size:.84rem;
+  line-height:1.8;
+  max-width:560px;
+}
+.policy-alert{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:14px 16px;
+  border:1px solid rgba(139,26,26,.5);
+  background:rgba(139,26,26,.12);
+  color:#f2c7c7;
+  line-height:1.75;
+  font-size:.82rem;
+  margin-top:14px;
+  margin-bottom:4px;
+}
+.policy-alert-icon{
+  font-size:1.2rem;
+  flex-shrink:0;
+  margin-top:2px;
+}
+.policy-alert strong{color:var(--paper)}
+.policy-note{
+  margin-top:16px;
+  padding:14px 16px;
+  border:1px solid rgba(139,26,26,.4);
+  background:rgba(139,26,26,.08);
+  color:#f2c7c7;
+  line-height:1.8;
+  font-size:.82rem;
+}
+.policy-note strong{color:var(--paper)}
 
 .toast{
   position:fixed;
@@ -1680,7 +1894,7 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
   .container{width:min(100% - 20px, 1180px)}
   .hero-actions,.detail-actions{flex-direction:column}
   .hero-actions .btn,.hero-actions .btn-outline,.hero-actions .btn-gold,.detail-actions .btn,.detail-actions .btn-outline,.detail-actions .btn-gold{width:100%}
-  .hero-meta,.about-points,.booking-premium,.field-grid,.admin-stats,.stock-form,.subscriber-form{grid-template-columns:1fr}
+  .hero-meta,.about-points,.booking-premium,.field-grid,.admin-stats,.stock-form,.subscriber-form,.proof-library-grid{grid-template-columns:1fr}
   .slot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .shop-head,.booking-top,.footer-bottom{flex-direction:column;align-items:flex-start}
   .stock-body{grid-template-columns:1fr}
@@ -2384,7 +2598,7 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
       </div>
       <div class="booking-form-card origami-corner origami-shadow reveal">
         <h3>Finalize o agendamento</h3>
-        <p>Preencha seus dados, escolha o serviço ideal e confirme sua reserva com praticidade. Em seguida, o WhatsApp abre com a mensagem pronta para acelerar a confirmação.</p>
+        <p>Preencha seus dados, escolha o serviço e o profissional. Depois de confirmar, o site abre o WhatsApp com a mensagem pronta.</p>
         <div class="field-grid">
           <div class="field"><label for="clientName">Nome</label><input id="clientName" type="text" placeholder="Seu nome"></div>
           <div class="field"><label for="clientPhone">WhatsApp</label><input id="clientPhone" type="tel" placeholder="(61) 99425-9943"></div>
@@ -2392,12 +2606,73 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
         <div class="field"><label for="serviceSelect">Serviço</label><select id="serviceSelect"></select></div>
         <div class="field"><label>Profissional</label><div class="professional-picker" id="professionalPicker"></div></div>
         <div class="booking-summary" id="bookingSummary"></div>
-        <button class="btn" style="width:100%;margin-top:18px" type="button" onclick="confirmBooking('main')">Confirmar Agendamento</button>
+        <div class="policy-alert">
+          <div class="policy-alert-icon">⚠</div>
+          <div><strong>Política de falta:</strong> o agendamento entra primeiro <strong>em análise</strong>. Após o envio do comprovante, ele muda para <strong>confirmado</strong>. Em caso de ausência no horário marcado, haverá apenas <strong>50% de estorno</strong> do valor pago.</div>
+        </div>
+        <button class="btn" style="width:100%;margin-top:14px" type="button" onclick="confirmBooking('main')">Registrar em análise</button>
+        <div class="booking-pix-gate" id="bookingPixGate_main">
+          <div class="pix-gate-title">Pagamento via PIX</div>
+          <p class="booking-pix-copy">Faça o PIX abaixo e, em seguida, envie o comprovante para análise. O cliente não confirma o horário por conta própria: a equipe libera manualmente no painel após verificar o pagamento.</p>
+          <div class="pix-box origami-corner origami-shadow" style="margin-top:12px">
+            <div class="pix-amount" id="bookingPixAmount_main">R$ 0,00</div>
+            <button class="pix-key" type="button" onclick="copyPixKey()"><span>63993051851</span> • copiar chave PIX</button>
+            <div class="pix-qr" aria-hidden="true">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" fill="#fff"/>
+                <rect x="5" y="5" width="28" height="28" fill="none" stroke="#000" stroke-width="5"/>
+                <rect x="12" y="12" width="14" height="14" fill="#000"/>
+                <rect x="67" y="5" width="28" height="28" fill="none" stroke="#000" stroke-width="5"/>
+                <rect x="74" y="12" width="14" height="14" fill="#000"/>
+                <rect x="5" y="67" width="28" height="28" fill="none" stroke="#000" stroke-width="5"/>
+                <rect x="12" y="74" width="14" height="14" fill="#000"/>
+                <g fill="#000">
+                  <rect x="40" y="5" width="7" height="7"/><rect x="48" y="5" width="7" height="7"/>
+                  <rect x="40" y="16" width="7" height="7"/><rect x="56" y="22" width="7" height="7"/>
+                  <rect x="39" y="40" width="7" height="7"/><rect x="48" y="40" width="7" height="7"/>
+                  <rect x="57" y="40" width="7" height="7"/><rect x="40" y="49" width="7" height="7"/>
+                  <rect x="56" y="49" width="7" height="7"/><rect x="40" y="58" width="7" height="7"/>
+                  <rect x="49" y="58" width="7" height="7"/><rect x="67" y="67" width="7" height="7"/>
+                  <rect x="76" y="67" width="7" height="7"/><rect x="85" y="67" width="7" height="7"/>
+                  <rect x="67" y="76" width="7" height="7"/><rect x="84" y="76" width="7" height="7"/>
+                  <rect x="67" y="85" width="7" height="7"/><rect x="76" y="85" width="7" height="7"/>
+                  <rect x="85" y="85" width="7" height="7"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="policy-alert" style="margin-top:14px">
+            <div class="policy-alert-icon">⚠</div>
+            <div><strong>Importante:</strong> após o envio do comprovante, o agendamento entra como <strong>aguardando liberação</strong>. Em caso de falta no horário marcado, haverá somente <strong>50% de estorno</strong>.</div>
+          </div>
+          <button class="btn" style="width:100%;margin-top:14px" type="button" onclick="confirmBooking('main')">Enviar comprovante para análise</button>
+          <button class="btn-dark" style="width:100%;margin-top:8px" type="button" onclick="hideBookingPixGate('main')">← Voltar</button>
+        </div>
         <div class="booking-success" id="bookingSuccess">
-          <h4>Horário reservado</h4>
+          <h4>Agendamento em análise</h4>
           <p id="bookingSuccessText"></p>
-          <a class="btn-outline" id="bookingSuccessLink" href="#" target="_blank" rel="noopener" style="margin-top:14px">Confirmar no WhatsApp</a>
-          <button class="btn-dark ics-btn" type="button" onclick="downloadIcs('main')">Adicionar ao calendário</button>
+          <div class="proof-upload">
+            <div class="proof-upload-top">
+              <div>
+                <strong>Enviar comprovante</strong>
+                <span>Anexe imagem ou PDF do pagamento. Assim que o upload for concluído, o status do agendamento muda automaticamente para confirmado.</span>
+              </div>
+            </div>
+            <label class="proof-file-label">
+              Selecionar arquivo
+              <input id="bookingProofInputMain" type="file" accept="image/*,.pdf,application/pdf" style="display:none" onchange="handleProofFileChange('main',this)">
+            </label>
+            <div class="proof-file-name" id="bookingProofNameMain">Nenhum comprovante selecionado.</div>
+            <div class="field" style="margin-top:0">
+              <label for="bookingProofTextMain">Texto do comprovante</label>
+              <textarea id="bookingProofTextMain" class="proof-textarea" placeholder="Cole aqui o texto do comprovante PIX. A confirmação automática só acontece se o sistema encontrar sinais de comprovante bancário e a chave PIX 63993051851."></textarea>
+            </div>
+            <div class="proof-helper">Segurança: a confirmação automática só ocorre quando o texto colado indicar comprovante bancário e contiver a chave PIX da barbearia. Sem isso, o horário permanece em análise.</div>
+            <div class="proof-upload-actions">
+              <button class="btn" type="button" onclick="submitBookingProof('main')">Enviar comprovante</button>
+              <a class="btn-outline" id="bookingSuccessLink" href="#" target="_blank" rel="noopener">Falar no WhatsApp</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2573,6 +2848,7 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
                 </g>
               </svg>
             </div>
+            <div class="payment-policy" id="paymentPolicyNote">Seu atendimento só entra como confirmado depois do pagamento. Em caso de falta no horário marcado, haverá apenas <strong>50% de estorno</strong> do valor pago.</div>
           </div>
           <button class="btn" style="width:100%;margin-top:18px" type="button" id="confirmPaymentBtn" onclick="confirmPayment()">Já realizei o pagamento</button>
         </div>
@@ -2583,9 +2859,9 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
         <div class="proof-box origami-corner origami-shadow">
           <div class="mini-title">Como enviar o comprovante</div>
           <ol>
-            <li>Salve o comprovante do PIX.</li>
-            <li>Abra o botão abaixo para ir ao WhatsApp.</li>
-            <li>Envie o comprovante junto com seus dados de entrega.</li>
+            <li id="proofStep1">Salve o comprovante do PIX.</li>
+            <li id="proofStep2">Abra o botão abaixo para ir ao WhatsApp.</li>
+            <li id="proofStep3">Envie o comprovante junto com seus dados de entrega.</li>
           </ol>
         </div>
         <a class="btn-outline" id="proofLink" href="#" target="_blank" rel="noopener" style="margin-top:16px">Enviar Comprovante no WhatsApp</a>
@@ -2643,16 +2919,77 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
           <h3>Dados da reserva</h3>
           <div class="field"><label for="clientNameModal">Nome</label><input id="clientNameModal" type="text" placeholder="Seu nome"></div>
           <div class="field"><label for="clientPhoneModal">WhatsApp</label><input id="clientPhoneModal" type="tel" placeholder="(61) 99425-9943"></div>
-          <div class="field"><label for="serviceSelectModal">Serviço</label><select id="serviceSelectModal"></select></div>
-          <div class="field"><label>Profissional</label><div class="professional-picker" id="professionalPickerModal"></div></div>
-          <div class="booking-summary" id="bookingSummaryModal"></div>
-          <button class="btn" style="width:100%;margin-top:18px" type="button" onclick="confirmBooking('modal')">Confirmar Agendamento</button>
-          <div class="booking-success" id="bookingSuccessModal">
-            <h4>Horário reservado</h4>
-            <p id="bookingSuccessTextModal"></p>
-            <a class="btn-outline" id="bookingSuccessLinkModal" href="#" target="_blank" rel="noopener" style="margin-top:14px">Confirmar no WhatsApp</a>
-            <button class="btn-dark ics-btn" type="button" onclick="downloadIcs('modal')">Adicionar ao calendário</button>
+        <div class="field"><label for="serviceSelectModal">Serviço</label><select id="serviceSelectModal"></select></div>
+        <div class="field"><label>Profissional</label><div class="professional-picker" id="professionalPickerModal"></div></div>
+        <div class="booking-summary" id="bookingSummaryModal"></div>
+        <div class="policy-alert">
+          <div class="policy-alert-icon">⚠</div>
+          <div><strong>Política de falta:</strong> o agendamento entra primeiro <strong>em análise</strong>. Após o envio do comprovante, ele muda para <strong>confirmado</strong>. Em caso de ausência no horário marcado, haverá apenas <strong>50% de estorno</strong> do valor pago.</div>
+        </div>
+        <button class="btn" style="width:100%;margin-top:14px" type="button" onclick="confirmBooking('modal')">Registrar em análise</button>
+        <div class="booking-pix-gate" id="bookingPixGate_modal">
+          <div class="pix-gate-title">Pagamento via PIX</div>
+          <p class="booking-pix-copy">Faça o PIX abaixo e envie o comprovante para análise. A confirmação final continua nas mãos da equipe, que libera o horário manualmente após checar o pagamento.</p>
+          <div class="pix-box origami-corner origami-shadow" style="margin-top:12px">
+            <div class="pix-amount" id="bookingPixAmount_modal">R$ 0,00</div>
+            <button class="pix-key" type="button" onclick="copyPixKey()"><span>63993051851</span> • copiar chave PIX</button>
+            <div class="pix-qr" aria-hidden="true">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" fill="#fff"/>
+                <rect x="5" y="5" width="28" height="28" fill="none" stroke="#000" stroke-width="5"/>
+                <rect x="12" y="12" width="14" height="14" fill="#000"/>
+                <rect x="67" y="5" width="28" height="28" fill="none" stroke="#000" stroke-width="5"/>
+                <rect x="74" y="12" width="14" height="14" fill="#000"/>
+                <rect x="5" y="67" width="28" height="28" fill="none" stroke="#000" stroke-width="5"/>
+                <rect x="12" y="74" width="14" height="14" fill="#000"/>
+                <g fill="#000">
+                  <rect x="40" y="5" width="7" height="7"/><rect x="48" y="5" width="7" height="7"/>
+                  <rect x="40" y="16" width="7" height="7"/><rect x="56" y="22" width="7" height="7"/>
+                  <rect x="39" y="40" width="7" height="7"/><rect x="48" y="40" width="7" height="7"/>
+                  <rect x="57" y="40" width="7" height="7"/><rect x="40" y="49" width="7" height="7"/>
+                  <rect x="56" y="49" width="7" height="7"/><rect x="40" y="58" width="7" height="7"/>
+                  <rect x="49" y="58" width="7" height="7"/><rect x="67" y="67" width="7" height="7"/>
+                  <rect x="76" y="67" width="7" height="7"/><rect x="85" y="67" width="7" height="7"/>
+                  <rect x="67" y="76" width="7" height="7"/><rect x="84" y="76" width="7" height="7"/>
+                  <rect x="67" y="85" width="7" height="7"/><rect x="76" y="85" width="7" height="7"/>
+                  <rect x="85" y="85" width="7" height="7"/>
+                </g>
+              </svg>
+            </div>
           </div>
+          <div class="policy-alert" style="margin-top:14px">
+            <div class="policy-alert-icon">⚠</div>
+            <div><strong>Importante:</strong> o horário entra como <strong>aguardando liberação</strong> até a validação manual do comprovante. Em caso de falta, haverá somente <strong>50% de estorno</strong>.</div>
+          </div>
+          <button class="btn" style="width:100%;margin-top:14px" type="button" onclick="confirmBooking('modal')">Enviar comprovante para análise</button>
+          <button class="btn-dark" style="width:100%;margin-top:8px" type="button" onclick="hideBookingPixGate('modal')">← Voltar</button>
+        </div>
+        <div class="booking-success" id="bookingSuccessModal">
+          <h4>Agendamento em análise</h4>
+          <p id="bookingSuccessTextModal"></p>
+          <div class="proof-upload">
+            <div class="proof-upload-top">
+              <div>
+                <strong>Enviar comprovante</strong>
+                <span>Anexe imagem ou PDF do pagamento para liberar a confirmação automática desse horário.</span>
+              </div>
+            </div>
+            <label class="proof-file-label">
+              Selecionar arquivo
+              <input id="bookingProofInputModal" type="file" accept="image/*,.pdf,application/pdf" style="display:none" onchange="handleProofFileChange('modal',this)">
+            </label>
+            <div class="proof-file-name" id="bookingProofNameModal">Nenhum comprovante selecionado.</div>
+            <div class="field" style="margin-top:0">
+              <label for="bookingProofTextModal">Texto do comprovante</label>
+              <textarea id="bookingProofTextModal" class="proof-textarea" placeholder="Cole aqui o texto do comprovante PIX para análise automática da chave de destino."></textarea>
+            </div>
+            <div class="proof-helper">A confirmação automática só é liberada quando a análise encontra sinais claros de comprovante bancário e a chave PIX da barbearia.</div>
+            <div class="proof-upload-actions">
+              <button class="btn" type="button" onclick="submitBookingProof('modal')">Enviar comprovante</button>
+              <a class="btn-outline" id="bookingSuccessLinkModal" href="#" target="_blank" rel="noopener">Falar no WhatsApp</a>
+            </div>
+          </div>
+        </div>
         </div>
       </div>
     </div>
@@ -2683,8 +3020,8 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
           <div class="mini-title">Operação do dia</div>
           <div class="admin-title" style="font-size:2.2rem">Agenda, status de atendimento e controle de estoque.</div>
           <div class="admin-toolbar">
-            <div class="field" style="margin-top:0"><label for="adminScope">Visão</label><select id="adminScope"><option value="today">Hoje</option><option value="upcoming">Próximos dias</option><option value="all">Tudo</option></select></div>
-            <div class="field" style="margin-top:0"><label for="adminStatusFilter">Status</label><select id="adminStatusFilter"><option value="all">Todos</option><option value="confirmado">Confirmado</option><option value="atendimento">Em atendimento</option><option value="finalizado">Finalizado</option><option value="faltou">Faltou</option></select></div>
+            <div class="field" style="margin-top:0"><label for="adminScope">Visão</label><select id="adminScope"><option value="all">Tudo</option><option value="today">Hoje</option><option value="upcoming">Próximos dias</option></select></div>
+            <div class="field" style="margin-top:0"><label for="adminStatusFilter">Status</label><select id="adminStatusFilter"><option value="all">Todos</option><option value="aguardando">Aguardando</option><option value="confirmado">Confirmado</option><option value="atendimento">Em atendimento</option><option value="finalizado">Finalizado</option><option value="faltou">Faltou</option></select></div>
             <div class="field" style="margin-top:0"><label for="adminSearch">Busca</label><input id="adminSearch" type="text" placeholder="Cliente, serviço ou profissional"></div>
           </div>
           <div class="admin-stats" id="adminStats"></div>
@@ -2694,6 +3031,7 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
           <button class="admin-tab active" type="button" onclick="switchAdminTab('agenda')">Agenda</button>
           <button class="admin-tab" type="button" onclick="switchAdminTab('estoque')">Estoque</button>
           <button class="admin-tab" type="button" onclick="switchAdminTab('planos')">Planos</button>
+          <button class="admin-tab" type="button" onclick="switchAdminTab('comprovantes')">Comprovantes</button>
           <button class="admin-tab" type="button" onclick="switchAdminTab('galeria')">Galeria</button>
           <button class="admin-tab" type="button" onclick="switchAdminTab('avaliacoes')">Avaliações</button>
           <button class="mini-btn" type="button" onclick="exportTodayAgenda()" style="margin-left:auto">Exportar agenda de hoje</button>
@@ -2737,6 +3075,16 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
               <button class="btn-outline" type="button" onclick="addSubscriberManually()">Registrar</button>
             </div>
             <div class="subscriber-list" id="subscriberList"></div>
+          </div>
+        </div>
+
+        <!-- TAB: COMPROVANTES -->
+        <div class="admin-tab-panel" id="tab-comprovantes">
+          <div class="admin-card origami-corner origami-shadow" style="margin-top:12px">
+            <div class="mini-title">Comprovantes</div>
+            <div class="admin-title" style="font-size:2rem">Biblioteca de pagamentos</div>
+            <p style="margin-top:10px;color:var(--white-dim);line-height:1.8">Todos os comprovantes enviados no agendamento ficam registrados aqui. Quando o cliente envia um arquivo pelo site, o status do horário é promovido automaticamente para confirmado.</p>
+            <div class="proof-library-grid" id="paymentProofGrid"></div>
           </div>
         </div>
 
@@ -2840,16 +3188,17 @@ const STORAGE = {
 
 const DB_CONFIG = {
   name: 'origami_local_db',
-  version: 2,
+  version: 3,
   subscribersStore: 'plan_subscribers',
   galleryStore: 'gallery_items',
   reviewsStore: 'reviews',
-  stockHistoryStore: 'stock_history'
+  stockHistoryStore: 'stock_history',
+  paymentProofsStore: 'payment_proofs'
 };
 
 const SUPABASE = {
-  url: 'COLE_SUA_URL_SUPABASE_AQUI',
-  anonKey: 'COLE_SUA_ANON_KEY_SUPABASE_AQUI',
+  url: 'sb_publishable_cNr76_eTY_jcL0z0uHWGXQ_e9wXw1tJ',
+  anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh6a2t3enVyZXhmenh4cGJ4dW91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDIxNTQsImV4cCI6MjA5MTA3ODE1NH0.dVi1Ve3oEqbKJBuGLb_fyUJWXLDriacVXPnBbKE6i8s',
   bookingsTable: 'bookings',
   adminStateTable: 'admin_state',
   subscribersTable: 'plan_subscribers',
@@ -2857,10 +3206,17 @@ const SUPABASE = {
 };
 
 const STATUS_LABELS = {
+  aguardando: 'Aguardando',
   confirmado: 'Confirmado',
   atendimento: 'Em atendimento',
   finalizado: 'Finalizado',
   faltou: 'Faltou'
+};
+
+const PROOF_ANALYSIS_LABELS = {
+  approved: 'Autoaprovado',
+  pending: 'Revisão manual',
+  rejected: 'Suspeito'
 };
 
 const SERVICES = [
@@ -2923,15 +3279,19 @@ const state = {
   stock: [],
   statuses: {},
   subscribers: [],
+  paymentProofs: [],
   productFilter: 'all',
   adminLogged: false,
   checkoutMode: 'store',
   selectedPlanId: '',
+  pendingBooking: null,
   calendar: {
     main: { month: new Date().getMonth(), year: new Date().getFullYear(), selectedDate: '', selectedSlot: '', professional: '' },
     modal: { month: new Date().getMonth(), year: new Date().getFullYear(), selectedDate: '', selectedSlot: '', professional: '' }
   }
 };
+
+const calendarPolling = { main: null, modal: null };
 
 function showToast(message, duration = 2200){
   const toast = document.getElementById('toast');
@@ -2980,6 +3340,11 @@ function getDb(){
         const sh = db.createObjectStore(DB_CONFIG.stockHistoryStore, { keyPath: 'id' });
         sh.createIndex('itemId', 'itemId', { unique: false });
         sh.createIndex('createdAt', 'createdAt', { unique: false });
+      }
+      if(!db.objectStoreNames.contains(DB_CONFIG.paymentProofsStore)){
+        const ps = db.createObjectStore(DB_CONFIG.paymentProofsStore, { keyPath: 'id' });
+        ps.createIndex('bookingKey', 'bookingKey', { unique: false });
+        ps.createIndex('createdAt', 'createdAt', { unique: false });
       }
     };
     request.onsuccess = () => resolve(request.result);
@@ -3050,6 +3415,205 @@ async function deleteSubscriberRecord(id){
   });
 }
 
+async function loadPaymentProofs(){
+  if(hasSupabaseConfig()){
+    try{
+      const payload = await invokeEdgeFunction('list-payment-proofs');
+      state.paymentProofs = Array.isArray(payload.items) ? payload.items : [];
+      return;
+    }catch(error){
+      console.error(error);
+      setSyncText('Falha ao ler comprovantes nas Functions — usando base local');
+    }
+  }
+  state.paymentProofs = (await dbGetAll(DB_CONFIG.paymentProofsStore)).sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+}
+
+function getPaymentProof(date, slot){
+  const key = getBookingKey(date, slot);
+  return state.paymentProofs.find(item => item.bookingKey === key) || null;
+}
+
+function proofField(mode, kind){
+  const map = {
+    main: { input: 'bookingProofInputMain', name: 'bookingProofNameMain', text: 'bookingProofTextMain' },
+    modal: { input: 'bookingProofInputModal', name: 'bookingProofNameModal', text: 'bookingProofTextModal' }
+  };
+  return document.getElementById(map[mode][kind]);
+}
+
+function handleProofFileChange(mode, input){
+  const label = proofField(mode, 'name');
+  if(!label) return;
+  label.textContent = input.files && input.files[0] ? input.files[0].name : 'Nenhum comprovante selecionado.';
+}
+
+function readFileAsDataUrl(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
+
+function normalizeProofText(value){
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
+
+function digitsOnly(value){
+  return String(value || '').replace(/\D/g, '');
+}
+
+function analyzePaymentProofText(rawText, expectedAmount){
+  const normalized = normalizeProofText(rawText);
+  const compactDigits = digitsOnly(rawText);
+  const expectedDigits = digitsOnly(expectedAmount != null ? Number(expectedAmount).toFixed(2) : '');
+  const pixKeyDigits = digitsOnly(CONFIG.pixKey);
+  const hasPixWord = /(pix|comprovante|transferencia|transferencia enviada|pagamento)/.test(normalized);
+  const hasBankWord = /(banco|nubank|caixa|bradesco|itau|inter|santander|sicredi|mercado pago|pagbank|transacao|endtoendid|autenticacao)/.test(normalized);
+  const hasPaidWord = /(concluido|concluida|aprovado|aprovada|realizado|efetuado|sucesso|pago)/.test(normalized);
+  const hasTargetPixKey = compactDigits.includes(pixKeyDigits);
+  const hasRecipientHint = normalized.includes('barbearia origami') || normalized.includes('origami');
+  const hasExpectedAmount = expectedDigits ? compactDigits.includes(expectedDigits) : false;
+  let decision = 'pending';
+  if(hasTargetPixKey && hasPixWord && hasPaidWord && (hasBankWord || hasRecipientHint)) decision = 'approved';
+  if(!hasTargetPixKey && rawText && rawText.trim()) decision = 'rejected';
+  return {
+    decision,
+    hasPixWord,
+    hasBankWord,
+    hasPaidWord,
+    hasTargetPixKey,
+    hasRecipientHint,
+    hasExpectedAmount,
+    checkedAt: new Date().toISOString()
+  };
+}
+
+function proofPreviewMarkup(item){
+  const proofSrc = item.publicUrl || item.fileDataUrl || '';
+  if(item.mimeType === 'application/pdf' || /\.pdf$/i.test(item.fileName || '')){
+    return `<div class="proof-preview-pdf">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"></path><path d="M14 3v6h6"></path><path d="M8 14h8"></path><path d="M8 18h6"></path></svg>
+      <div>PDF registrado</div>
+    </div>`;
+  }
+  return `<img src="${proofSrc}" alt="${escapeHtml(item.fileName || 'Comprovante')}" loading="lazy">`;
+}
+
+async function submitBookingProof(mode){
+  const calendarState = state.calendar[mode];
+  const input = proofField(mode, 'input');
+  const label = proofField(mode, 'name');
+  const textField = proofField(mode, 'text');
+  const dateStr = calendarState.selectedDate;
+  const slot = calendarState.selectedSlot;
+  if(!dateStr || !slot){
+    showToast('Nenhum agendamento selecionado para vincular o comprovante');
+    return;
+  }
+  if(!input || !input.files || !input.files[0]){
+    showToast('Selecione uma imagem ou PDF do comprovante');
+    return;
+  }
+  const booking = state.bookings[dateStr] && state.bookings[dateStr][slot];
+  if(!booking){
+    showToast('Agendamento não encontrado para vincular o comprovante');
+    return;
+  }
+  try{
+    const file = input.files[0];
+    const fileDataUrl = await readFileAsDataUrl(file);
+    const service = getServiceById(booking.serviceId);
+    const proofText = textField ? textField.value.trim() : '';
+    if(hasSupabaseConfig()){
+      const payload = await invokeEdgeFunction('upload-payment-proof', {
+        method: 'POST',
+        body: {
+          bookingKey: getBookingKey(dateStr, slot),
+          bookingDate: dateStr,
+          slot,
+          customerName: booking.name || '',
+          customerPhone: booking.phone || '',
+          serviceId: booking.serviceId || '',
+          professionalId: booking.professionalId || '',
+          expectedAmount: service ? service.price : null,
+          proofText,
+          fileName: file.name,
+          mimeType: file.type || '',
+          fileDataUrl
+        }
+      });
+      const proofRecord = payload.proof || null;
+      if(proofRecord){
+        const existingIndex = state.paymentProofs.findIndex(item => item.bookingKey === proofRecord.bookingKey);
+        if(existingIndex >= 0) state.paymentProofs.splice(existingIndex, 1, proofRecord);
+        else state.paymentProofs.unshift(proofRecord);
+      }
+      state.statuses[getBookingKey(dateStr, slot)] = payload.status || 'aguardando';
+      saveStatuses();
+      await syncAdminState();
+      renderAdmin();
+      input.value = '';
+      if(label) label.textContent = 'Comprovante enviado com sucesso.';
+      if(textField) textField.value = '';
+      if(payload.status === 'confirmado'){
+        bookingField(mode, 'successText').textContent = booking.name + ', comprovante validado pela Function e agendamento confirmado para ' + longDate(dateStr) + ', às ' + slot + '.';
+        showToast('Comprovante validado pela Function. Agendamento confirmado.');
+      }else{
+        bookingField(mode, 'successText').textContent = booking.name + ', comprovante enviado. A Function armazenou o arquivo, mas o agendamento continua em análise até validação completa.';
+        showToast('Comprovante salvo para revisão pela Function.', 3200);
+      }
+      return;
+    }
+    const analysis = analyzePaymentProofText(proofText, service ? service.price : null);
+    const proofRecord = {
+      id: 'proof-' + getBookingKey(dateStr, slot),
+      bookingKey: getBookingKey(dateStr, slot),
+      date: dateStr,
+      slot,
+      customerName: booking.name || '',
+      customerPhone: booking.phone || '',
+      serviceId: booking.serviceId || '',
+      professionalId: booking.professionalId || '',
+      fileName: file.name,
+      mimeType: file.type || '',
+      fileDataUrl,
+      proofText,
+      analysis,
+      createdAt: new Date().toISOString()
+    };
+    await dbPut(DB_CONFIG.paymentProofsStore, proofRecord);
+    const existingIndex = state.paymentProofs.findIndex(item => item.bookingKey === proofRecord.bookingKey);
+    if(existingIndex >= 0) state.paymentProofs.splice(existingIndex, 1, proofRecord);
+    else state.paymentProofs.unshift(proofRecord);
+    state.statuses[getBookingKey(dateStr, slot)] = analysis.decision === 'approved' ? 'confirmado' : 'aguardando';
+    saveStatuses();
+    await syncAdminState();
+    renderAdmin();
+    input.value = '';
+    if(label) label.textContent = 'Comprovante enviado com sucesso.';
+    if(textField) textField.value = '';
+    if(analysis.decision === 'approved'){
+      bookingField(mode, 'successText').textContent = booking.name + ', comprovante analisado com sucesso e agendamento confirmado para ' + longDate(dateStr) + ', às ' + slot + '.';
+      showToast('Comprovante validado. Agendamento confirmado.');
+    }else if(analysis.decision === 'rejected'){
+      bookingField(mode, 'successText').textContent = booking.name + ', o arquivo foi salvo, mas a análise não encontrou a chave PIX da barbearia no texto informado. O agendamento permanece em análise para revisão manual.';
+      showToast('Comprovante salvo, mas a chave PIX não foi validada.', 3400);
+    }else{
+      bookingField(mode, 'successText').textContent = booking.name + ', comprovante salvo. O sistema não conseguiu validar automaticamente todos os critérios bancários, então o agendamento continua em análise.';
+      showToast('Comprovante salvo para revisão manual.', 3200);
+    }
+  }catch(error){
+    console.error(error);
+    showToast('Não foi possível enviar o comprovante', 3200);
+  }
+}
+
 function money(value){
   return 'R$ ' + Number(value).toFixed(2).replace('.', ',');
 }
@@ -3101,12 +3665,37 @@ function getPlanById(planId){
 }
 
 function hasSupabaseConfig(){
-  return !!(
-    SUPABASE.url &&
-    SUPABASE.anonKey &&
-    !SUPABASE.url.includes('sb_publishable_cNr76_eTY_jcL0z0uHWGXQ_e9wXw1tJ') &&
-    !SUPABASE.anonKey.includes('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh6a2t3enVyZXhmenh4cGJ4dW91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDIxNTQsImV4cCI6MjA5MTA3ODE1NH0.dVi1Ve3oEqbKJBuGLb_fyUJWXLDriacVXPnBbKE6i8s')
-  );
+  const url = String(SUPABASE.url || '').trim();
+  const anonKey = String(SUPABASE.anonKey || '').trim();
+  const hasPlaceholders =
+    !url ||
+    !anonKey ||
+    url.includes('COLE_SUA_URL_SUPABASE_AQUI') ||
+    anonKey.includes('COLE_SUA_ANON_KEY_SUPABASE_AQUI');
+  const looksLikeUrl = /^https?:\/\//i.test(url);
+  return !hasPlaceholders && looksLikeUrl;
+}
+
+function edgeFunctionUrl(name){
+  return String(SUPABASE.url || '').replace(/\/+$/,'') + '/functions/v1/' + String(name || '').replace(/^\/+/,'');
+}
+
+async function invokeEdgeFunction(name, options = {}){
+  const response = await fetch(edgeFunctionUrl(name), {
+    method: options.method || 'GET',
+    headers: {
+      apikey: SUPABASE.anonKey,
+      Authorization: 'Bearer ' + SUPABASE.anonKey,
+      'Content-Type': 'application/json',
+      ...(options.headers || {})
+    },
+    body: options.body ? JSON.stringify(options.body) : undefined
+  });
+  const payload = await response.json().catch(() => ({}));
+  if(!response.ok){
+    throw new Error(payload.error || ('Falha na Edge Function: ' + response.status));
+  }
+  return payload;
 }
 
 function supabaseHeaders(extra = {}){
@@ -3873,7 +4462,32 @@ function bookingField(mode, field){
 }
 
 function buildWhatsAppBookingMessage(payload){
-  return ['Olá! Acabei de fazer um agendamento na Barbearia Origami.','','Nome: ' + payload.name,'WhatsApp: ' + payload.phone,'Serviço: ' + payload.serviceName,'Profissional: ' + payload.professionalName,'Data: ' + longDate(payload.date),'Horário: ' + payload.slot,'','Quero confirmar meu horário.'].join('\n');
+  return ['Olá! Acabei de fazer um agendamento na Barbearia Origami.','','Nome: ' + payload.name,'WhatsApp: ' + payload.phone,'Serviço: ' + payload.serviceName + ' • ' + money(payload.servicePrice),'Profissional: ' + payload.professionalName,'Data: ' + longDate(payload.date),'Horário: ' + payload.slot,'','Quero confirmar meu horário.'].join('\n');
+}
+
+function showBookingPixGate(mode){
+  const name = bookingField(mode, 'name').value.trim();
+  const phone = bookingField(mode, 'phone').value.trim();
+  const serviceId = bookingField(mode, 'service').value;
+  const calendarState = state.calendar[mode];
+  const service = getServiceById(serviceId);
+  const professional = getProfessionalById(calendarState.professional);
+  if(!name){ showToast('Informe seu nome'); return; }
+  if(!phone){ showToast('Informe seu WhatsApp'); return; }
+  if(!service){ showToast('Selecione um serviço'); return; }
+  if(!calendarState.selectedDate || !calendarState.selectedSlot){ showToast('Selecione data e horário'); return; }
+  if(!professional){ showToast('Selecione o profissional'); return; }
+  // Update PIX amount display
+  const amountEl = document.getElementById('bookingPixAmount_' + mode);
+  if(amountEl) amountEl.textContent = money(service.price);
+  // Show the PIX gate
+  document.getElementById('bookingPixGate_' + mode).classList.add('show');
+  // Scroll gate into view
+  document.getElementById('bookingPixGate_' + mode).scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function hideBookingPixGate(mode){
+  document.getElementById('bookingPixGate_' + mode).classList.remove('show');
 }
 
 async function confirmBooking(mode){
@@ -3889,26 +4503,67 @@ async function confirmBooking(mode){
   if(!service){ showToast('Selecione um serviço'); return; }
   if(!calendarState.selectedDate || !calendarState.selectedSlot){ showToast('Selecione data e horário'); return; }
   if(!professional){ showToast('Selecione o profissional'); return; }
+  await refreshCalendarBookings(false);
+  if(isSlotTaken(calendarState.selectedDate, calendarState.selectedSlot) || isSlotExpired(calendarState.selectedDate, calendarState.selectedSlot)){
+    showToast('Esse horário não está mais disponível');
+    renderSlots(mode);
+    calendarState.selectedSlot = '';
+    renderBookingSummary(mode);
+    return;
+  }
+  const bookingRecord = { name, phone, serviceId, professionalId, createdAt: new Date().toISOString(), paymentProofPendingAt: new Date().toISOString() };
   if(hasSupabaseConfig()){
     try{
-      state.bookings = purgeOldBookings(await readSupabaseBookings());
-      state.statuses = pruneStatusesMap(state.bookings, state.statuses);
-      persistStateLocally();
+      const payload = await invokeEdgeFunction('create-booking', {
+        method: 'POST',
+        body: {
+          bookingDate: calendarState.selectedDate,
+          slot: calendarState.selectedSlot,
+          name,
+          phone,
+          serviceId,
+          professionalId
+        }
+      });
+      if(payload.conflict){
+        await refreshCalendarBookings(false);
+        renderSlots(mode);
+        showToast('Esse horário acabou de ser reservado');
+        return;
+      }
+      if(!state.bookings[calendarState.selectedDate]) state.bookings[calendarState.selectedDate] = {};
+      state.bookings[calendarState.selectedDate][calendarState.selectedSlot] = bookingRecord;
+      state.statuses[getBookingKey(calendarState.selectedDate, calendarState.selectedSlot)] = payload.status || 'aguardando';
+      saveBookings();
+      saveStatuses();
       renderSlots(mode);
+      renderAdmin();
+      updateVacancies();
+      setSyncText('Agendamento em análise salvo pela Function');
+      const payloadWa = { name, phone, serviceName: service.name, servicePrice: service.price, professionalName: professional.name, date: calendarState.selectedDate, slot: calendarState.selectedSlot };
+      const link = CONFIG.whatsappUrl + '?text=' + encodeURIComponent(buildWhatsAppBookingMessage(payloadWa));
+      bookingField(mode, 'success').classList.add('show');
+      document.getElementById('bookingPixGate_' + mode).classList.remove('show');
+      bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi registrado em análise pela Function para ' + service.name + ' com ' + professional.name + '. Envie o comprovante abaixo para confirmar automaticamente.';
+      bookingField(mode, 'successLink').href = link;
+      const proofInput = proofField(mode, 'input');
+      const proofName = proofField(mode, 'name');
+      if(proofInput) proofInput.value = '';
+      if(proofName) proofName.textContent = 'Nenhum comprovante selecionado.';
+      return;
     }catch(error){
       console.error(error);
-      setSyncText('Falha ao consultar o Supabase — validando localmente');
+      setSyncText('Falha na Function — usando fluxo local');
     }
   }
-  if(isSlotTaken(calendarState.selectedDate, calendarState.selectedSlot) || isSlotExpired(calendarState.selectedDate, calendarState.selectedSlot)){ showToast('Esse horário não está mais disponível'); renderSlots(mode); return; }
-  const bookingRecord = { name, phone, serviceId, professionalId, createdAt: new Date().toISOString() };
   if(hasSupabaseConfig()){
-    setSyncText('Enviando agendamento para o Supabase...');
+    setSyncText('Registrando agendamento...');
     try{
       const result = await createSupabaseBooking(calendarState.selectedDate, calendarState.selectedSlot, bookingRecord);
       if(!result.ok){
         if(result.conflict){
-          await refreshRemoteState(false);
+          await refreshCalendarBookings(false);
+          renderSlots(mode);
           showToast('Esse horário acabou de ser reservado');
           return;
         }
@@ -3916,25 +4571,55 @@ async function confirmBooking(mode){
       }
     }catch(error){
       console.error(error);
-      setSyncText('Falha no Supabase — horário salvo localmente');
+      setSyncText('Falha no Supabase — agendamento salvo localmente');
     }
   }
   if(!state.bookings[calendarState.selectedDate]) state.bookings[calendarState.selectedDate] = {};
   state.bookings[calendarState.selectedDate][calendarState.selectedSlot] = bookingRecord;
-  state.statuses[getBookingKey(calendarState.selectedDate, calendarState.selectedSlot)] = 'confirmado';
+  state.statuses[getBookingKey(calendarState.selectedDate, calendarState.selectedSlot)] = 'aguardando';
   saveBookings();
   saveStatuses();
   await syncAdminState();
   renderSlots(mode);
   renderAdmin();
   updateVacancies();
-  setSyncText(hasSupabaseConfig() ? 'Horário salvo e sincronizado' : 'Horário salvo com sucesso');
-  const payload = { name, phone, serviceName: service.name, professionalName: professional.name, date: calendarState.selectedDate, slot: calendarState.selectedSlot };
+  setSyncText(hasSupabaseConfig() ? 'Agendamento em análise e sincronizado' : 'Agendamento em análise salvo localmente');
+  const payload = { name, phone, serviceName: service.name, servicePrice: service.price, professionalName: professional.name, date: calendarState.selectedDate, slot: calendarState.selectedSlot };
   const link = CONFIG.whatsappUrl + '?text=' + encodeURIComponent(buildWhatsAppBookingMessage(payload));
   bookingField(mode, 'success').classList.add('show');
-  bookingField(mode, 'successText').textContent = name + ', seu horário para ' + service.name + ' foi reservado em ' + longDate(calendarState.selectedDate) + ', às ' + calendarState.selectedSlot + '.';
+  document.getElementById('bookingPixGate_' + mode).classList.remove('show');
+  bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi registrado em análise para ' + service.name + ' com ' + professional.name + '. Envie o comprovante abaixo para confirmar automaticamente.';
   bookingField(mode, 'successLink').href = link;
-  setTimeout(() => window.open(link, '_blank'), 250);
+  const proofInput = proofField(mode, 'input');
+  const proofName = proofField(mode, 'name');
+  if(proofInput) proofInput.value = '';
+  if(proofName) proofName.textContent = 'Nenhum comprovante selecionado.';
+}
+
+function stopCalendarPolling(mode){
+  if(calendarPolling[mode]){
+    clearInterval(calendarPolling[mode]);
+    calendarPolling[mode] = null;
+  }
+}
+
+async function refreshCalendarBookings(updateSyncText = true){
+  try{
+    if(hasSupabaseConfig()){
+      state.bookings = purgeOldBookings(await readSupabaseBookings());
+      state.statuses = pruneStatusesMap(state.bookings, state.statuses);
+      persistStateLocally();
+      if(updateSyncText) setSyncText('Horários sincronizados');
+      return;
+    }
+  }catch(error){
+    console.error(error);
+    if(updateSyncText) setSyncText('Falha ao consultar o Supabase — usando agenda local');
+  }
+  state.bookings = purgeOldBookings(readStore(STORAGE.bookings, {}));
+  state.statuses = pruneStatusesMap(state.bookings, readStore(STORAGE.statuses, {}));
+  persistStateLocally();
+  if(updateSyncText && !hasSupabaseConfig()) setSyncText('Agenda local pronta');
 }
 
 function buildCalendar(mode){
@@ -3942,6 +4627,7 @@ function buildCalendar(mode){
   const grid = mode === 'main' ? document.getElementById('calendarGrid') : document.getElementById('modalCalendarGrid');
   const title = mode === 'main' ? document.getElementById('calendarMonth') : document.getElementById('modalCalendarMonth');
   const selectedLabel = mode === 'main' ? document.getElementById('selectedDateLabel') : document.getElementById('modalSelectedDateLabel');
+  if(!grid || !title || !selectedLabel) return;
   title.textContent = monthLabel(calendarState.month, calendarState.year);
   grid.innerHTML = '';
   ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'].forEach(day => {
@@ -3959,44 +4645,94 @@ function buildCalendar(mode){
   }
   for(let day = 1; day <= totalDays; day += 1){
     const date = new Date(calendarState.year, calendarState.month, day);
-    const dateStr = date.toISOString().slice(0, 10);
-    const button = document.createElement('button');
-    button.type = 'button';
+    date.setHours(0, 0, 0, 0);
+    const dateStr = calendarState.year + '-' + String(calendarState.month + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+    const button = document.createElement('div');
     button.className = 'cal-day';
     button.textContent = day;
-    const isPast = parseDate(dateStr) < parseDate(todayISO());
-    const isSunday = date.getDay() === 0;
-    if(isPast){ button.classList.add('past'); button.disabled = true; }
-    else if(isSunday){ button.classList.add('blocked-day'); button.disabled = true; }
-    else{
+    if(date.getDay() === 0){
+      button.classList.add('blocked-day');
+    }else if(date < parseDate(todayISO())){
+      button.classList.add('past');
+    }else{
       button.classList.add('available');
-      button.addEventListener('click', () => {
-        calendarState.selectedDate = dateStr;
-        calendarState.selectedSlot = '';
-        bookingField(mode, 'success').classList.remove('show');
-        renderBookingSummary(mode);
-        buildCalendar(mode);
-        renderSlots(mode);
-      });
+      if(dateStr === todayISO()) button.classList.add('today');
+      button.addEventListener('click', () => selectCalendarDate(mode, dateStr, calendarState.year, calendarState.month, day, button));
     }
-    if(calendarState.selectedDate === dateStr){ button.classList.add('selected'); selectedLabel.textContent = shortDate(dateStr); }
+    if(calendarState.selectedDate === dateStr) button.classList.add('selected');
     grid.appendChild(button);
   }
-  if(!calendarState.selectedDate) selectedLabel.textContent = 'Selecione um dia';
+  selectedLabel.textContent = calendarState.selectedDate ? shortDate(calendarState.selectedDate) : 'Selecione um dia';
 }
 
 function renderSlots(mode){
   const calendarState = state.calendar[mode];
   const area = mode === 'main' ? document.getElementById('slotsArea') : document.getElementById('modalSlotsArea');
-  if(!calendarState.selectedDate){ area.innerHTML = '<div class="slot-empty">Selecione uma data para visualizar os horários disponíveis.</div>'; return; }
+  if(!area) return;
+  if(!calendarState.selectedDate){
+    area.innerHTML = '<div class="slot-empty">' + (mode === 'main' ? 'Selecione uma data no calendário para carregar os horários entre 09:00 e 20:00.' : 'Escolha a data para liberar os horários disponíveis.') + '</div>';
+    return;
+  }
+  const parts = calendarState.selectedDate.split('-').map(Number);
+  renderSlotsForDate(mode, calendarState.selectedDate, parts[0], parts[1] - 1, parts[2]);
+}
+
+function renderSlotsForDate(mode, dateStr, year, month, day, silent = false){
+  const area = mode === 'main' ? document.getElementById('slotsArea') : document.getElementById('modalSlotsArea');
+  const calendarState = state.calendar[mode];
+  if(!area) return;
   const slots = getBookingSlots();
-  const buttons = slots.map(slot => {
-    const taken = isSlotTaken(calendarState.selectedDate, slot);
-    const expired = isSlotExpired(calendarState.selectedDate, slot);
-    const selected = calendarState.selectedSlot === slot;
-    return `<button type="button" class="slot${taken ? ' taken' : ''}${expired ? ' expired' : ''}${selected ? ' selected' : ''}" ${taken || expired ? 'disabled' : ''} onclick="selectSlot('${mode}','${slot}')">${slot}</button>`;
-  }).join('');
-  area.innerHTML = '<div class="slot-grid">' + buttons + '</div>';
+  const grid = document.createElement('div');
+  grid.className = 'slot-grid';
+  slots.forEach(slot => {
+    const taken = isSlotTaken(dateStr, slot);
+    const expired = isSlotExpired(dateStr, slot);
+    const blocked = taken || expired;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'slot' + (taken ? ' taken' : '') + (expired ? ' expired' : '') + (calendarState.selectedSlot === slot && !blocked ? ' selected' : '');
+    button.textContent = slot;
+    if(blocked) button.disabled = true;
+    if(!blocked) button.addEventListener('click', () => selectSlot(mode, slot));
+    grid.appendChild(button);
+  });
+  area.innerHTML = '';
+  area.appendChild(grid);
+}
+
+async function refreshAndRenderSlots(mode, dateStr, year, month, day){
+  const area = mode === 'main' ? document.getElementById('slotsArea') : document.getElementById('modalSlotsArea');
+  if(area){
+    area.innerHTML = '<div class="slot-empty" style="border-color:var(--gold-border);color:var(--gold);">Verificando disponibilidade...</div>';
+  }
+  await refreshCalendarBookings(false);
+  renderSlotsForDate(mode, dateStr, year, month, day);
+  renderAdmin();
+}
+
+function startCalendarPolling(mode, dateStr, year, month, day){
+  stopCalendarPolling(mode);
+  calendarPolling[mode] = setInterval(async () => {
+    await refreshCalendarBookings(false);
+    if(state.calendar[mode].selectedDate === dateStr){
+      renderSlotsForDate(mode, dateStr, year, month, day, true);
+    }
+  }, 30000);
+}
+
+function selectCalendarDate(mode, dateStr, year, month, day, element){
+  const calendarState = state.calendar[mode];
+  const gridId = mode === 'main' ? 'calendarGrid' : 'modalCalendarGrid';
+  document.querySelectorAll('#' + gridId + ' .cal-day.selected').forEach(node => node.classList.remove('selected'));
+  if(element) element.classList.add('selected');
+  calendarState.selectedDate = dateStr;
+  calendarState.selectedSlot = '';
+  bookingField(mode, 'success').classList.remove('show');
+  hideBookingPixGate(mode);
+  buildCalendar(mode);
+  renderBookingSummary(mode);
+  refreshAndRenderSlots(mode, dateStr, year, month, day);
+  startCalendarPolling(mode, dateStr, year, month, day);
 }
 
 function selectSlot(mode, slot){
@@ -4007,12 +4743,17 @@ function selectSlot(mode, slot){
 
 function openBookingModal(){
   document.getElementById('bookingSuccessModal').classList.remove('show');
+  document.getElementById('bookingPixGate_modal').classList.remove('show');
   document.getElementById('bookingModalOverlay').classList.add('open');
   document.getElementById('bookingModalWrap').classList.add('open');
   document.body.classList.add('no-scroll');
+  buildCalendar('modal');
+  renderSlots('modal');
+  renderBookingSummary('modal');
 }
 
 function closeBookingModal(){
+  stopCalendarPolling('modal');
   document.getElementById('bookingModalOverlay').classList.remove('open');
   document.getElementById('bookingModalWrap').classList.remove('open');
   document.body.classList.remove('no-scroll');
@@ -4083,12 +4824,14 @@ function filterAdminBookings(entries){
 
 function renderAdminStats(entries){
   const todayCount = entries.filter(entry => entry.date === todayISO()).length;
+  const awaitingCount = entries.filter(entry => entry.status === 'aguardando').length;
   const openCount = entries.filter(entry => entry.status === 'confirmado').length;
   const inService = entries.filter(entry => entry.status === 'atendimento').length;
   const stockLow = state.stock.filter(item => Number(item.qty) <= Number(item.min)).length;
   const activeSubscribers = state.subscribers.filter(item => item.status === 'ativo').length;
   document.getElementById('adminStats').innerHTML = `
     <div class="admin-stat origami-corner"><strong>${todayCount}</strong><span>Agenda de hoje</span></div>
+    <div class="admin-stat origami-corner"><strong>${awaitingCount}</strong><span>Aguardando liberação</span></div>
     <div class="admin-stat origami-corner"><strong>${openCount}</strong><span>Confirmados</span></div>
     <div class="admin-stat origami-corner"><strong>${inService}</strong><span>Em atendimento</span></div>
     <div class="admin-stat origami-corner"><strong>${stockLow}</strong><span>Estoque baixo</span></div>
@@ -4106,9 +4849,16 @@ async function updateBookingStatus(date, slot, status){
 
 function renderAdminBookings(entries){
   const list = document.getElementById('adminBookingsList');
-  if(!entries.length){ list.innerHTML = '<div class="stock-item">Nenhum agendamento encontrado nesse filtro.</div>'; return; }
+  if(!entries.length){
+    list.innerHTML = '<div class="stock-item">Nenhum agendamento encontrado nesse filtro. Se você acabou de receber um novo pagamento, deixe a visão em <strong>Tudo</strong> ou selecione <strong>Aguardando liberação</strong>.</div>';
+    return;
+  }
   list.innerHTML = entries.map(entry => {
     const reminderLink = CONFIG.whatsappUrl + '?text=' + encodeURIComponent('Olá, ' + entry.name + '! Passando para lembrar do seu atendimento na Barbearia Origami em ' + longDate(entry.date) + ', às ' + entry.slot + '.');
+    const proof = getPaymentProof(entry.date, entry.slot);
+    const analysisBadge = proof && proof.analysis
+      ? `<span class="proof-badge ${proof.analysis.decision === 'approved' ? 'ok' : proof.analysis.decision === 'rejected' ? 'risk' : 'warn'}">${PROOF_ANALYSIS_LABELS[proof.analysis.decision] || 'Análise'}</span>`
+      : '';
     return `
       <article class="admin-booking origami-corner">
         <div class="admin-booking-head">
@@ -4119,6 +4869,9 @@ function renderAdminBookings(entries){
           <span class="status-pill ${entry.status}">${STATUS_LABELS[entry.status]}</span>
         </div>
         <div class="pill-row">
+          ${proof ? `<a class="mini-btn" href="${proof.publicUrl || proof.fileDataUrl}" target="_blank" rel="noopener" style="text-decoration:none;display:inline-flex;align-items:center">Comprovante</a>` : ''}
+          ${analysisBadge}
+          <button class="mini-btn${entry.status === 'aguardando' ? ' active' : ''}" type="button" onclick="updateBookingStatus('${entry.date}','${entry.slot}','aguardando')">Aguardando</button>
           <button class="mini-btn${entry.status === 'confirmado' ? ' active' : ''}" type="button" onclick="updateBookingStatus('${entry.date}','${entry.slot}','confirmado')">Confirmado</button>
           <button class="mini-btn${entry.status === 'atendimento' ? ' active' : ''}" type="button" onclick="updateBookingStatus('${entry.date}','${entry.slot}','atendimento')">Em atendimento</button>
           <button class="mini-btn${entry.status === 'finalizado' ? ' active' : ''}" type="button" onclick="updateBookingStatus('${entry.date}','${entry.slot}','finalizado')">Finalizado</button>
@@ -4234,6 +4987,52 @@ function renderSubscribers(){
   }).join('');
 }
 
+function renderPaymentProofLibrary(){
+  const grid = document.getElementById('paymentProofGrid');
+  if(!grid) return;
+  if(!state.paymentProofs.length){
+    grid.innerHTML = '<div class="subscriber-empty">Nenhum comprovante enviado ainda. Assim que um cliente anexar imagem ou PDF no fluxo de agendamento, o arquivo aparecerá aqui.</div>';
+    return;
+  }
+  grid.innerHTML = state.paymentProofs.map(item => {
+    const service = getServiceById(item.serviceId);
+    const professional = getProfessionalById(item.professionalId);
+    const status = state.statuses[item.bookingKey] || 'aguardando';
+    const analysis = item.analysis || { decision: 'pending' };
+    const analysisClass = analysis.decision === 'approved' ? 'ok' : analysis.decision === 'rejected' ? 'risk' : 'warn';
+    return `
+      <article class="proof-card origami-corner">
+        <div class="proof-preview">${proofPreviewMarkup(item)}</div>
+        <div class="proof-meta">
+          <strong>${escapeHtml(item.customerName || 'Cliente')}</strong>
+          <span>${escapeHtml(longDate(item.date))} às ${escapeHtml(item.slot)}</span>
+          <span>${escapeHtml(service ? service.name : item.serviceId || 'Serviço')}</span>
+          <span>${escapeHtml(professional ? professional.name : item.professionalId || 'Sem preferência')}</span>
+          <span>${escapeHtml(item.customerPhone || '')}</span>
+          <span>Arquivo: ${escapeHtml(item.fileName || 'comprovante')}</span>
+        </div>
+        <div class="proof-badges">
+          <span class="proof-badge">${STATUS_LABELS[status] || status}</span>
+          <span class="proof-badge ${analysisClass}">${PROOF_ANALYSIS_LABELS[analysis.decision] || 'Análise'}</span>
+          <span class="proof-badge">${item.mimeType === 'application/pdf' || /\.pdf$/i.test(item.fileName || '') ? 'PDF' : 'Imagem'}</span>
+          ${analysis.hasTargetPixKey ? '<span class="proof-badge ok">Chave PIX OK</span>' : '<span class="proof-badge risk">Chave não validada</span>'}
+        </div>
+        <div class="proof-meta">
+          <span>PIX identificado: ${analysis.hasPixWord ? 'sim' : 'não'}</span>
+          <span>Status pago identificado: ${analysis.hasPaidWord ? 'sim' : 'não'}</span>
+          <span>Banco/transação identificado: ${analysis.hasBankWord ? 'sim' : 'não'}</span>
+          <span>Valor esperado identificado: ${analysis.hasExpectedAmount ? 'sim' : 'não'}</span>
+        </div>
+        <div class="pill-row">
+          <a class="mini-btn" href="${item.publicUrl || item.fileDataUrl}" target="_blank" rel="noopener" style="text-decoration:none;display:inline-flex;align-items:center">Abrir arquivo</a>
+          <button class="mini-btn${status === 'aguardando' ? ' active' : ''}" type="button" onclick="updateBookingStatus('${item.date}','${item.slot}','aguardando')">Aguardando</button>
+          <button class="mini-btn${status === 'confirmado' ? ' active' : ''}" type="button" onclick="updateBookingStatus('${item.date}','${item.slot}','confirmado')">Confirmado</button>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
 async function addSubscriberManually(){
   const name = document.getElementById('subscriberName').value.trim();
   const phone = document.getElementById('subscriberPhone').value.trim();
@@ -4284,6 +5083,7 @@ function renderAdmin(){
   renderAdminBookings(filtered);
   renderStock();
   renderSubscribers();
+  renderPaymentProofLibrary();
   renderAdminGallery();
   renderAdminReviews();
   renderOccupancyChart();
@@ -4319,20 +5119,36 @@ function initIntro(){
 
 function initCalendarControls(){
   document.getElementById('prevMonthBtn').addEventListener('click', () => {
+    stopCalendarPolling('main');
     if(state.calendar.main.month === 0){ state.calendar.main.month = 11; state.calendar.main.year -= 1; } else { state.calendar.main.month -= 1; }
-    state.calendar.main.selectedDate = ''; state.calendar.main.selectedSlot = ''; buildCalendar('main'); renderSlots('main'); renderBookingSummary('main');
+    state.calendar.main.selectedDate = ''; state.calendar.main.selectedSlot = '';
+    document.getElementById('bookingSuccess').classList.remove('show');
+    hideBookingPixGate('main');
+    buildCalendar('main'); renderSlots('main'); renderBookingSummary('main');
   });
   document.getElementById('nextMonthBtn').addEventListener('click', () => {
+    stopCalendarPolling('main');
     if(state.calendar.main.month === 11){ state.calendar.main.month = 0; state.calendar.main.year += 1; } else { state.calendar.main.month += 1; }
-    state.calendar.main.selectedDate = ''; state.calendar.main.selectedSlot = ''; buildCalendar('main'); renderSlots('main'); renderBookingSummary('main');
+    state.calendar.main.selectedDate = ''; state.calendar.main.selectedSlot = '';
+    document.getElementById('bookingSuccess').classList.remove('show');
+    hideBookingPixGate('main');
+    buildCalendar('main'); renderSlots('main'); renderBookingSummary('main');
   });
   document.getElementById('modalPrevMonthBtn').addEventListener('click', () => {
+    stopCalendarPolling('modal');
     if(state.calendar.modal.month === 0){ state.calendar.modal.month = 11; state.calendar.modal.year -= 1; } else { state.calendar.modal.month -= 1; }
-    state.calendar.modal.selectedDate = ''; state.calendar.modal.selectedSlot = ''; buildCalendar('modal'); renderSlots('modal'); renderBookingSummary('modal');
+    state.calendar.modal.selectedDate = ''; state.calendar.modal.selectedSlot = '';
+    document.getElementById('bookingSuccessModal').classList.remove('show');
+    hideBookingPixGate('modal');
+    buildCalendar('modal'); renderSlots('modal'); renderBookingSummary('modal');
   });
   document.getElementById('modalNextMonthBtn').addEventListener('click', () => {
+    stopCalendarPolling('modal');
     if(state.calendar.modal.month === 11){ state.calendar.modal.month = 0; state.calendar.modal.year += 1; } else { state.calendar.modal.month += 1; }
-    state.calendar.modal.selectedDate = ''; state.calendar.modal.selectedSlot = ''; buildCalendar('modal'); renderSlots('modal'); renderBookingSummary('modal');
+    state.calendar.modal.selectedDate = ''; state.calendar.modal.selectedSlot = '';
+    document.getElementById('bookingSuccessModal').classList.remove('show');
+    hideBookingPixGate('modal');
+    buildCalendar('modal'); renderSlots('modal'); renderBookingSummary('modal');
   });
 }
 
@@ -4378,7 +5194,7 @@ function initEvents(){
 // ── Admin tabs ──────────────────────────────────────────
 function switchAdminTab(name){
   document.querySelectorAll('.admin-tab').forEach((btn,i) => {
-    const names = ['agenda','estoque','planos','galeria','avaliacoes'];
+    const names = ['agenda','estoque','planos','comprovantes','galeria','avaliacoes'];
     btn.classList.toggle('active', names[i] === name);
   });
   document.querySelectorAll('.admin-tab-panel').forEach(panel => {
@@ -4800,6 +5616,7 @@ async function init(){
   loadState();
   await syncStateFromSupabase();
   await loadSubscribers();
+  await loadPaymentProofs();
   initIntro();
   initMenu();
   initForms();
