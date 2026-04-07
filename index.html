@@ -1408,6 +1408,10 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
 .payment-success p{margin-top:12px;color:var(--white-dim);line-height:1.8}
 .proof-box{margin-top:18px;padding:18px;border:1px solid rgba(201,168,76,.14);background:rgba(255,255,255,.015);text-align:left}
 .proof-box li{margin-left:18px;color:var(--white-dim);line-height:1.85}
+.plan-proof-panel{display:none;margin-top:18px;text-align:left}
+.plan-proof-panel.show{display:block}
+.plan-proof-status{margin-top:12px;color:var(--white-dim);line-height:1.8}
+.plan-proof-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 
 .detail-grid{display:grid;grid-template-columns:320px minmax(0,1fr)}
 .detail-art{
@@ -2665,9 +2669,9 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
             <div class="proof-file-name" id="bookingProofNameMain">Nenhum comprovante selecionado.</div>
             <div class="field" style="margin-top:0">
               <label for="bookingProofTextMain">Texto do comprovante</label>
-              <textarea id="bookingProofTextMain" class="proof-textarea" placeholder="Cole aqui o texto do comprovante PIX. A confirmação automática só acontece se o sistema encontrar sinais de comprovante bancário e a chave PIX 63993051851."></textarea>
+              <textarea id="bookingProofTextMain" class="proof-textarea" placeholder="Cole aqui o texto do comprovante PIX. A confirmação automática só acontece se o sistema encontrar a chave PIX 63993051851, o destinatário Pedro Dias P de Carvalho e o valor exato do serviço selecionado."></textarea>
             </div>
-            <div class="proof-helper">Segurança: a confirmação automática só ocorre quando o texto colado indicar comprovante bancário e contiver a chave PIX da barbearia. Sem isso, o horário permanece em análise.</div>
+            <div class="proof-helper">Segurança: a confirmação automática só ocorre quando o texto colado indicar comprovante bancário, contiver a chave PIX da barbearia, o destinatário Pedro Dias P de Carvalho e trouxer o valor exato do serviço escolhido. Sem isso, o horário permanece em análise.</div>
             <div class="proof-upload-actions">
               <button class="btn" type="button" onclick="submitBookingProof('main')">Enviar comprovante</button>
               <a class="btn-outline" id="bookingSuccessLink" href="#" target="_blank" rel="noopener">Falar no WhatsApp</a>
@@ -2865,6 +2869,23 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
           </ol>
         </div>
         <a class="btn-outline" id="proofLink" href="#" target="_blank" rel="noopener" style="margin-top:16px">Enviar Comprovante no WhatsApp</a>
+        <div class="proof-box origami-corner origami-shadow plan-proof-panel" id="planProofPanel">
+          <div class="mini-title">Validar comprovante do plano</div>
+          <p style="margin-top:0;color:var(--white-dim);line-height:1.8">Para o cliente entrar no cadastro, o texto do comprovante precisa mostrar a chave PIX da barbearia, o destinatário Pedro Dias P de Carvalho e o valor exato do plano escolhido.</p>
+          <div class="field" style="margin-top:14px">
+            <label for="planProofFile">Imagem ou PDF do comprovante</label>
+            <input id="planProofFile" type="file" accept="image/*,application/pdf" onchange="handlePlanProofFileChange(this)">
+          </div>
+          <div class="upload-status" id="planProofFileName">Nenhum comprovante selecionado.</div>
+          <div class="field" style="margin-top:14px">
+            <label for="planProofText">Texto do comprovante</label>
+            <textarea id="planProofText" class="proof-textarea" placeholder="Cole aqui o texto do comprovante PIX. O sistema só cadastra o cliente se encontrar o destinatário Pedro Dias P de Carvalho e o valor exato do plano selecionado."></textarea>
+          </div>
+          <div class="plan-proof-actions">
+            <button class="btn" type="button" onclick="submitPlanProof()">Validar comprovante e ativar plano</button>
+          </div>
+          <div class="plan-proof-status" id="planProofStatus"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -2981,9 +3002,9 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
             <div class="proof-file-name" id="bookingProofNameModal">Nenhum comprovante selecionado.</div>
             <div class="field" style="margin-top:0">
               <label for="bookingProofTextModal">Texto do comprovante</label>
-              <textarea id="bookingProofTextModal" class="proof-textarea" placeholder="Cole aqui o texto do comprovante PIX para análise automática da chave de destino."></textarea>
+              <textarea id="bookingProofTextModal" class="proof-textarea" placeholder="Cole aqui o texto do comprovante PIX. O destinatário deve ser Pedro Dias P de Carvalho e o valor precisa bater exatamente com o serviço selecionado."></textarea>
             </div>
-            <div class="proof-helper">A confirmação automática só é liberada quando a análise encontra sinais claros de comprovante bancário e a chave PIX da barbearia.</div>
+            <div class="proof-helper">A confirmação automática só é liberada quando a análise encontra sinais claros de comprovante bancário, a chave PIX da barbearia, o destinatário Pedro Dias P de Carvalho e o valor exato do serviço selecionado.</div>
             <div class="proof-upload-actions">
               <button class="btn" type="button" onclick="submitBookingProof('modal')">Enviar comprovante</button>
               <a class="btn-outline" id="bookingSuccessLinkModal" href="#" target="_blank" rel="noopener">Falar no WhatsApp</a>
@@ -3171,6 +3192,7 @@ const CONFIG = {
   whatsappUrl: 'https://wa.me/5561994259943',
   instagram: 'https://www.instagram.com/origamibarbearia/',
   pixKey: '63993051851',
+  pixRecipientName: 'Pedro Dias P de Carvalho',
   adminPassword: 'origami2025',
   startHour: 9,
   endHour: 20,
@@ -3284,6 +3306,7 @@ const state = {
   adminLogged: false,
   checkoutMode: 'store',
   selectedPlanId: '',
+  pendingPlanProof: null,
   pendingBooking: null,
   calendar: {
     main: { month: new Date().getMonth(), year: new Date().getFullYear(), selectedDate: '', selectedSlot: '', professional: '' },
@@ -3448,6 +3471,29 @@ function handleProofFileChange(mode, input){
   label.textContent = input.files && input.files[0] ? input.files[0].name : 'Nenhum comprovante selecionado.';
 }
 
+function handlePlanProofFileChange(input){
+  const label = document.getElementById('planProofFileName');
+  if(label) label.textContent = input.files && input.files[0] ? input.files[0].name : 'Nenhum comprovante selecionado.';
+}
+
+function resetPlanProofPanel(){
+  const fileInput = document.getElementById('planProofFile');
+  const textInput = document.getElementById('planProofText');
+  const fileName = document.getElementById('planProofFileName');
+  const status = document.getElementById('planProofStatus');
+  if(fileInput) fileInput.value = '';
+  if(textInput) textInput.value = '';
+  if(fileName) fileName.textContent = 'Nenhum comprovante selecionado.';
+  if(status) status.textContent = '';
+}
+
+function togglePlanProofPanel(show){
+  const panel = document.getElementById('planProofPanel');
+  if(!panel) return;
+  panel.classList.toggle('show', !!show);
+  if(!show) resetPlanProofPanel();
+}
+
 function readFileAsDataUrl(file){
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -3468,19 +3514,36 @@ function digitsOnly(value){
   return String(value || '').replace(/\D/g, '');
 }
 
+function extractProofAmounts(rawText){
+  const matches = String(rawText || '').match(/(?:r\$\s*)?\d{1,3}(?:\.\d{3})*,\d{2}|(?:r\$\s*)?\d+[.,]\d{2}/gi) || [];
+  const values = matches.map(item => {
+    const sanitized = item.replace(/[^\d,.\-]/g, '');
+    if(!sanitized) return null;
+    const normalized = sanitized.includes(',')
+      ? sanitized.replace(/\./g, '').replace(',', '.')
+      : sanitized;
+    const parsed = Number(normalized);
+    return Number.isFinite(parsed) ? Number(parsed.toFixed(2)) : null;
+  }).filter(value => value != null);
+  return [...new Set(values)];
+}
+
 function analyzePaymentProofText(rawText, expectedAmount){
   const normalized = normalizeProofText(rawText);
   const compactDigits = digitsOnly(rawText);
-  const expectedDigits = digitsOnly(expectedAmount != null ? Number(expectedAmount).toFixed(2) : '');
   const pixKeyDigits = digitsOnly(CONFIG.pixKey);
+  const detectedAmounts = extractProofAmounts(rawText);
+  const expectedValue = expectedAmount != null ? Number(Number(expectedAmount).toFixed(2)) : null;
   const hasPixWord = /(pix|comprovante|transferencia|transferencia enviada|pagamento)/.test(normalized);
   const hasBankWord = /(banco|nubank|caixa|bradesco|itau|inter|santander|sicredi|mercado pago|pagbank|transacao|endtoendid|autenticacao)/.test(normalized);
   const hasPaidWord = /(concluido|concluida|aprovado|aprovada|realizado|efetuado|sucesso|pago)/.test(normalized);
   const hasTargetPixKey = compactDigits.includes(pixKeyDigits);
-  const hasRecipientHint = normalized.includes('barbearia origami') || normalized.includes('origami');
-  const hasExpectedAmount = expectedDigits ? compactDigits.includes(expectedDigits) : false;
+  const expectedRecipientName = normalizeProofText(CONFIG.pixRecipientName);
+  const hasRecipientName = expectedRecipientName ? normalized.includes(expectedRecipientName) : false;
+  const hasRecipientHint = hasRecipientName;
+  const hasExpectedAmount = expectedValue == null ? false : detectedAmounts.some(value => Math.abs(value - expectedValue) < 0.001);
   let decision = 'pending';
-  if(hasTargetPixKey && hasPixWord && hasPaidWord && (hasBankWord || hasRecipientHint)) decision = 'approved';
+  if(hasTargetPixKey && hasPixWord && hasPaidWord && (hasBankWord || hasRecipientHint) && hasExpectedAmount && hasRecipientName) decision = 'approved';
   if(!hasTargetPixKey && rawText && rawText.trim()) decision = 'rejected';
   return {
     decision,
@@ -3488,8 +3551,11 @@ function analyzePaymentProofText(rawText, expectedAmount){
     hasBankWord,
     hasPaidWord,
     hasTargetPixKey,
+    hasRecipientName,
     hasRecipientHint,
     hasExpectedAmount,
+    detectedAmounts,
+    expectedAmount: expectedValue,
     checkedAt: new Date().toISOString()
   };
 }
@@ -5016,11 +5082,13 @@ function renderPaymentProofLibrary(){
           <span class="proof-badge ${analysisClass}">${PROOF_ANALYSIS_LABELS[analysis.decision] || 'Análise'}</span>
           <span class="proof-badge">${item.mimeType === 'application/pdf' || /\.pdf$/i.test(item.fileName || '') ? 'PDF' : 'Imagem'}</span>
           ${analysis.hasTargetPixKey ? '<span class="proof-badge ok">Chave PIX OK</span>' : '<span class="proof-badge risk">Chave não validada</span>'}
+          ${analysis.hasRecipientName ? '<span class="proof-badge ok">Destinatário OK</span>' : '<span class="proof-badge risk">Destinatário divergente</span>'}
         </div>
         <div class="proof-meta">
           <span>PIX identificado: ${analysis.hasPixWord ? 'sim' : 'não'}</span>
           <span>Status pago identificado: ${analysis.hasPaidWord ? 'sim' : 'não'}</span>
           <span>Banco/transação identificado: ${analysis.hasBankWord ? 'sim' : 'não'}</span>
+          <span>Destinatário esperado: ${analysis.hasRecipientName ? 'sim' : 'não'}</span>
           <span>Valor esperado identificado: ${analysis.hasExpectedAmount ? 'sim' : 'não'}</span>
         </div>
         <div class="pill-row">
@@ -5073,6 +5141,300 @@ async function removeSubscriber(id){
   await loadSubscribers(!!(result && result.forcedLocal));
   renderAdmin();
   showToast('Assinante removido');
+}
+
+function openPlanCheckout(planId){
+  const plan = getPlanById(planId);
+  if(!plan) return;
+  state.checkoutMode = 'plan';
+  state.selectedPlanId = planId;
+  state.pendingPlanProof = null;
+  togglePlanProofPanel(false);
+  document.getElementById('checkoutTitle').textContent = 'Pagamento do Plano';
+  document.getElementById('checkoutSummaryTitle').textContent = 'Resumo da assinatura';
+  document.getElementById('checkoutItems').innerHTML = `
+    <div class="checkout-item"><span>${plan.name}</span><strong>${money(plan.price)}</strong></div>
+    ${plan.items.map(item => `<div class="checkout-item"><span>${item}</span><strong>incluído</strong></div>`).join('')}
+  `;
+  document.getElementById('checkoutTotal').textContent = money(plan.price);
+  document.getElementById('pixAmount').textContent = money(plan.price);
+  document.getElementById('checkoutAddressField').style.display = 'none';
+  document.getElementById('confirmPaymentBtn').textContent = 'Já paguei o plano';
+  document.getElementById('paymentSuccessHeading').textContent = 'Plano em análise';
+  document.getElementById('paymentSuccess').classList.remove('show');
+  document.getElementById('checkoutForm').style.display = 'block';
+  document.getElementById('checkoutOverlay').classList.add('open');
+  document.getElementById('checkoutWrap').classList.add('open');
+  document.body.classList.add('no-scroll');
+}
+
+function closeCheckout(){
+  state.pendingPlanProof = null;
+  togglePlanProofPanel(false);
+  document.getElementById('checkoutOverlay').classList.remove('open');
+  document.getElementById('checkoutWrap').classList.remove('open');
+  document.body.classList.remove('no-scroll');
+}
+
+async function confirmPayment(){
+  const name = document.getElementById('checkoutName').value.trim();
+  const phone = document.getElementById('checkoutPhone').value.trim();
+  const address = document.getElementById('checkoutAddress').value.trim();
+  if(!name){ showToast('Informe seu nome'); return; }
+  if(!phone){ showToast('Informe seu WhatsApp'); return; }
+  if(state.checkoutMode === 'store' && !address){ showToast('Informe o endereço'); return; }
+
+  const items = cartDetailedItems();
+  const total = state.checkoutMode === 'plan' ? (getPlanById(state.selectedPlanId)?.price || 0) : cartTotal();
+  let message = '';
+
+  if(state.checkoutMode === 'plan'){
+    const plan = getPlanById(state.selectedPlanId);
+    if(!plan) return;
+    state.pendingPlanProof = {
+      name,
+      phone,
+      planId: plan.id,
+      amount: plan.price,
+      createdAt: new Date().toISOString()
+    };
+    message = [
+      'Olá! Acabei de pagar um plano mensal da Barbearia Origami.',
+      '',
+      'Nome: ' + name,
+      'WhatsApp: ' + phone,
+      'Plano: ' + plan.name,
+      'Valor: ' + money(plan.price),
+      '',
+      'Benefícios:',
+      ...plan.items.map(item => '- ' + item),
+      '',
+      'Vou enviar o comprovante do PIX na sequência para validar o valor e ativar a assinatura.'
+    ].join('\n');
+  }else{
+    message = [
+      'Olá! Acabei de pagar um pedido na Barbearia Origami.',
+      '',
+      'Nome: ' + name,
+      'WhatsApp: ' + phone,
+      'Endereço: ' + address,
+      '',
+      'Pedido:',
+      ...items.map(item => '- ' + item.product.name + ' x ' + item.qty + ' = ' + money(item.subtotal)),
+      '',
+      'Total: ' + money(total),
+      '',
+      'Vou enviar o comprovante do PIX na sequência.'
+    ].join('\n');
+    await applyStockReduction(items);
+    state.cart = [];
+    saveCart();
+    renderCart();
+  }
+
+  renderAdmin();
+  document.getElementById('checkoutForm').style.display = 'none';
+  document.getElementById('paymentSuccess').classList.add('show');
+  document.getElementById('paymentSuccessText').textContent = state.checkoutMode === 'plan'
+    ? name + ', seu plano ainda não entrou no cadastro. Envie o comprovante abaixo: a assinatura só será criada se o texto trouxer o destinatário Pedro Dias P de Carvalho e o valor exato do plano selecionado.'
+    : name + ', seu pedido foi registrado. Agora envie o comprovante PIX pelo WhatsApp para confirmar a entrega.';
+  document.getElementById('proofLink').href = CONFIG.whatsappUrl + '?text=' + encodeURIComponent(message);
+  togglePlanProofPanel(state.checkoutMode === 'plan');
+  if(state.checkoutMode === 'plan'){
+    document.getElementById('planProofStatus').textContent = 'Plano escolhido: ' + getPlanById(state.selectedPlanId).name + ' • destinatário esperado: Pedro Dias P de Carvalho • valor esperado: ' + money(total) + '.';
+  }
+}
+
+async function submitPlanProof(){
+  const context = state.pendingPlanProof;
+  const fileInput = document.getElementById('planProofFile');
+  const textInput = document.getElementById('planProofText');
+  const status = document.getElementById('planProofStatus');
+  if(!context){
+    showToast('Nenhuma assinatura pendente para validar');
+    return;
+  }
+  if(!fileInput || !fileInput.files || !fileInput.files[0]){
+    showToast('Selecione a imagem ou o PDF do comprovante');
+    return;
+  }
+  const proofText = textInput ? textInput.value.trim() : '';
+  if(!proofText){
+    showToast('Cole o texto do comprovante para validar o valor do plano');
+    return;
+  }
+
+  const plan = getPlanById(context.planId);
+  if(!plan){
+    showToast('Plano não encontrado');
+    return;
+  }
+
+  const analysis = analyzePaymentProofText(proofText, plan.price);
+  if(analysis.decision !== 'approved'){
+    if(!analysis.hasTargetPixKey){
+      if(status) status.textContent = 'A validação falhou porque a chave PIX da barbearia não foi encontrada no texto do comprovante.';
+      showToast('A chave PIX da barbearia não foi encontrada no comprovante.', 3600);
+    }else if(!analysis.hasRecipientName){
+      if(status) status.textContent = 'A validação falhou porque o nome do destinatário não corresponde a Pedro Dias P de Carvalho.';
+      showToast('O destinatário do comprovante não corresponde ao nome exigido.', 3600);
+    }else if(!analysis.hasExpectedAmount){
+      if(status) status.textContent = 'A validação falhou porque o valor encontrado no comprovante não corresponde ao plano ' + plan.name + ' (' + money(plan.price) + ').';
+      showToast('O valor do comprovante não corresponde ao plano selecionado.', 3600);
+    }else{
+      if(status) status.textContent = 'O comprovante foi lido, mas ainda não há evidência suficiente para ativar a assinatura automaticamente.';
+      showToast('Comprovante em análise. Ainda não foi possível ativar o plano.', 3600);
+    }
+    return;
+  }
+
+  const existingSubscriber = state.subscribers.find(item => item.phone === context.phone && item.planId === plan.id && item.status !== 'cancelado');
+  await upsertSubscriberRecord({
+    id: existingSubscriber ? existingSubscriber.id : 'sub-' + Date.now(),
+    name: context.name,
+    phone: context.phone,
+    planId: plan.id,
+    amount: plan.price,
+    status: 'ativo',
+    source: 'site',
+    notes: 'Assinatura ativada automaticamente após validação do valor do comprovante',
+    createdAt: existingSubscriber ? existingSubscriber.createdAt : (context.createdAt || new Date().toISOString()),
+    updatedAt: new Date().toISOString()
+  });
+
+  state.pendingPlanProof = null;
+  document.getElementById('paymentSuccessHeading').textContent = 'Plano ativado';
+  document.getElementById('paymentSuccessText').textContent = context.name + ', comprovante validado com sucesso. Sua assinatura ' + plan.name + ' foi cadastrada automaticamente.';
+  togglePlanProofPanel(false);
+  renderAdmin();
+  showToast('Plano ativado com sucesso.');
+}
+
+async function submitBookingProof(mode){
+  const calendarState = state.calendar[mode];
+  const input = proofField(mode, 'input');
+  const label = proofField(mode, 'name');
+  const textField = proofField(mode, 'text');
+  const dateStr = calendarState.selectedDate;
+  const slot = calendarState.selectedSlot;
+  if(!dateStr || !slot){
+    showToast('Nenhum agendamento selecionado para vincular o comprovante');
+    return;
+  }
+  if(!input || !input.files || !input.files[0]){
+    showToast('Selecione uma imagem ou PDF do comprovante');
+    return;
+  }
+  const booking = state.bookings[dateStr] && state.bookings[dateStr][slot];
+  if(!booking){
+    showToast('Agendamento não encontrado para vincular o comprovante');
+    return;
+  }
+
+  try{
+    const file = input.files[0];
+    const fileDataUrl = await readFileAsDataUrl(file);
+    const service = getServiceById(booking.serviceId);
+    const proofText = textField ? textField.value.trim() : '';
+
+    if(hasSupabaseConfig()){
+      const payload = await invokeEdgeFunction('upload-payment-proof', {
+        method: 'POST',
+        body: {
+          bookingKey: getBookingKey(dateStr, slot),
+          bookingDate: dateStr,
+          slot,
+          customerName: booking.name || '',
+          customerPhone: booking.phone || '',
+          serviceId: booking.serviceId || '',
+          professionalId: booking.professionalId || '',
+          expectedAmount: service ? service.price : null,
+          proofText,
+          fileName: file.name,
+          mimeType: file.type || '',
+          fileDataUrl
+        }
+      });
+      const proofRecord = payload.proof || null;
+      const functionAnalysis = proofRecord && proofRecord.analysis ? proofRecord.analysis : null;
+      if(proofRecord){
+        const existingIndex = state.paymentProofs.findIndex(item => item.bookingKey === proofRecord.bookingKey);
+        if(existingIndex >= 0) state.paymentProofs.splice(existingIndex, 1, proofRecord);
+        else state.paymentProofs.unshift(proofRecord);
+      }
+      state.statuses[getBookingKey(dateStr, slot)] = payload.status || 'aguardando';
+      saveStatuses();
+      await syncAdminState();
+      renderAdmin();
+      input.value = '';
+      if(label) label.textContent = 'Comprovante enviado com sucesso.';
+      if(textField) textField.value = '';
+
+      if(payload.status === 'confirmado'){
+        bookingField(mode, 'successText').textContent = booking.name + ', comprovante validado pela Function e agendamento confirmado para ' + longDate(dateStr) + ', às ' + slot + '.';
+        showToast('Comprovante validado pela Function. Agendamento confirmado.');
+      }else if(functionAnalysis && !functionAnalysis.hasRecipientName){
+        bookingField(mode, 'successText').textContent = booking.name + ', comprovante enviado. O texto não mostra o destinatário Pedro Dias P de Carvalho, então o horário continua em análise.';
+        showToast('O destinatário do comprovante não corresponde ao nome exigido.', 3600);
+      }else if(functionAnalysis && !functionAnalysis.hasExpectedAmount){
+        bookingField(mode, 'successText').textContent = booking.name + ', comprovante enviado. O valor encontrado no texto não corresponde ao serviço selecionado, então o horário continua em análise.';
+        showToast('O valor do comprovante não corresponde ao serviço selecionado.', 3600);
+      }else{
+        bookingField(mode, 'successText').textContent = booking.name + ', comprovante enviado. O arquivo foi armazenado, mas o agendamento continua em análise até a validação completa.';
+        showToast('Comprovante salvo para revisão pela Function.', 3200);
+      }
+      return;
+    }
+
+    const analysis = analyzePaymentProofText(proofText, service ? service.price : null);
+    const proofRecord = {
+      id: 'proof-' + getBookingKey(dateStr, slot),
+      bookingKey: getBookingKey(dateStr, slot),
+      date: dateStr,
+      slot,
+      customerName: booking.name || '',
+      customerPhone: booking.phone || '',
+      serviceId: booking.serviceId || '',
+      professionalId: booking.professionalId || '',
+      fileName: file.name,
+      mimeType: file.type || '',
+      fileDataUrl,
+      proofText,
+      analysis,
+      createdAt: new Date().toISOString()
+    };
+    await dbPut(DB_CONFIG.paymentProofsStore, proofRecord);
+    const existingIndex = state.paymentProofs.findIndex(item => item.bookingKey === proofRecord.bookingKey);
+    if(existingIndex >= 0) state.paymentProofs.splice(existingIndex, 1, proofRecord);
+    else state.paymentProofs.unshift(proofRecord);
+    state.statuses[getBookingKey(dateStr, slot)] = analysis.decision === 'approved' ? 'confirmado' : 'aguardando';
+    saveStatuses();
+    await syncAdminState();
+    renderAdmin();
+    input.value = '';
+    if(label) label.textContent = 'Comprovante enviado com sucesso.';
+    if(textField) textField.value = '';
+
+    if(analysis.decision === 'approved'){
+      bookingField(mode, 'successText').textContent = booking.name + ', comprovante analisado com sucesso e agendamento confirmado para ' + longDate(dateStr) + ', às ' + slot + '.';
+      showToast('Comprovante validado. Agendamento confirmado.');
+    }else if(analysis.decision === 'rejected'){
+      bookingField(mode, 'successText').textContent = booking.name + ', o arquivo foi salvo, mas a análise não encontrou a chave PIX da barbearia no texto informado. O agendamento permanece em análise para revisão manual.';
+      showToast('Comprovante salvo, mas a chave PIX não foi validada.', 3400);
+    }else if(!analysis.hasRecipientName){
+      bookingField(mode, 'successText').textContent = booking.name + ', o arquivo foi salvo, mas o destinatário informado no comprovante não corresponde a Pedro Dias P de Carvalho. O agendamento segue em análise.';
+      showToast('O destinatário do comprovante não corresponde ao nome exigido.', 3600);
+    }else if(!analysis.hasExpectedAmount){
+      bookingField(mode, 'successText').textContent = booking.name + ', o arquivo foi salvo, mas o valor encontrado no comprovante não corresponde ao serviço selecionado. O agendamento segue em análise.';
+      showToast('Valor do comprovante diferente do serviço selecionado.', 3600);
+    }else{
+      bookingField(mode, 'successText').textContent = booking.name + ', comprovante salvo. O sistema não conseguiu validar automaticamente todos os critérios bancários, então o agendamento continua em análise.';
+      showToast('Comprovante salvo para revisão manual.', 3200);
+    }
+  }catch(error){
+    console.error(error);
+    showToast('Não foi possível enviar o comprovante', 3200);
+  }
 }
 
 function renderAdmin(){
