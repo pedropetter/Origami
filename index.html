@@ -2669,9 +2669,9 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
             <div class="proof-file-name" id="bookingProofNameMain">Nenhum comprovante selecionado.</div>
             <div class="field" style="margin-top:0">
               <label for="bookingProofTextMain">Texto do comprovante</label>
-              <textarea id="bookingProofTextMain" class="proof-textarea" placeholder="Cole aqui o texto do comprovante PIX. A confirmação automática só acontece se o sistema encontrar a chave PIX 63993051851, o destinatário Pedro Dias P de Carvalho e o valor exato do serviço selecionado."></textarea>
+              <textarea id="bookingProofTextMain" class="proof-textarea" placeholder="Cole aqui o texto do comprovante PIX. A confirmação automática só acontece se o sistema encontrar a chave PIX 63993051851, o destinatário Pedro Dias Pettermann de Carva e o valor exato do serviço selecionado."></textarea>
             </div>
-            <div class="proof-helper">Segurança: a confirmação automática só ocorre quando o texto colado indicar comprovante bancário, contiver a chave PIX da barbearia, o destinatário Pedro Dias P de Carvalho e trouxer o valor exato do serviço escolhido. Sem isso, o horário permanece em análise.</div>
+            <div class="proof-helper">Segurança: a confirmação automática só ocorre quando o texto colado indicar comprovante bancário, contiver a chave PIX da barbearia, o destinatário Pedro Dias Pettermann de Carva e trouxer o valor exato do serviço escolhido. Sem isso, o horário permanece em análise.</div>
             <div class="proof-upload-actions">
               <button class="btn" type="button" onclick="submitBookingProof('main')">Enviar comprovante</button>
               <a class="btn-outline" id="bookingSuccessLink" href="#" target="_blank" rel="noopener">Falar no WhatsApp</a>
@@ -2871,7 +2871,7 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
         <a class="btn-outline" id="proofLink" href="#" target="_blank" rel="noopener" style="margin-top:16px">Enviar Comprovante no WhatsApp</a>
         <div class="proof-box origami-corner origami-shadow plan-proof-panel" id="planProofPanel">
           <div class="mini-title">Validar comprovante do plano</div>
-          <p style="margin-top:0;color:var(--white-dim);line-height:1.8">Para o cliente entrar no cadastro, o texto do comprovante precisa mostrar a chave PIX da barbearia, o destinatário Pedro Dias P de Carvalho e o valor exato do plano escolhido.</p>
+          <p style="margin-top:0;color:var(--white-dim);line-height:1.8">Para o cliente entrar no cadastro, o texto do comprovante precisa mostrar a chave PIX da barbearia, o destinatário Pedro Dias Pettermann de Carva e o valor exato do plano escolhido.</p>
           <div class="field" style="margin-top:14px">
             <label for="planProofFile">Imagem ou PDF do comprovante</label>
             <input id="planProofFile" type="file" accept="image/*,application/pdf" onchange="handlePlanProofFileChange(this)">
@@ -2879,7 +2879,7 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
           <div class="upload-status" id="planProofFileName">Nenhum comprovante selecionado.</div>
           <div class="field" style="margin-top:14px">
             <label for="planProofText">Texto do comprovante</label>
-            <textarea id="planProofText" class="proof-textarea" placeholder="Cole aqui o texto do comprovante PIX. O sistema só cadastra o cliente se encontrar o destinatário Pedro Dias P de Carvalho e o valor exato do plano selecionado."></textarea>
+            <textarea id="planProofText" class="proof-textarea" placeholder="Cole aqui o texto do comprovante PIX. O sistema só cadastra o cliente se encontrar o destinatário Pedro Dias Pettermann de Carva e o valor exato do plano selecionado."></textarea>
           </div>
           <div class="plan-proof-actions">
             <button class="btn" type="button" onclick="submitPlanProof()">Validar comprovante e ativar plano</button>
@@ -3002,9 +3002,9 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
             <div class="proof-file-name" id="bookingProofNameModal">Nenhum comprovante selecionado.</div>
             <div class="field" style="margin-top:0">
               <label for="bookingProofTextModal">Texto do comprovante</label>
-              <textarea id="bookingProofTextModal" class="proof-textarea" placeholder="Cole aqui o texto do comprovante PIX. O destinatário deve ser Pedro Dias P de Carvalho e o valor precisa bater exatamente com o serviço selecionado."></textarea>
+              <textarea id="bookingProofTextModal" class="proof-textarea" placeholder="Cole aqui o texto do comprovante PIX. O destinatário deve ser Pedro Dias Pettermann de Carva e o valor precisa bater exatamente com o serviço selecionado."></textarea>
             </div>
-            <div class="proof-helper">A confirmação automática só é liberada quando a análise encontra sinais claros de comprovante bancário, a chave PIX da barbearia, o destinatário Pedro Dias P de Carvalho e o valor exato do serviço selecionado.</div>
+            <div class="proof-helper">A confirmação automática só é liberada quando a análise encontra sinais claros de comprovante bancário, a chave PIX da barbearia, o destinatário Pedro Dias Pettermann de Carva e o valor exato do serviço selecionado.</div>
             <div class="proof-upload-actions">
               <button class="btn" type="button" onclick="submitBookingProof('modal')">Enviar comprovante</button>
               <a class="btn-outline" id="bookingSuccessLinkModal" href="#" target="_blank" rel="noopener">Falar no WhatsApp</a>
@@ -3192,7 +3192,7 @@ const CONFIG = {
   whatsappUrl: 'https://wa.me/5561994259943',
   instagram: 'https://www.instagram.com/origamibarbearia/',
   pixKey: '63993051851',
-  pixRecipientName: 'Pedro Dias P de Carvalho',
+  pixRecipientName: 'Pedro Dias Pettermann de Carva',
   adminPassword: 'origami2025',
   startHour: 9,
   endHour: 20,
@@ -5236,12 +5236,12 @@ async function confirmPayment(){
   document.getElementById('checkoutForm').style.display = 'none';
   document.getElementById('paymentSuccess').classList.add('show');
   document.getElementById('paymentSuccessText').textContent = state.checkoutMode === 'plan'
-    ? name + ', seu plano ainda não entrou no cadastro. Envie o comprovante abaixo: a assinatura só será criada se o texto trouxer o destinatário Pedro Dias P de Carvalho e o valor exato do plano selecionado.'
+    ? name + ', seu plano ainda não entrou no cadastro. Envie o comprovante abaixo: a assinatura só será criada se o texto trouxer o destinatário Pedro Dias Pettermann de Carva e o valor exato do plano selecionado.'
     : name + ', seu pedido foi registrado. Agora envie o comprovante PIX pelo WhatsApp para confirmar a entrega.';
   document.getElementById('proofLink').href = CONFIG.whatsappUrl + '?text=' + encodeURIComponent(message);
   togglePlanProofPanel(state.checkoutMode === 'plan');
   if(state.checkoutMode === 'plan'){
-    document.getElementById('planProofStatus').textContent = 'Plano escolhido: ' + getPlanById(state.selectedPlanId).name + ' • destinatário esperado: Pedro Dias P de Carvalho • valor esperado: ' + money(total) + '.';
+    document.getElementById('planProofStatus').textContent = 'Plano escolhido: ' + getPlanById(state.selectedPlanId).name + ' • destinatário esperado: Pedro Dias Pettermann de Carva • valor esperado: ' + money(total) + '.';
   }
 }
 
@@ -5276,7 +5276,7 @@ async function submitPlanProof(){
       if(status) status.textContent = 'A validação falhou porque a chave PIX da barbearia não foi encontrada no texto do comprovante.';
       showToast('A chave PIX da barbearia não foi encontrada no comprovante.', 3600);
     }else if(!analysis.hasRecipientName){
-      if(status) status.textContent = 'A validação falhou porque o nome do destinatário não corresponde a Pedro Dias P de Carvalho.';
+      if(status) status.textContent = 'A validação falhou porque o nome do destinatário não corresponde a Pedro Dias Pettermann de Carva.';
       showToast('O destinatário do comprovante não corresponde ao nome exigido.', 3600);
     }else if(!analysis.hasExpectedAmount){
       if(status) status.textContent = 'A validação falhou porque o valor encontrado no comprovante não corresponde ao plano ' + plan.name + ' (' + money(plan.price) + ').';
@@ -5374,7 +5374,7 @@ async function submitBookingProof(mode){
         bookingField(mode, 'successText').textContent = booking.name + ', comprovante validado pela Function e agendamento confirmado para ' + longDate(dateStr) + ', às ' + slot + '.';
         showToast('Comprovante validado pela Function. Agendamento confirmado.');
       }else if(functionAnalysis && !functionAnalysis.hasRecipientName){
-        bookingField(mode, 'successText').textContent = booking.name + ', comprovante enviado. O texto não mostra o destinatário Pedro Dias P de Carvalho, então o horário continua em análise.';
+        bookingField(mode, 'successText').textContent = booking.name + ', comprovante enviado. O texto não mostra o destinatário Pedro Dias Pettermann de Carva, então o horário continua em análise.';
         showToast('O destinatário do comprovante não corresponde ao nome exigido.', 3600);
       }else if(functionAnalysis && !functionAnalysis.hasExpectedAmount){
         bookingField(mode, 'successText').textContent = booking.name + ', comprovante enviado. O valor encontrado no texto não corresponde ao serviço selecionado, então o horário continua em análise.';
@@ -5422,7 +5422,7 @@ async function submitBookingProof(mode){
       bookingField(mode, 'successText').textContent = booking.name + ', o arquivo foi salvo, mas a análise não encontrou a chave PIX da barbearia no texto informado. O agendamento permanece em análise para revisão manual.';
       showToast('Comprovante salvo, mas a chave PIX não foi validada.', 3400);
     }else if(!analysis.hasRecipientName){
-      bookingField(mode, 'successText').textContent = booking.name + ', o arquivo foi salvo, mas o destinatário informado no comprovante não corresponde a Pedro Dias P de Carvalho. O agendamento segue em análise.';
+      bookingField(mode, 'successText').textContent = booking.name + ', o arquivo foi salvo, mas o destinatário informado no comprovante não corresponde a Pedro Dias Pettermann de Carva. O agendamento segue em análise.';
       showToast('O destinatário do comprovante não corresponde ao nome exigido.', 3600);
     }else if(!analysis.hasExpectedAmount){
       bookingField(mode, 'successText').textContent = booking.name + ', o arquivo foi salvo, mas o valor encontrado no comprovante não corresponde ao serviço selecionado. O agendamento segue em análise.';
