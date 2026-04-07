@@ -1906,6 +1906,76 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
   .panel-head h3,.checkout-title,.detail-title,.admin-title{font-size:1.7rem}
   .floating-actions{right:14px;bottom:14px}
 }
+@media (max-width: 620px){
+  .section-pad{padding:64px 0}
+  .nav-inner{width:min(100% - 16px, 1180px);min-height:68px;gap:12px}
+  .brand{gap:10px}
+  .brand-mark{width:34px;height:34px}
+  .brand-text{font-size:1.12rem;letter-spacing:.1em}
+  .brand-text small{font-size:.5rem;letter-spacing:.24em}
+  #hero{min-height:auto;padding:30px 0 52px}
+  .hero-grid{gap:22px}
+  .hero-title{font-size:clamp(42px,13vw,58px);line-height:.9}
+  .hero-text{margin-top:18px;font-size:.95rem;line-height:1.75}
+  .hero-meta{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .hero-stat{padding:14px 12px 13px}
+  .hero-stat strong{font-size:1.55rem}
+  .hero-stat span{margin-top:6px;font-size:.56rem;letter-spacing:.22em}
+  .hero-panel,.service-card,.plan-card,.review-card,.contact-card,.footer-card,.booking-form-card{padding:18px}
+  .hero-panel h3{font-size:1.6rem}
+  .hero-art-strip{gap:10px}
+  .hero-art-card{padding:12px}
+  .hero-art-card svg{height:68px}
+  .steps-grid,.services-grid,.plans-grid,.gallery-grid,.reviews-grid{gap:12px}
+  .booking-form-card h3,.checkout-title,.detail-title,.admin-title,.panel-head h3{font-size:1.45rem}
+  .booking-form-card p,.policy-note,.proof-helper,.plan-proof-status{font-size:.84rem;line-height:1.7}
+  .field{margin-top:12px}
+  .field label{font-size:.55rem;letter-spacing:.22em}
+  .field input,.field select,.proof-textarea{font-size:16px}
+  .field input,.field select{min-height:44px;padding:0 12px}
+  .proof-textarea{min-height:120px;padding:12px}
+  .pro-option{padding:12px 10px}
+  .pro-option strong{font-size:.68rem}
+  .pro-option span{font-size:.78rem;line-height:1.48}
+  .slot-grid{gap:6px}
+  .slot{min-height:42px;font-size:.92rem}
+  .slots-head{margin-top:18px;align-items:flex-start;flex-direction:column}
+  .booking-summary,.booking-success,.proof-box,.proof-upload,.map-note,.pix-box{padding:16px}
+  .proof-upload-top{gap:10px}
+  .proof-upload-actions,.plan-proof-actions{display:grid;grid-template-columns:1fr}
+  .proof-upload-actions .btn,
+  .proof-upload-actions .btn-outline,
+  .proof-upload-actions .btn-dark,
+  .plan-proof-actions .btn,
+  .plan-proof-actions .btn-outline,
+  .plan-proof-actions .btn-dark{width:100%;justify-content:center}
+  .proof-file-label{width:100%;justify-content:center;padding:13px 14px}
+  .contact-block{gap:12px;padding:14px 0}
+  .contact-geo{width:34px;height:34px}
+  .map-frame,.map-frame iframe{min-height:280px}
+  .panel-head{padding:18px 16px 14px}
+  .checkout-wrap,.detail-wrap,.admin-wrap,.booking-modal-wrap{padding:10px}
+  .checkout-modal,.detail-modal,.booking-modal,.admin-modal{max-height:calc(100vh - 20px)}
+  .checkout-body,.detail-body,.booking-modal-body,.admin-modal{padding:18px}
+  .cart-item{grid-template-columns:56px 1fr auto;gap:10px;padding:16px}
+  .cart-item-name{font-size:1rem}
+  .qty-controls{margin-top:10px}
+  .floating-actions{right:12px;bottom:12px;gap:10px}
+  .float-btn{width:52px;height:52px}
+  .float-tip{display:none}
+  .drawer{top:68px;left:10px;right:10px;padding:16px}
+  .drawer a{font-size:.68rem;letter-spacing:.18em}
+  .footer-grid{gap:12px;padding:30px 0 18px}
+  .footer-bottom{font-size:.62rem;letter-spacing:.12em}
+}
+@media (max-width: 420px){
+  .container{width:min(100% - 14px, 1180px)}
+  .hero-title{font-size:clamp(38px,12.8vw,50px)}
+  .hero-meta{grid-template-columns:1fr}
+  .slot-grid{grid-template-columns:1fr 1fr}
+  .panel-head h3,.checkout-title,.detail-title,.admin-title{font-size:1.28rem}
+  .mini-title{font-size:.58rem;letter-spacing:.22em}
+}
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
   *,*:before,*:after{
