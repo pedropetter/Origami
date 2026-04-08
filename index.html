@@ -3341,11 +3341,13 @@ const DB_CONFIG = {
 };
 
 const SUPABASE = {
-  url: 'sb_publishable_cNr76_eTY_jcL0z0uHWGXQ_e9wXw1tJ',
+  url: 'https://hzkkwzurexfzxxpbxuou.supabase.co',
   anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh6a2t3enVyZXhmenh4cGJ4dW91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MDIxNTQsImV4cCI6MjA5MTA3ODE1NH0.dVi1Ve3oEqbKJBuGLb_fyUJWXLDriacVXPnBbKE6i8s',
   bookingsTable: 'bookings',
   adminStateTable: 'admin_state',
   subscribersTable: 'plan_subscribers',
+  galleryTable: 'gallery_items',
+  reviewsTable: 'reviews',
   adminStateRowId: 'main'
 };
 
@@ -6055,6 +6057,94 @@ function renderOccupancyChart(){
   svg.innerHTML = bars;
 }
 
+
+// ===== Supabase: Gallery =====
+async function readSupabaseGallery(){
+  const url = SUPABASE.url + '/rest/v1/' + SUPABASE.galleryTable + '?select=id,image_base64,category,caption,date,created_at&order=created_at.desc';
+  const response = await fetch(url, { method: 'GET', headers: supabaseHeaders() });
+  if(!response.ok) throw new Error('Falha ao ler galeria no Supabase: ' + response.status);
+  const rows = await response.json();
+  return rows.map(r => ({
+    id: r.id,
+    imageBase64: r.image_base64,
+    category: r.category,
+    caption: r.caption || '',
+    date: r.date || '',
+    createdAt: r.created_at || new Date().toISOString()
+  }));
+}
+
+async function upsertSupabaseGalleryItem(record){
+  const payload = {
+    id: record.id,
+    image_base64: record.imageBase64,
+    category: record.category,
+    caption: record.caption || '',
+    date: record.date || '',
+    created_at: record.createdAt || new Date().toISOString()
+  };
+  const response = await fetch(SUPABASE.url + '/rest/v1/' + SUPABASE.galleryTable, {
+    method: 'POST',
+    headers: supabaseHeaders({ Prefer: 'resolution=merge-duplicates,return=minimal' }),
+    body: JSON.stringify([payload])
+  });
+  if(!response.ok){
+    const errorText = await response.text().catch(() => '');
+    throw new Error(errorText || ('Falha ao salvar foto no Supabase: ' + response.status));
+  }
+}
+
+async function deleteSupabaseGalleryItem(id){
+  const url = SUPABASE.url + '/rest/v1/' + SUPABASE.galleryTable + '?id=eq.' + encodeURIComponent(id);
+  const response = await fetch(url, { method: 'DELETE', headers: supabaseHeaders({ Prefer: 'return=minimal' }) });
+  if(!response.ok) throw new Error('Falha ao remover foto no Supabase: ' + response.status);
+}
+
+// ===== Supabase: Reviews =====
+async function readSupabaseReviews(){
+  const url = SUPABASE.url + '/rest/v1/' + SUPABASE.reviewsTable + '?select=id,name,text,stars,date,visible,created_at&order=created_at.desc';
+  const response = await fetch(url, { method: 'GET', headers: supabaseHeaders() });
+  if(!response.ok) throw new Error('Falha ao ler avaliações no Supabase: ' + response.status);
+  const rows = await response.json();
+  return rows.map(r => ({
+    id: r.id,
+    name: r.name,
+    text: r.text,
+    stars: r.stars || 5,
+    date: r.date || '',
+    visible: r.visible === true || r.visible === 1,
+    createdAt: r.created_at || new Date().toISOString()
+  }));
+}
+
+async function upsertSupabaseReview(record){
+  const payload = {
+    id: record.id,
+    name: record.name,
+    text: record.text,
+    stars: record.stars || 5,
+    date: record.date || '',
+    visible: record.visible || false,
+    created_at: record.createdAt || new Date().toISOString()
+  };
+  const response = await fetch(SUPABASE.url + '/rest/v1/' + SUPABASE.reviewsTable, {
+    method: 'POST',
+    headers: supabaseHeaders({ Prefer: 'resolution=merge-duplicates,return=minimal' }),
+    body: JSON.stringify([payload])
+  });
+  if(!response.ok){
+    const errorText = await response.text().catch(() => '');
+    throw new Error(errorText || ('Falha ao salvar avaliação no Supabase: ' + response.status));
+  }
+}
+
+async function deleteSupabaseReview(id){
+  const url = SUPABASE.url + '/rest/v1/' + SUPABASE.reviewsTable + '?id=eq.' + encodeURIComponent(id);
+  const response = await fetch(url, { method: 'DELETE', headers: supabaseHeaders({ Prefer: 'return=minimal' }) });
+  if(!response.ok) throw new Error('Falha ao remover avaliação no Supabase: ' + response.status);
+}
+
+
 // ===== IndexedDB helpers for gallery =====
 async function dbGetAll(storeName){
   const db = await getDb();
@@ -6112,6 +6202,10 @@ async function saveGalleryItem(){
       createdAt: new Date().toISOString()
     };
     await dbPut(DB_CONFIG.galleryStore, record);
+    if(hasSupabaseConfig()){
+      try{ await upsertSupabaseGalleryItem(record); }
+      catch(err){ console.error('Supabase gallery save error:', err); }
+    }
     fileInput.value = '';
     document.getElementById('galleryUploadLabel').textContent = 'Selecionar foto';
     document.getElementById('galleryCaptionInput').value = '';
@@ -6124,6 +6218,10 @@ async function saveGalleryItem(){
 
 async function removeGalleryItem(id){
   await dbDelete(DB_CONFIG.galleryStore, id);
+  if(hasSupabaseConfig()){
+    try{ await deleteSupabaseGalleryItem(id); }
+    catch(err){ console.error('Supabase gallery delete error:', err); }
+  }
   await renderPublicGallery();
   renderAdminGallery();
   showToast('Foto removida');
@@ -6132,7 +6230,13 @@ async function removeGalleryItem(id){
 async function renderAdminGallery(){
   const grid = document.getElementById('galleryAdminGrid');
   if(!grid) return;
-  const items = (await dbGetAll(DB_CONFIG.galleryStore)).sort((a,b) => b.createdAt.localeCompare(a.createdAt));
+  let items = [];
+  if(hasSupabaseConfig()){
+    try{ items = await readSupabaseGallery(); }
+    catch(err){ console.error('Supabase gallery read error:', err); items = (await dbGetAll(DB_CONFIG.galleryStore)).sort((a,b) => b.createdAt.localeCompare(a.createdAt)); }
+  } else {
+    items = (await dbGetAll(DB_CONFIG.galleryStore)).sort((a,b) => b.createdAt.localeCompare(a.createdAt));
+  }
   if(!items.length){ grid.innerHTML = '<div class="subscriber-empty" style="margin-top:12px">Nenhuma foto publicada ainda.</div>'; return; }
   grid.innerHTML = items.map(item => `
     <div class="gallery-admin-item origami-corner">
@@ -6157,7 +6261,13 @@ const GALLERY_PLACEHOLDER_SVG = `<svg viewBox="0 0 120 150" xmlns="http://www.w3
 async function renderPublicGallery(){
   const grid = document.getElementById('galleryGrid');
   if(!grid) return;
-  const items = (await dbGetAll(DB_CONFIG.galleryStore)).sort((a,b) => b.createdAt.localeCompare(a.createdAt));
+  let items = [];
+  if(hasSupabaseConfig()){
+    try{ items = await readSupabaseGallery(); }
+    catch(err){ console.error('Supabase gallery read error:', err); items = (await dbGetAll(DB_CONFIG.galleryStore)).sort((a,b) => b.createdAt.localeCompare(a.createdAt)); }
+  } else {
+    items = (await dbGetAll(DB_CONFIG.galleryStore)).sort((a,b) => b.createdAt.localeCompare(a.createdAt));
+  }
   if(!items.length){
     grid.innerHTML = `
       <article class="gallery-empty-state origami-corner origami-shadow reveal" style="grid-column:1/-1">
@@ -6214,6 +6324,10 @@ async function submitPublicReview(){
     createdAt: new Date().toISOString()
   };
   await dbPut(DB_CONFIG.reviewsStore, record);
+  if(hasSupabaseConfig()){
+    try{ await upsertSupabaseReview(record); }
+    catch(err){ console.error('Supabase review save error:', err); }
+  }
   document.getElementById('publicReviewName').value = '';
   document.getElementById('publicReviewText').value = '';
   closeReviewModal();
@@ -6229,6 +6343,10 @@ async function adminAddReview(){
   if(!text){ showToast('Informe o texto'); return; }
   const record = { id: 'rev-' + Date.now(), name, text, stars, date: todayISO(), visible: true, createdAt: new Date().toISOString() };
   await dbPut(DB_CONFIG.reviewsStore, record);
+  if(hasSupabaseConfig()){
+    try{ await upsertSupabaseReview(record); }
+    catch(err){ console.error('Supabase review save error:', err); }
+  }
   document.getElementById('adminReviewName').value = '';
   document.getElementById('adminReviewText').value = '';
   renderAdminReviews();
@@ -6237,11 +6355,21 @@ async function adminAddReview(){
 }
 
 async function toggleReviewVisibility(id, current){
-  const all = await dbGetAll(DB_CONFIG.reviewsStore);
+  let all = [];
+  if(hasSupabaseConfig()){
+    try{ all = await readSupabaseReviews(); }
+    catch(err){ all = await dbGetAll(DB_CONFIG.reviewsStore); }
+  } else {
+    all = await dbGetAll(DB_CONFIG.reviewsStore);
+  }
   const rec = all.find(r => r.id === id);
   if(!rec) return;
   rec.visible = !current;
   await dbPut(DB_CONFIG.reviewsStore, rec);
+  if(hasSupabaseConfig()){
+    try{ await upsertSupabaseReview(rec); }
+    catch(err){ console.error('Supabase review update error:', err); }
+  }
   renderAdminReviews();
   await renderPublicReviews();
   showToast(rec.visible ? 'Avaliação publicada' : 'Avaliação ocultada');
@@ -6249,6 +6377,10 @@ async function toggleReviewVisibility(id, current){
 
 async function removeReview(id){
   await dbDelete(DB_CONFIG.reviewsStore, id);
+  if(hasSupabaseConfig()){
+    try{ await deleteSupabaseReview(id); }
+    catch(err){ console.error('Supabase review delete error:', err); }
+  }
   renderAdminReviews();
   await renderPublicReviews();
   showToast('Avaliação removida');
@@ -6257,7 +6389,13 @@ async function removeReview(id){
 async function renderAdminReviews(){
   const grid = document.getElementById('reviewsAdminGrid');
   if(!grid) return;
-  const items = (await dbGetAll(DB_CONFIG.reviewsStore)).sort((a,b) => b.createdAt.localeCompare(a.createdAt));
+  let items = [];
+  if(hasSupabaseConfig()){
+    try{ items = await readSupabaseReviews(); }
+    catch(err){ console.error('Supabase reviews read error:', err); items = (await dbGetAll(DB_CONFIG.reviewsStore)).sort((a,b) => b.createdAt.localeCompare(a.createdAt)); }
+  } else {
+    items = (await dbGetAll(DB_CONFIG.reviewsStore)).sort((a,b) => b.createdAt.localeCompare(a.createdAt));
+  }
   if(!items.length){ grid.innerHTML = '<div class="subscriber-empty" style="margin-top:12px">Nenhuma avaliação recebida ainda.</div>'; return; }
   const stars = n => '&#9733;'.repeat(n) + '&#9734;'.repeat(5 - n);
   grid.innerHTML = items.map(item => `
@@ -6342,7 +6480,13 @@ async function renderPublicReviews(){
   const grid = document.getElementById('reviewsGrid');
   const countNote = document.getElementById('reviewsCountNote');
   if(!grid) return;
-  const all = await dbGetAll(DB_CONFIG.reviewsStore);
+  let all = [];
+  if(hasSupabaseConfig()){
+    try{ all = await readSupabaseReviews(); }
+    catch(err){ console.error('Supabase reviews read error:', err); all = await dbGetAll(DB_CONFIG.reviewsStore); }
+  } else {
+    all = await dbGetAll(DB_CONFIG.reviewsStore);
+  }
   const visible = all.filter(r => r.visible).sort((a,b) => b.createdAt.localeCompare(a.createdAt));
   if(!visible.length){
     if(countNote) countNote.innerHTML = '';
