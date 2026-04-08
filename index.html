@@ -6123,18 +6123,21 @@ async function dbDelete(storeName, id){
   }).catch(()=>{});
 }
 
-// ===== Gallery admin =====
-// ===== Gallery — fotos estáticas definidas no código =====
-// ✏️ PARA ADICIONAR OU REMOVER FOTOS: edite o array GALLERY_PHOTOS abaixo.
-// Cada item tem:
-//   src      → URL da imagem (ex: "https://..." ou caminho relativo "fotos/corte1.jpg")
-//   category → "corte" | "barba" | "combo" | "tratamento"
-//   caption  → legenda exibida sobre a foto (opcional, use "" para omitir)
+// ===== Gallery — fotos definidas no código =====
+// ✏️ PARA ADICIONAR FOTOS: coloque o arquivo de imagem na mesma pasta do index.html
+// e adicione uma entrada no array abaixo com o nome do arquivo no src.
+// Exemplo: { src: 'corte1.jpg', category: 'corte', caption: 'Degradê clássico' }
+//
+// category: 'corte' | 'barba' | 'combo' | 'tratamento'
+// caption:  legenda exibida sobre a foto (use '' para omitir)
 const GALLERY_PHOTOS = [
-  // { src: 'https://exemplo.com/foto1.jpg', category: 'corte',   caption: 'Degradê clássico'  },
-  // { src: 'https://exemplo.com/foto2.jpg', category: 'barba',   caption: 'Barba delineada'   },
-  // { src: 'https://exemplo.com/foto3.jpg', category: 'combo',   caption: 'Corte + Barba'     },
-  // { src: 'https://exemplo.com/foto4.jpg', category: 'corte',   caption: ''                  },
+  { src: 'corte 1.jpg',  category: 'corte',  caption: 'Degradê clássico' },
+  { src: 'corte 2.jpg',  category: 'barba',  caption: 'Barba delineada'  },
+  { src: 'corte 3.jpg',  category: 'combo',  caption: 'Corte + Barba'    },
+  { src: 'corte 4.jpg',  category: 'combo',  caption: 'Corte + Barba'    },
+  { src: 'corte 5.jpg',  category: 'combo',  caption: 'Corte + Barba'    },
+  { src: 'corte 6.jpg',  category: 'combo',  caption: 'Corte + Barba'    },
+  { src: 'corte 7.jpg',  category: 'combo',  caption: 'Corte + Barba'    },
 ];
 
 function renderPublicGallery(){
@@ -6160,7 +6163,7 @@ function renderPublicGallery(){
   observeReveals();
 }
 
-function renderAdminGallery(){ /* galeria agora é estática — editar GALLERY_PHOTOS no código */ }
+function renderAdminGallery(){ /* galeria definida pelo array GALLERY_PHOTOS no código */ }
 
 // ===== Reviews public modal =====
 function openReviewModal(){
