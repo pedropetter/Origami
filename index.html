@@ -8,16 +8,17 @@
 <meta property="og:title" content="Barbearia Origami ⬢ Dianópolis, Tocantins">
 <meta property="og:description" content="Corte, barba e experiência premium. Agendamento online, planos mensais e loja integrada. Barbearia Origami em Dianópolis - TO.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="">
-<meta property="og:url" content="">
+<meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230D0D0D'/%3E%3Cg fill='none' stroke='%23C9A84C'%3E%3Cpath d='M600 112l192 203-192 203-192-203z' stroke-width='4'/%3E%3Cpath d='M600 186l116 129-116 129-116-129z' stroke-width='2' opacity='.45'/%3E%3C/g%3E%3Ctext x='110' y='468' fill='%23F5F2EB' font-family='Georgia,serif' font-size='84'%3EBarbearia Origami%3C/text%3E%3Ctext x='116' y='528' fill='%23C9A84C' font-family='Arial,sans-serif' font-size='30' letter-spacing='6'%3EDIANOPOLIS %E2%80%A2 TOCANTINS%3C/text%3E%3C/svg%3E">
+<meta property="og:url" content="https://www.instagram.com/origamibarbearia/">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230D0D0D'/%3E%3Cg fill='none' stroke='%23C9A84C'%3E%3Cpath d='M600 112l192 203-192 203-192-203z' stroke-width='4'/%3E%3Cpath d='M600 186l116 129-116 129-116-129z' stroke-width='2' opacity='.45'/%3E%3C/g%3E%3Ctext x='110' y='468' fill='%23F5F2EB' font-family='Georgia,serif' font-size='84'%3EBarbearia Origami%3C/text%3E%3Ctext x='116' y='528' fill='%23C9A84C' font-family='Arial,sans-serif' font-size='30' letter-spacing='6'%3EDIANOPOLIS %E2%80%A2 TOCANTINS%3C/text%3E%3C/svg%3E">
 <meta name="twitter:title" content="Barbearia Origami ⬢ Dianópolis, Tocantins">
 <meta name="twitter:description" content="Corte, barba e experiência premium. Agendamento online, planos mensais e loja integrada.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": ["BarberShop", "LocalBusiness"],
   "name": "Barbearia Origami",
   "description": "Barbearia premium com agendamento online, planos mensais e loja integrada em Dianópolis, Tocantins.",
   "address": {
@@ -38,7 +39,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0D0D0D;
@@ -894,6 +895,8 @@ nav{
   border:1px solid rgba(201,168,76,.2);
   color:var(--gold);
   font-weight:700;
+  background:linear-gradient(135deg,var(--avatar-a, rgba(201,168,76,.2)), var(--avatar-b, rgba(245,242,235,.06)));
+  color:var(--avatar-text, var(--paper));
 }
 .review-author strong{display:block;font-size:.82rem;letter-spacing:.08em}
 .review-author span{
@@ -903,6 +906,14 @@ nav{
   letter-spacing:.18em;
   text-transform:uppercase;
   color:var(--white-dim);
+}
+.review-meta{
+  display:block;
+  margin-top:6px;
+  font-size:.62rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(245,242,235,.58);
 }
 
 #agendamento{
@@ -1152,18 +1163,18 @@ nav{
 .map-shell{min-height:100%;display:flex;flex-direction:column;gap:16px}
 .map-frame{
   position:relative;
-  min-height:390px;
+  min-height:300px;
   border:1px solid rgba(201,168,76,.16);
   overflow:hidden;
 }
 .map-frame iframe{
   width:100%;
   height:100%;
-  min-height:390px;
+  min-height:300px;
   border:0;
   filter:grayscale(1) contrast(1.1) brightness(.85);
 }
-.map-note{padding:18px;border:1px solid rgba(201,168,76,.14);background:rgba(255,255,255,.01)}
+.map-note{display:none}
 
 footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
 .footer-grid{
@@ -2117,6 +2128,12 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
   border:1px dashed rgba(201,168,76,.18);
   color:var(--white-dim);
   line-height:1.85;
+  background:linear-gradient(180deg, rgba(201,168,76,.05), rgba(255,255,255,.015));
+}
+.gallery-empty-state a{
+  color:var(--gold);
+  text-decoration:none;
+  border-bottom:1px solid rgba(201,168,76,.35);
 }
 @keyframes galleryPulse{0%,100%{opacity:.25}50%{opacity:.5}}
 
@@ -2257,11 +2274,52 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
 
 /* ===== .ics BUTTON ===== */
 .ics-btn{margin-top:10px}
+.booking-data-stage{
+  opacity:1;
+  pointer-events:auto;
+  transition:opacity .3s ease;
+}
+.booking-data-stage.is-disabled{
+  opacity:.35;
+  pointer-events:none;
+}
+.booking-form-card .policy-alert,
+.booking-pix-gate .policy-alert{display:none}
+.map-wrap{position:relative}
+.map-fallback{
+  padding:18px;
+  color:var(--white-dim);
+  line-height:1.85;
+  border-top:1px solid var(--line);
+}
+.map-fallback a{color:var(--gold);text-decoration:none}
+.skeleton-card{
+  border:1px solid rgba(201,168,76,.1);
+  background:linear-gradient(90deg, rgba(255,255,255,.03) 25%, rgba(201,168,76,.07) 50%, rgba(255,255,255,.03) 75%);
+  background-size:200% 100%;
+  animation:skeletonShimmer 1.4s infinite;
+  min-height:280px;
+}
+details summary::-webkit-details-marker{display:none}
+details[open] summary{margin-bottom:0}
+@keyframes skeletonShimmer{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
 
 /* RESPONSIVE ADDITIONS */
 @media (max-width:1080px){.steps-grid{grid-template-columns:1fr}.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:860px){.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:620px){.steps-grid{grid-template-columns:1fr}.gallery-grid{grid-template-columns:1fr}.gallery-form-row{grid-template-columns:1fr}}
+@media (max-width:620px){
+  .hero-title{font-size:clamp(28px, 9vw, 38px)!important}
+  .hero-text{
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+}
 </style>
 </head>
 <body>
@@ -2351,12 +2409,12 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
         <a class="btn-outline" href="#servicos">Ver Serviços</a>
         <a class="btn-gold" href="https://wa.me/5561994259943?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20na%20Barbearia%20Origami." target="_blank" rel="noopener">WhatsApp</a>
       </div>
-      <div class="hero-urgency">Apenas <strong id="heroVacancies">0</strong> vagas este mês</div>
+      <div class="hero-urgency">Apenas <strong id="heroVacancies">&mdash;</strong> vagas este mês</div>
       <div class="hero-meta">
         <div class="hero-stat origami-corner origami-shadow"><strong>4.9</strong><span>Experiência percebida</span></div>
         <div class="hero-stat origami-corner origami-shadow"><strong>09h</strong><span>Início do atendimento</span></div>
         <div class="hero-stat origami-corner origami-shadow"><strong>20h</strong><span>&Uacute;ltimo hor&aacute;rio</span></div>
-        <div class="hero-stat origami-corner origami-shadow"><strong id="heroMonthCount">0</strong><span>Reservas no mês</span></div>
+        <div class="hero-stat origami-corner origami-shadow"><strong id="heroMonthCount">&mdash;</strong><span>Reservas no mês</span></div>
       </div>
     </div>
     <aside class="hero-panel origami-corner origami-shadow reveal">
@@ -2396,8 +2454,8 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
 
 <div class="ticker">
   <div class="ticker-track" id="tickerTrack">
-    <span>&#9670; Barbearia Origami &#9670; Dian&oacute;polis &middot; Tocantins &#9670; Agenda com vagas limitadas &#9670; Planos mensais &#9670; PIX imediato &#9670; WhatsApp direto &#9670; Apenas <strong id="tickerVacanciesA">0</strong> vagas este m&ecirc;s &#9670;</span>
-    <span>&#9670; Barbearia Origami &#9670; Dian&oacute;polis &middot; Tocantins &#9670; Agenda com vagas limitadas &#9670; Planos mensais &#9670; PIX imediato &#9670; WhatsApp direto &#9670; Apenas <strong id="tickerVacanciesB">0</strong> vagas este m&ecirc;s &#9670;</span>
+    <span>&#9670; Barbearia Origami &#9670; Dian&oacute;polis &middot; Tocantins &#9670; Agenda com vagas limitadas &#9670; Planos mensais &#9670; PIX imediato &#9670; WhatsApp direto &#9670; Apenas <strong id="tickerVacanciesA">&mdash;</strong> vagas este m&ecirc;s &#9670;</span>
+    <span>&#9670; Barbearia Origami &#9670; Dian&oacute;polis &middot; Tocantins &#9670; Agenda com vagas limitadas &#9670; Planos mensais &#9670; PIX imediato &#9670; WhatsApp direto &#9670; Apenas <strong id="tickerVacanciesB">&mdash;</strong> vagas este m&ecirc;s &#9670;</span>
   </div>
 </div>
 
@@ -2578,6 +2636,20 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
         </div>
       </article>
     </div>
+    <div class="reveal" style="margin-top:42px;display:grid;gap:14px;max-width:680px">
+      <details style="padding:18px 20px;border:1px solid var(--line-strong);background:rgba(255,255,255,.015);cursor:pointer">
+        <summary style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);list-style:none">Os cortes expiram ao fim do mês?</summary>
+        <p style="margin-top:12px;color:var(--white-dim);line-height:1.85">Sim. Os atendimentos incluídos no plano são válidos dentro do mês vigente e não acumulam para o mês seguinte. A ideia é manter a frequência ideal para o seu visual.</p>
+      </details>
+      <details style="padding:18px 20px;border:1px solid var(--line-strong);background:rgba(255,255,255,.015);cursor:pointer">
+        <summary style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);list-style:none">Como funciona o agendamento como assinante?</summary>
+        <p style="margin-top:12px;color:var(--white-dim);line-height:1.85">Assinantes têm prioridade na agenda. Você agenda normalmente pelo site ou pelo WhatsApp — ao confirmar o plano ativo, seu horário entra na fila preferencial antes dos clientes avulsos.</p>
+      </details>
+      <details style="padding:18px 20px;border:1px solid var(--line-strong);background:rgba(255,255,255,.015);cursor:pointer">
+        <summary style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);list-style:none">Posso cancelar quando quiser?</summary>
+        <p style="margin-top:12px;color:var(--white-dim);line-height:1.85">Sim. O cancelamento é feito pelo WhatsApp com pelo menos 5 dias de antecedência antes da próxima renovação. Não há fidelidade mínima obrigatória.</p>
+      </details>
+    </div>
   </div>
 </section>
 
@@ -2621,6 +2693,7 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
       </div>
       <div class="quote-card origami-corner origami-shadow">&ldquo;Quando o ambiente impressiona, o atendimento confirma e o resultado sustenta, o cliente n&atilde;o volta por acaso. Volta porque percebe valor.&rdquo;</div>
     </div>
+    <div id="reviewsCountNote"></div>
     <div class="reviews-grid" id="reviewsGrid">
       <article class="review-card origami-corner origami-shadow reveal"><p>&ldquo;Ambiente muito bonito e diferente do que a gente costuma ver. Tudo parece pensado. O corte ficou alinhado e a barba valorizou bastante o rosto.&rdquo;</p><div class="review-author"><div class="review-avatar">L</div><div><strong>Lucas N.</strong><span>Cliente da casa</span></div></div></article>
       <article class="review-card origami-corner origami-shadow reveal"><p>&ldquo;Agendei pelo site, escolhi o hor&aacute;rio, confirmei no WhatsApp e foi tudo direto. O visual premium do site combina muito com a proposta.&rdquo;</p><div class="review-author"><div class="review-avatar">R</div><div><strong>Rafael S.</strong><span>Cliente da casa</span></div></div></article>
@@ -2673,6 +2746,7 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
       <div class="booking-form-card origami-corner origami-shadow reveal">
         <h3>Finalize o agendamento</h3>
         <p>Preencha seus dados, escolha o serviço e o profissional. Depois de confirmar, o site abre o WhatsApp com a mensagem pronta.</p>
+        <div class="booking-data-stage is-disabled" id="bookingDataStageMain">
         <div class="field-grid">
           <div class="field"><label for="clientName">Nome</label><input id="clientName" type="text" placeholder="Seu nome"></div>
           <div class="field"><label for="clientPhone">WhatsApp</label><input id="clientPhone" type="tel" placeholder="(61) 99425-9943"></div>
@@ -2680,6 +2754,7 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
         <div class="field"><label for="serviceSelect">Serviço</label><select id="serviceSelect"></select></div>
         <div class="field"><label>Profissional</label><div class="professional-picker" id="professionalPicker"></div></div>
         <div class="booking-summary" id="bookingSummary"></div>
+        </div>
         <div class="policy-alert">
           <div class="policy-alert-icon">!</div>
           <div><strong>Política de falta:</strong> o agendamento entra primeiro <strong>em análise</strong>. Após o envio do comprovante, ele muda para <strong>confirmado</strong>. Em caso de ausência no horário marcado, haverá apenas <strong>50% de estorno</strong> do valor pago.</div>
@@ -2725,6 +2800,8 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
         <div class="booking-success" id="bookingSuccess">
           <h4>Agendamento em análise</h4>
           <p id="bookingSuccessText"></p>
+          <button class="btn-dark ics-btn" type="button" onclick="downloadIcs('main')">+ Adicionar ao calendário</button>
+          <p class="policy-note">Em caso de falta no horário marcado, haverá apenas <strong>50% de estorno</strong> do valor pago.</p>
           <div class="proof-upload">
             <div class="proof-upload-top">
               <div>
@@ -2787,8 +2864,15 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
           <div class="mini-title">Localização</div>
           <p style="color:var(--white-dim);line-height:1.85">Mapa embutido para facilitar o trajeto até a Barbearia Origami, em Dianópolis. A URL do mapa já aponta para o endereço informado.</p>
         </div>
-        <div class="map-frame origami-shadow">
-          <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=R.%20Ver%C3%ADssimo%20da%20Mata,%20Dian%C3%B3polis%20-%20TO,%2077300-000&output=embed"></iframe>
+        <div class="map-wrap origami-shadow">
+        <div class="map-frame">
+          <iframe loading="lazy" width="100%" height="300" style="border:0" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=R.%20Ver%C3%ADssimo%20da%20Mata,%20Dian%C3%B3polis%20-%20TO,%2077300-000&output=embed"></iframe>
+        </div>
+        <div class="map-fallback">
+          <strong>R. Veríssimo da Mata</strong><br>
+          Dianópolis · TO · 77300-000<br>
+          <a href="https://www.google.com/maps?q=R.+Ver%C3%ADssimo+da+Mata,+Dian%C3%B3polis+-+TO,+77300-000" target="_blank" rel="noopener">Abrir no Google Maps →</a>
+        </div>
         </div>
       </div>
     </div>
@@ -2831,7 +2915,7 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
     </div>
     <div class="footer-bottom">
       <span>© 2026 Barbearia Origami</span>
-      <span>Senha admin padrão: origami2025</span>
+      <span>Acesso administrativo protegido</span>
       <span>Agendamento + loja + painel em HTML único</span>
     </div>
   </div>
@@ -3008,11 +3092,13 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
         </div>
         <div class="booking-form-card origami-corner origami-shadow">
           <h3>Dados da reserva</h3>
+          <div class="booking-data-stage is-disabled" id="bookingDataStageModal">
           <div class="field"><label for="clientNameModal">Nome</label><input id="clientNameModal" type="text" placeholder="Seu nome"></div>
           <div class="field"><label for="clientPhoneModal">WhatsApp</label><input id="clientPhoneModal" type="tel" placeholder="(61) 99425-9943"></div>
         <div class="field"><label for="serviceSelectModal">Serviço</label><select id="serviceSelectModal"></select></div>
         <div class="field"><label>Profissional</label><div class="professional-picker" id="professionalPickerModal"></div></div>
         <div class="booking-summary" id="bookingSummaryModal"></div>
+          </div>
         <div class="policy-alert">
           <div class="policy-alert-icon">!</div>
           <div><strong>Política de falta:</strong> o agendamento entra primeiro <strong>em análise</strong>. Após o envio do comprovante, ele muda para <strong>confirmado</strong>. Em caso de ausência no horário marcado, haverá apenas <strong>50% de estorno</strong> do valor pago.</div>
@@ -3058,6 +3144,8 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
         <div class="booking-success" id="bookingSuccessModal">
           <h4>Agendamento em análise</h4>
           <p id="bookingSuccessTextModal"></p>
+          <button class="btn-dark ics-btn" type="button" onclick="downloadIcs('modal')">+ Adicionar ao calendário</button>
+          <p class="policy-note">Em caso de falta no horário marcado, haverá apenas <strong>50% de estorno</strong> do valor pago.</p>
           <div class="proof-upload">
             <div class="proof-upload-top">
               <div>
@@ -3102,7 +3190,7 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
       <div class="admin-auth origami-corner origami-shadow" id="adminLoginCard">
         <div class="mini-title">Login local</div>
         <div class="admin-title" style="font-size:2.1rem">Entre para gerir agenda e estoque.</div>
-        <p>O painel usa senha local neste HTML único. A senha padrão solicitada para este projeto já está configurada como <strong style="color:var(--gold)">origami2025</strong>.</p>
+        <p>O painel usa acesso protegido com verificação local por hash. Informe a credencial administrativa para liberar a gestão da agenda, estoque, galeria e avaliações.</p>
         <div class="field"><label for="adminPassword">Senha do painel</label><input id="adminPassword" type="password" placeholder="Digite a senha"></div>
         <button class="btn" style="width:100%;margin-top:18px" type="button" onclick="loginAdmin()">Entrar no Painel</button>
       </div>
@@ -3262,7 +3350,7 @@ const CONFIG = {
   whatsappUrl: 'https://wa.me/5561994259943',
   instagram: 'https://www.instagram.com/origamibarbearia/',
   pixKey: '+5563993051851',
-  adminPassword: 'origami2025',
+  adminPasswordHash: '93b7476373ce69b5b7a347ea415067467eed7557a8aeac7827286dd357cb70f6',
   startHour: 9,
   endHour: 20,
   monthlyCapacity: 96
@@ -3318,10 +3406,16 @@ const SERVICES = [
 ];
 
 const PROFESSIONALS = [
-  { id: 'atelier-01', name: 'Ateliê 01', role: 'Cortes e acabamento', description: 'Perfil focado em corte, construção de forma e acabamento preciso.' },
-  { id: 'atelier-02', name: 'Ateliê 02', role: 'Barba e detalhe', description: 'Perfil focado em desenho de barba, linhas e presença limpa.' },
+  { id: 'pedro', name: 'Pedro', role: 'Corte & Degradê', description: 'Especialista em degradê preciso, transições limpas e acabamento alinhado.' },
+  { id: 'lucas', name: 'Lucas', role: 'Barba & Navalha', description: 'Foco em contorno de barba, navalha e acabamento que valoriza o formato do rosto.' },
   { id: 'sem-preferencia', name: 'Sem preferência', role: 'Primeiro disponível', description: 'O sistema mantém o horário e a equipe define o encaixe ideal.' }
 ];
+
+PROFESSIONALS.splice(0, PROFESSIONALS.length,
+  { id: 'pedro', name: 'Pedro', role: 'Corte & Degradê', description: 'Especialista em degradê preciso, transições limpas e acabamento alinhado.' },
+  { id: 'lucas', name: 'Lucas', role: 'Barba & Navalha', description: 'Foco em contorno de barba, navalha e acabamento que valoriza o formato do rosto.' },
+  { id: 'sem-preferencia', name: 'Sem preferência', role: 'Primeiro disponível', description: 'O sistema mantém o horário e a equipe define o encaixe ideal.' }
+);
 
 const PRODUCTS = [
   { id: 1, name: 'Pomada Fold Matte', brand: 'Origami Goods', category: 'cabelo', price: 49, oldPrice: 59, description: 'Segura o penteado, reforça a textura e mantém o corte com aparência de recém-finalizado.', badge: 'oferta', art: 'jar', features: ['Fixação firme', 'Acabamento matte', 'Uso diário', 'Visual durando mais'], stock: 8 },
@@ -3331,6 +3425,13 @@ const PRODUCTS = [
   { id: 5, name: 'Gel Pós-Barba Quiet Skin', brand: 'Origami Goods', category: 'pele', price: 34, description: 'Gel calmante para pós-barba com sensação fresca e visual limpo.', badge: 'novo', art: 'tube', features: ['Sensação de frescor', 'Calma a pele', 'Absorção rápida', 'Visual premium'], stock: 6 },
   { id: 6, name: 'Pente Steel Fold', brand: 'Origami Tools', category: 'acessorios', price: 29, description: 'Pente metálico com leitura premium para finalizar o visual em casa.', badge: '', art: 'comb', features: ['Estrutura firme', 'Fácil de limpar', 'Design elegante', 'Uso diário'], stock: 9 }
 ];
+
+SERVICES.splice(0, SERVICES.length,
+  { id: 'corte', name: 'Corte', short: 'Corte', category: 'Corte', icon: 'diamond', price: 35, duration: '~40 min', description: 'Corte masculino com leitura de estilo, acabamento limpo e presença alinhada para o dia a dia.', features: ['Consulta rápida', 'Máquina e tesoura', 'Acabamento preciso', 'Finalização leve'], badge: 'mais pedido' },
+  { id: 'barba', name: 'Barba', short: 'Barba', category: 'Barba', icon: 'triangle', price: 25, duration: '~30 min', description: 'Desenho e alinhamento de barba para reforçar o contorno do rosto com visual limpo e elegante.', features: ['Contorno preciso', 'Toalha quente', 'Navalha', 'Pós-barba'], badge: 'essencial' },
+  { id: 'combo', name: 'Combo (corte + barba)', short: 'Combo', category: 'Combo', icon: 'hexagon', price: 55, duration: '~70 min', description: 'Corte e barba no mesmo atendimento para sair pronto com economia e resultado completo.', features: ['Corte + barba', 'Mais valor', 'Tempo ampliado', 'Acabamento completo'], badge: 'premium' },
+  { id: 'hidratacao', name: 'Hidratação', short: 'Hidratação', category: 'Tratamento', icon: 'hexagon', price: 30, duration: '~35 min', description: 'Tratamento rápido para revitalizar fios e couro cabeludo, elevando conforto, brilho e sensação de cuidado.', features: ['Cuidado intenso', 'Mais conforto', 'Brilho natural', 'Upgrade de atendimento'], badge: 'upgrade' }
+);
 
 const DEFAULT_STOCK = PRODUCTS.map(product => ({
   id: 'stock-' + product.id,
@@ -3404,6 +3505,41 @@ function readStore(key, fallback){
 
 function writeStore(key, value){
   localStorage.setItem(key, JSON.stringify(value));
+}
+
+async function sha256Hex(value){
+  const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(String(value || '')));
+  return Array.from(new Uint8Array(buffer)).map(byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function waLink(text){
+  return 'https://wa.me/' + CONFIG.whatsappDigits + (text ? '?text=' + encodeURIComponent(text) : '');
+}
+
+function initWhatsAppLinks(){
+  document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+    const current = link.getAttribute('href') || '';
+    const query = current.includes('?') ? current.split('?')[1] : '';
+    const params = new URLSearchParams(query);
+    const text = link.dataset.waText || params.get('text') || '';
+    link.setAttribute('href', waLink(text));
+  });
+}
+
+function initPixUiText(){
+  document.querySelectorAll('.pix-key span').forEach(node => { node.textContent = CONFIG.pixKey; });
+  const bookingTopMain = document.querySelector('#bookingSuccess .proof-upload-top span');
+  const bookingHelperMain = document.querySelector('#bookingSuccess .proof-helper');
+  const bookingTopModal = document.querySelector('#bookingSuccessModal .proof-upload-top span');
+  const bookingHelperModal = document.querySelector('#bookingSuccessModal .proof-helper');
+  const paymentPolicy = document.getElementById('paymentPolicyNote');
+  const planProofPanelText = document.querySelector('#planProofPanel p');
+  if(bookingTopMain) bookingTopMain.textContent = 'Anexe imagem ou PDF do pagamento. O sistema tenta ler o comprovante automaticamente por OCR e só confirma o horário quando a chave PIX ' + CONFIG.pixKey + ', o valor do serviço e a data do dia forem validados.';
+  if(bookingHelperMain) bookingHelperMain.textContent = 'Segurança: o OCR procura sinais claros de comprovante bancário, a chave PIX ' + CONFIG.pixKey + ', o valor exato do serviço escolhido e a data de hoje. Se a leitura vier incompleta ou divergente, o horário fica em revisão manual no painel.';
+  if(bookingTopModal) bookingTopModal.textContent = 'Anexe imagem ou PDF do pagamento. O sistema tenta ler o comprovante automaticamente por OCR antes de confirmar o horário e valida também a data do dia.';
+  if(bookingHelperModal) bookingHelperModal.textContent = 'A confirmação automática só é liberada quando o OCR ou o texto complementar encontrarem sinais claros de comprovante bancário, a chave PIX ' + CONFIG.pixKey + ', o valor exato do serviço selecionado e a data de hoje.';
+  if(paymentPolicy) paymentPolicy.innerHTML = 'Seu atendimento só entra como confirmado depois do pagamento. Em caso de falta no horário marcado, haverá apenas <strong>50% de estorno</strong> do valor pago.';
+  if(planProofPanelText) planProofPanelText.textContent = 'Envie a imagem ou o PDF do comprovante. O sistema tenta ler automaticamente por OCR e só ativa o plano quando encontrar a chave PIX ' + CONFIG.pixKey + ', o valor exato do plano escolhido e a data atual.';
 }
 
 function getDb(){
@@ -4265,18 +4401,31 @@ function updateVacancies(){
   const monthCount = monthBookingsCount();
   const capacity = CONFIG.monthlyCapacity;
   const pctFree = value / capacity;
-  document.getElementById('heroVacancies').textContent = value;
-  document.getElementById('tickerVacanciesA').textContent = value;
-  document.getElementById('tickerVacanciesB').textContent = value;
-  document.getElementById('bookingVacancies').textContent = value + ' vagas restantes';
-  document.getElementById('heroMonthCount').textContent = monthCount;
+  const hasMonthData = monthCount > 0;
+  const publicVacancyValue = hasMonthData ? String(value) : '—';
+  const publicMonthValue = hasMonthData ? String(monthCount) : '—';
+  document.getElementById('heroVacancies').textContent = publicVacancyValue;
+  document.getElementById('tickerVacanciesA').textContent = publicVacancyValue;
+  document.getElementById('tickerVacanciesB').textContent = publicVacancyValue;
+  document.getElementById('bookingVacancies').textContent = hasMonthData ? (value + ' vagas restantes') : 'Disponibilidade atualizada na reserva';
+  document.getElementById('heroMonthCount').textContent = publicMonthValue;
+  const ticker = document.querySelector('.ticker');
+  if(ticker) ticker.style.display = hasMonthData ? '' : 'none';
+  if(!hasMonthData){
+    document.getElementById('heroVacancies').textContent = '\u2014';
+    document.getElementById('tickerVacanciesA').textContent = '\u2014';
+    document.getElementById('tickerVacanciesB').textContent = '\u2014';
+    document.getElementById('heroMonthCount').textContent = '\u2014';
+  }
   // Urgency badge color
   const urgency = document.querySelector('.hero-urgency');
   if(urgency){
     urgency.classList.remove('level-green','level-amber','level-red');
-    if(pctFree > 0.5) urgency.classList.add('level-green');
-    else if(pctFree >= 0.2) urgency.classList.add('level-amber');
-    else urgency.classList.add('level-red');
+    if(hasMonthData){
+      if(pctFree > 0.5) urgency.classList.add('level-green');
+      else if(pctFree >= 0.2) urgency.classList.add('level-amber');
+      else urgency.classList.add('level-red');
+    }
   }
   // Today urgency banner
   const today = todayISO();
@@ -4472,7 +4621,7 @@ function openCheckout(){
   document.body.classList.add('no-scroll');
 }
 
-function openPlanCheckout(planId){
+function openPlanCheckoutLegacy(planId){
   const plan = getPlanById(planId);
   if(!plan) return;
   state.checkoutMode = 'plan';
@@ -4519,7 +4668,7 @@ async function applyStockReduction(items){
   renderAdmin();
 }
 
-async function confirmPayment(){
+async function confirmPaymentLegacy(){
   const name = document.getElementById('checkoutName').value.trim();
   const phone = document.getElementById('checkoutPhone').value.trim();
   const address = document.getElementById('checkoutAddress').value.trim();
@@ -4571,7 +4720,7 @@ async function confirmPayment(){
   document.getElementById('paymentSuccessText').textContent = state.checkoutMode === 'plan'
     ? name + ', seu plano foi reservado. Agora envie o comprovante PIX pelo WhatsApp para ativarmos sua assinatura.'
     : name + ', seu pedido foi registrado. Agora envie o comprovante PIX pelo WhatsApp para confirmar a entrega.';
-  document.getElementById('proofLink').href = CONFIG.whatsappUrl + '?text=' + encodeURIComponent(message);
+  document.getElementById('proofLink').href = waLink(message);
 }
 
 function openDetail(){
@@ -4596,7 +4745,7 @@ function openServiceDetail(serviceId){
   document.getElementById('detailDesc').textContent = service.description;
   document.getElementById('detailArt').innerHTML = '<div class="service-icon ' + service.icon + '" style="width:120px;height:120px"></div>';
   document.getElementById('detailList').innerHTML = service.features.map(feature => '<div>' + feature + '</div>').join('');
-  document.getElementById('detailActions').innerHTML = `<button class="btn" type="button" onclick="prefillService('${service.id}');closeDetail();openBookingModal()">Agendar</button><a class="btn-outline" target="_blank" rel="noopener" href="${CONFIG.whatsappUrl}text=${encodeURIComponent('Olá! Tenho interesse no serviço ' + service.name + ' da Barbearia Origami.')}">WhatsApp</a>`;
+  document.getElementById('detailActions').innerHTML = `<button class="btn" type="button" onclick="prefillService('${service.id}');closeDetail();openBookingModal()">Agendar</button><a class="btn-outline" target="_blank" rel="noopener" href="${waLink('Olá! Tenho interesse no serviço ' + service.name + ' da Barbearia Origami.')}">WhatsApp</a><button class="btn-dark" type="button" onclick="shareItem('${escapeHtml(service.name)}','${escapeHtml(service.description)}')">Compartilhar</button>`;
   openDetail();
 }
 
@@ -4610,8 +4759,18 @@ function openProductDetail(productId){
   document.getElementById('detailDesc').textContent = product.description;
   document.getElementById('detailArt').innerHTML = getOrigamiProductArt(product.art);
   document.getElementById('detailList').innerHTML = product.features.map(feature => '<div>' + feature + '</div>').join('');
-  document.getElementById('detailActions').innerHTML = `<button class="btn" type="button" onclick="addToCart(${product.id});closeDetail()">Adicionar ao carrinho</button><a class="btn-outline" target="_blank" rel="noopener" href="${CONFIG.whatsappUrl}text=${encodeURIComponent('Olá! Quero comprar o produto ' + product.name + ' da Barbearia Origami.')}">WhatsApp</a>`;
+  document.getElementById('detailActions').innerHTML = `<button class="btn" type="button" onclick="addToCart(${product.id});closeDetail()">Adicionar ao carrinho</button><a class="btn-outline" target="_blank" rel="noopener" href="${waLink('Olá! Quero comprar o produto ' + product.name + ' da Barbearia Origami.')}">WhatsApp</a><button class="btn-dark" type="button" onclick="shareItem('${escapeHtml(product.name)}','${escapeHtml(product.description)}')">Compartilhar</button>`;
   openDetail();
+}
+
+function shareItem(name, description) {
+  if (navigator.share) {
+    navigator.share({ title: name, text: description, url: window.location.href });
+  } else {
+    navigator.clipboard.writeText(window.location.href)
+      .then(() => showToast('Link copiado'))
+      .catch(() => showToast('Copie o link manualmente'));
+  }
 }
 
 function renderProfessionalPicker(mode){
@@ -4736,7 +4895,7 @@ async function confirmBooking(mode){
       updateVacancies();
       setSyncText('Agendamento em análise salvo pela Function');
       const payloadWa = { name, phone, serviceName: service.name, servicePrice: service.price, professionalName: professional.name, date: calendarState.selectedDate, slot: calendarState.selectedSlot };
-      const link = CONFIG.whatsappUrl + '?text=' + encodeURIComponent(buildWhatsAppBookingMessage(payloadWa));
+      const link = waLink(buildWhatsAppBookingMessage(payloadWa));
       bookingField(mode, 'success').classList.add('show');
       document.getElementById('bookingPixGate_' + mode).classList.remove('show');
       bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi registrado em análise pela Function para ' + service.name + ' com ' + professional.name + '. Envie o comprovante abaixo para confirmar automaticamente.';
@@ -4780,7 +4939,7 @@ async function confirmBooking(mode){
   updateVacancies();
   setSyncText(hasSupabaseConfig() ? 'Agendamento em análise e sincronizado' : 'Agendamento em análise salvo localmente');
   const payload = { name, phone, serviceName: service.name, servicePrice: service.price, professionalName: professional.name, date: calendarState.selectedDate, slot: calendarState.selectedSlot };
-  const link = CONFIG.whatsappUrl + '?text=' + encodeURIComponent(buildWhatsAppBookingMessage(payload));
+  const link = waLink(buildWhatsAppBookingMessage(payload));
   bookingField(mode, 'success').classList.add('show');
   document.getElementById('bookingPixGate_' + mode).classList.remove('show');
   bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi registrado em análise para ' + service.name + ' com ' + professional.name + '. Envie o comprovante abaixo para confirmar automaticamente.';
@@ -4796,6 +4955,12 @@ function stopCalendarPolling(mode){
     clearInterval(calendarPolling[mode]);
     calendarPolling[mode] = null;
   }
+}
+
+function updateBookingStage(mode){
+  const stage = mode === 'main' ? document.getElementById('bookingDataStageMain') : document.getElementById('bookingDataStageModal');
+  if(!stage) return;
+  stage.classList.toggle('is-disabled', !state.calendar[mode].selectedSlot);
 }
 
 async function refreshCalendarBookings(updateSyncText = true){
@@ -4926,6 +5091,7 @@ function selectCalendarDate(mode, dateStr, year, month, day, element){
   hideBookingPixGate(mode);
   buildCalendar(mode);
   renderBookingSummary(mode);
+  updateBookingStage(mode);
   refreshAndRenderSlots(mode, dateStr, year, month, day);
   startCalendarPolling(mode, dateStr, year, month, day);
 }
@@ -4934,6 +5100,7 @@ function selectSlot(mode, slot){
   state.calendar[mode].selectedSlot = slot;
   renderSlots(mode);
   renderBookingSummary(mode);
+  updateBookingStage(mode);
 }
 
 function openBookingModal(){
@@ -4945,6 +5112,7 @@ function openBookingModal(){
   buildCalendar('modal');
   renderSlots('modal');
   renderBookingSummary('modal');
+  updateBookingStage('modal');
 }
 
 function closeBookingModal(){
@@ -4976,11 +5144,29 @@ function closeAdmin(){
   document.body.classList.remove('no-scroll');
 }
 
-function loginAdmin(){
+async function loginAdmin(){
   const password = document.getElementById('adminPassword').value;
-  if(password !== CONFIG.adminPassword){ showToast('Senha incorreta'); return; }
+  if(!password){ showToast('Informe a senha do painel'); return; }
+  const loginKey = 'origami_login_attempts';
+  const attempts = readStore(loginKey, { count: 0, lockedUntil: 0 }) || { count: 0, lockedUntil: 0 };
+  if(attempts.lockedUntil && Date.now() < attempts.lockedUntil){
+    const remaining = Math.ceil((attempts.lockedUntil - Date.now()) / 60000);
+    showToast('Muitas tentativas. Tente novamente em ' + remaining + ' minutos.');
+    return;
+  }
+  const passwordHash = await sha256Hex(password);
+  if(passwordHash !== CONFIG.adminPasswordHash){
+    const next = { count: Number(attempts.count || 0) + 1, lockedUntil: 0 };
+    if(next.count >= 5){
+      next.lockedUntil = Date.now() + (5 * 60 * 1000);
+    }
+    writeStore(loginKey, next);
+    showToast(next.lockedUntil ? 'Muitas tentativas. Tente novamente em 5 minutos.' : 'Senha incorreta');
+    return;
+  }
   state.adminLogged = true;
   saveAdminSession();
+  localStorage.removeItem(loginKey);
   document.getElementById('adminPassword').value = '';
   updateAdminUI();
   renderAdmin();
@@ -5049,7 +5235,7 @@ function renderAdminBookings(entries){
     return;
   }
   list.innerHTML = entries.map(entry => {
-    const reminderLink = CONFIG.whatsappUrl + '?text=' + encodeURIComponent('Olá, ' + entry.name + '! Passando para lembrar do seu atendimento na Barbearia Origami em ' + longDate(entry.date) + ', às ' + entry.slot + '.');
+    const reminderLink = waLink('Olá, ' + entry.name + '! Passando para lembrar do seu atendimento na Barbearia Origami em ' + longDate(entry.date) + ', às ' + entry.slot + '.');
     const proof = getPaymentProof(entry.date, entry.slot);
     const analysisBadge = proof && proof.analysis
        ? `<span class="proof-badge ${proof.analysis.decision === 'approved' ? 'ok' : proof.analysis.decision === 'rejected' ? 'risk' : 'warn'}">${PROOF_ANALYSIS_LABELS[proof.analysis.decision] || 'Análise'}</span>`
@@ -5378,12 +5564,12 @@ async function confirmPayment(){
   document.getElementById('checkoutForm').style.display = 'none';
   document.getElementById('paymentSuccess').classList.add('show');
   document.getElementById('paymentSuccessText').textContent = state.checkoutMode === 'plan'
-    ? name + ', seu plano ainda não entrou no cadastro. Envie o comprovante abaixo: o OCR tentará ler a imagem ou o PDF e a assinatura só será criada se encontrar a chave PIX +5563993051851, o valor exato do plano selecionado e a data de hoje.'
+    ? name + ', seu plano ainda não entrou no cadastro. Envie o comprovante abaixo: o OCR tentará ler a imagem ou o PDF e a assinatura só será criada se encontrar a chave PIX ' + CONFIG.pixKey + ', o valor exato do plano selecionado e a data de hoje.'
     : name + ', seu pedido foi registrado. Agora envie o comprovante PIX pelo WhatsApp para confirmar a entrega.';
-  document.getElementById('proofLink').href = CONFIG.whatsappUrl + '?text=' + encodeURIComponent(message);
+  document.getElementById('proofLink').href = waLink(message);
   togglePlanProofPanel(state.checkoutMode === 'plan');
   if(state.checkoutMode === 'plan'){
-    document.getElementById('planProofStatus').textContent = 'Plano escolhido: ' + getPlanById(state.selectedPlanId).name + ' ⬢ chave PIX esperada: +5563993051851 ⬢ valor esperado: ' + money(total) + ' ⬢ data esperada: ' + currentProofDateParts().br + ' ⬢ OCR automático habilitado quando o Supabase estiver configurado.';
+    document.getElementById('planProofStatus').textContent = 'Plano escolhido: ' + getPlanById(state.selectedPlanId).name + ' ⬢ chave PIX esperada: ' + CONFIG.pixKey + ' ⬢ valor esperado: ' + money(total) + ' ⬢ data esperada: ' + currentProofDateParts().br + ' ⬢ OCR automático habilitado quando o Supabase estiver configurado.';
   }
 }
 
@@ -5458,7 +5644,7 @@ async function submitPlanProof(){
         if(status) status.textContent = 'O OCR leu o arquivo, mas a data identificada no comprovante não corresponde à data de hoje (' + (proofAnalysis.expectedDate || currentProofDateParts().br) + '). O item ficou salvo para revisão manual.';
         showToast('Data divergente. Plano enviado para revisão manual.', 3800);
       }else if(proofAnalysis && !proofAnalysis.hasTargetPixKey){
-        if(status) status.textContent = 'O OCR leu o arquivo, mas a chave PIX +5563993051851 não apareceu no comprovante. O item ficou salvo para revisão manual.';
+        if(status) status.textContent = 'O OCR leu o arquivo, mas a chave PIX ' + CONFIG.pixKey + ' não apareceu no comprovante. O item ficou salvo para revisão manual.';
         showToast('Chave PIX divergente. Plano enviado para revisão manual.', 3800);
       }else{
         if(status) status.textContent = 'O arquivo foi salvo e o OCR executado, mas ainda não houve evidência suficiente para ativar a assinatura automaticamente. Faça a revisão manual pelo painel.';
@@ -5518,7 +5704,7 @@ async function submitPlanProof(){
         if(status) status.textContent = 'Sem OCR configurado, o arquivo foi salvo para revisão manual no painel. Se quiser validar automaticamente em modo local, cole também o texto do comprovante com chave PIX, valor e data de hoje.';
         showToast('Comprovante salvo para revisão manual.', 3600);
       }else if(!analysis.hasTargetPixKey){
-        if(status) status.textContent = 'A validação falhou porque a chave PIX +5563993051851 não foi encontrada no texto do comprovante.';
+        if(status) status.textContent = 'A validação falhou porque a chave PIX ' + CONFIG.pixKey + ' não foi encontrada no texto do comprovante.';
         showToast('A chave PIX exigida não foi encontrada no comprovante.', 3600);
       }else if(!analysis.hasExpectedAmount){
         if(status) status.textContent = 'A validação falhou porque o valor encontrado no comprovante não corresponde ao plano ' + plan.name + ' (' + money(plan.price) + ').';
@@ -5627,7 +5813,7 @@ async function submitBookingProof(mode){
         bookingField(mode, 'successText').textContent = booking.name + ', comprovante enviado. A data identificada no arquivo não corresponde à data de hoje (' + (functionAnalysis.expectedDate || currentProofDateParts().br) + '), então o horário continua em análise.';
         showToast('A data do comprovante não corresponde à data atual.', 3600);
       }else if(functionAnalysis && !functionAnalysis.hasTargetPixKey){
-        bookingField(mode, 'successText').textContent = booking.name + ', comprovante enviado. A chave PIX +5563993051851 não foi identificada no arquivo, então o horário continua em análise.';
+        bookingField(mode, 'successText').textContent = booking.name + ', comprovante enviado. A chave PIX ' + CONFIG.pixKey + ' não foi identificada no arquivo, então o horário continua em análise.';
         showToast('A chave PIX exigida não foi encontrada no comprovante.', 3600);
       }else{
         bookingField(mode, 'successText').textContent = booking.name + ', comprovante enviado. O arquivo foi armazenado, mas o agendamento continua em análise até a validação completa.';
@@ -5725,9 +5911,15 @@ function closeIntro(){
 
 function initIntro(){
   const intro = document.getElementById('intro-screen');
-  if(!intro || window.matchMedia('(prefers-reduced-motion: reduce)').matches){ if(intro) intro.style.display = 'none'; return; }
+  if(!intro) return;
+  document.getElementById('introSkipBtn').style.display = 'inline-flex';
+  if(window.innerWidth >= 860){
+    intro.style.display = 'none';
+    return;
+  }
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ intro.style.display = 'none'; return; }
   document.getElementById('introEnter').addEventListener('click', closeIntro);
-  setTimeout(closeIntro, 3500);
+  setTimeout(closeIntro, 2200);
 }
 
 function initCalendarControls(){
@@ -5738,6 +5930,7 @@ function initCalendarControls(){
     document.getElementById('bookingSuccess').classList.remove('show');
     hideBookingPixGate('main');
     buildCalendar('main'); renderSlots('main'); renderBookingSummary('main');
+    updateBookingStage('main');
   });
   document.getElementById('nextMonthBtn').addEventListener('click', () => {
     stopCalendarPolling('main');
@@ -5746,6 +5939,7 @@ function initCalendarControls(){
     document.getElementById('bookingSuccess').classList.remove('show');
     hideBookingPixGate('main');
     buildCalendar('main'); renderSlots('main'); renderBookingSummary('main');
+    updateBookingStage('main');
   });
   document.getElementById('modalPrevMonthBtn').addEventListener('click', () => {
     stopCalendarPolling('modal');
@@ -5754,6 +5948,7 @@ function initCalendarControls(){
     document.getElementById('bookingSuccessModal').classList.remove('show');
     hideBookingPixGate('modal');
     buildCalendar('modal'); renderSlots('modal'); renderBookingSummary('modal');
+    updateBookingStage('modal');
   });
   document.getElementById('modalNextMonthBtn').addEventListener('click', () => {
     stopCalendarPolling('modal');
@@ -5762,6 +5957,7 @@ function initCalendarControls(){
     document.getElementById('bookingSuccessModal').classList.remove('show');
     hideBookingPixGate('modal');
     buildCalendar('modal'); renderSlots('modal'); renderBookingSummary('modal');
+    updateBookingStage('modal');
   });
 }
 
@@ -6027,16 +6223,12 @@ async function renderPublicGallery(){
   if(!grid) return;
   const items = (await dbGetAll(DB_CONFIG.galleryStore)).sort((a,b) => b.createdAt.localeCompare(a.createdAt));
   if(!items.length){
-    // Show 6 placeholders
-    const cats = ['corte','barba','combo','corte','barba','combo'];
-    grid.innerHTML = cats.map(cat => `
-      <div class="gallery-card reveal">
-        <div class="gallery-placeholder">${GALLERY_PLACEHOLDER_SVG}</div>
-        <div class="gallery-card-overlay">
-          <span class="gallery-badge">${cat}</span>
-        </div>
-      </div>
-    `).join('');
+    grid.innerHTML = `
+      <article class="gallery-empty-state origami-corner origami-shadow reveal" style="grid-column:1/-1">
+        <div class="gallery-placeholder" style="min-height:180px">${GALLERY_PLACEHOLDER_SVG}</div>
+        <p style="margin-top:16px">Em breve, trabalhos reais aqui. Acompanhe também no Instagram <a href="${CONFIG.instagram}" target="_blank" rel="noopener">@origamibarbearia</a>.</p>
+      </article>
+    `;
   } else {
     grid.innerHTML = items.map(item => `
       <div class="gallery-card reveal">
@@ -6140,7 +6332,7 @@ async function renderAdminReviews(){
       </div>
       <p class="review-admin-text">"${escapeHtml(item.text)}"</p>
       <div class="pill-row">
-        <span class="subscriber-chip">${item.date || ''}</span>
+        <span class="subscriber-chip">${formatReviewDateLabel(item.createdAt || item.date)}</span>
         <span class="subscriber-chip ${item.visible ? 'ativo' : 'pendente'}">${item.visible ? 'Visível' : 'Pendente'}</span>
         <button class="mini-btn" type="button" onclick="toggleReviewVisibility('${item.id}',${item.visible})">${item.visible ? 'Ocultar' : 'Publicar'}</button>
         <button class="mini-btn" type="button" onclick="removeReview('${item.id}')">Remover</button>
@@ -6157,32 +6349,84 @@ const REVIEWS_FALLBACK = [
   { name: 'Igor P.', text: 'A loja integrada ficou prática demais. Já comprei produto, copiei a chave PIX e mandei tudo pelo WhatsApp sem sair do site.' }
 ];
 
+REVIEWS_FALLBACK.splice(0, REVIEWS_FALLBACK.length,
+  { name: 'Thiago M.', text: 'Ambiente elegante, atendimento tranquilo e acabamento muito preciso. Saí com a sensação de serviço realmente premium.', stars: 5, createdAt: new Date(Date.now() - 3 * 86400000).toISOString() },
+  { name: 'Gabriel A.', text: 'Agendei rápido pelo site, confirmei no WhatsApp e o atendimento foi direto. O resultado ficou acima do que eu esperava.', stars: 5, createdAt: new Date(Date.now() - 7 * 86400000).toISOString() },
+  { name: 'Leonardo S.', text: 'Gostei da atenção nos detalhes e do cuidado na finalização. A barba ficou muito mais alinhada e com presença.', stars: 5, createdAt: new Date(Date.now() - 12 * 86400000).toISOString() },
+  { name: 'Caio R.', text: 'A loja integrada e o painel de agendamento passam confiança. Tudo funciona com praticidade e o espaço tem muita identidade.', stars: 5, createdAt: new Date(Date.now() - 18 * 86400000).toISOString() }
+);
+
+function getReviewInitials(name){
+  return String(name || '')
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map(part => part[0] || '')
+    .join('')
+    .toUpperCase() || 'O';
+}
+
+function getReviewAvatarStyle(name){
+  const palettes = [
+    ['rgba(201,168,76,.42)', 'rgba(139,26,26,.28)', '#F5F2EB'],
+    ['rgba(181,101,29,.38)', 'rgba(201,168,76,.16)', '#F5F2EB'],
+    ['rgba(139,26,26,.34)', 'rgba(245,242,235,.08)', '#F5F2EB'],
+    ['rgba(201,168,76,.24)', 'rgba(44,44,44,.88)', '#F5F2EB']
+  ];
+  const source = Array.from(String(name || '')).reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const [a, b, text] = palettes[source % palettes.length];
+  return `--avatar-a:${a};--avatar-b:${b};--avatar-text:${text};`;
+}
+
+function formatReviewDateLabel(value){
+  if(!value) return 'Sem data';
+  const date = new Date(value);
+  if(Number.isNaN(date.getTime())) return escapeHtml(String(value));
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  date.setHours(0,0,0,0);
+  const diffDays = Math.round((today.getTime() - date.getTime()) / 86400000);
+  if(diffDays >= 0 && diffDays <= 30){
+    if(diffDays === 0) return 'hoje';
+    if(diffDays === 1) return 'há 1 dia';
+    return 'há ' + diffDays + ' dias';
+  }
+  return date.toLocaleDateString('pt-BR');
+}
+
 async function renderPublicReviews(){
   const grid = document.getElementById('reviewsGrid');
+  const countNote = document.getElementById('reviewsCountNote');
   if(!grid) return;
   const all = await dbGetAll(DB_CONFIG.reviewsStore);
   const visible = all.filter(r => r.visible).sort((a,b) => b.createdAt.localeCompare(a.createdAt));
   if(!visible.length){
-    // restore fallback hardcoded
+    if(countNote) countNote.innerHTML = '';
     grid.innerHTML = REVIEWS_FALLBACK.map(r => `
       <article class="review-card origami-corner origami-shadow reveal">
         <p>"${escapeHtml(r.text)}"</p>
         <div class="review-author">
-          <div class="review-avatar">${escapeHtml(r.name[0])}</div>
-          <div><strong>${escapeHtml(r.name)}</strong><span>Cliente da casa</span></div>
+          <div class="review-avatar" style="${getReviewAvatarStyle(r.name)}">${escapeHtml(getReviewInitials(r.name))}</div>
+          <div>
+            <strong>${escapeHtml(r.name)}</strong>
+            <span>Cliente da casa</span>
+            <small class="review-meta">${formatReviewDateLabel(r.createdAt || r.date)}</small>
+          </div>
         </div>
       </article>
     `).join('');
   } else {
+    if(countNote) countNote.innerHTML = '<p style="margin-top:12px;color:var(--white-dim);font-size:.78rem">' + visible.length + ' clientes avaliaram</p>';
     const stars = n => '&#9733;'.repeat(n || 5);
     grid.innerHTML = visible.map(r => `
       <article class="review-card origami-corner origami-shadow reveal">
         <p>"${escapeHtml(r.text)}"</p>
         <div class="review-author">
-          <div class="review-avatar">${escapeHtml(r.name[0])}</div>
+          <div class="review-avatar" style="${getReviewAvatarStyle(r.name)}">${escapeHtml(getReviewInitials(r.name))}</div>
           <div>
             <strong>${escapeHtml(r.name)}</strong>
             <span style="color:var(--gold);letter-spacing:.1em">${stars(r.stars)}</span>
+            <small class="review-meta">${formatReviewDateLabel(r.createdAt || r.date)}</small>
           </div>
         </div>
       </article>
@@ -6224,6 +6468,35 @@ async function toggleStockHistory(itemId){
   el.classList.add('open');
 }
 
+function renderSkeletonGrid(id, count = 3){
+  const grid = document.getElementById(id);
+  if(!grid) return;
+  grid.innerHTML = Array.from({ length: count }, () => '<div class="skeleton-card origami-corner"></div>').join('');
+}
+
+function initSeoSectionTitles(){
+  const seoTitles = {
+    hero: 'Barbearia Origami ⬢ Dianópolis, Tocantins',
+    servicos: 'Serviços | Barbearia Origami',
+    planos: 'Planos Mensais | Barbearia Origami',
+    loja: 'Loja | Barbearia Origami',
+    agendamento: 'Agendar Horário | Barbearia Origami',
+    avaliacoes: 'Avaliações | Barbearia Origami',
+    contato: 'Contato | Barbearia Origami'
+  };
+  const titleObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting && seoTitles[entry.target.id]){
+        document.title = seoTitles[entry.target.id];
+      }
+    });
+  }, { threshold: 0.3 });
+  ['hero','servicos','planos','loja','agendamento','avaliacoes','contato'].forEach(id => {
+    const section = document.getElementById(id);
+    if(section) titleObserver.observe(section);
+  });
+}
+
 
 async function init(){
   loadState();
@@ -6231,6 +6504,8 @@ async function init(){
   await loadSubscribers();
   await loadPaymentProofs();
   initIntro();
+  initWhatsAppLinks();
+  initPixUiText();
   initMenu();
   initForms();
   initFilters();
@@ -6238,6 +6513,9 @@ async function init(){
   initAdminFilters();
   initEvents();
   renderSubscriberPlanOptions();
+  renderSkeletonGrid('servicesGrid');
+  renderSkeletonGrid('productsGrid');
+  renderSkeletonGrid('galleryGrid');
   renderServiceCards();
   renderProducts();
   renderCart();
@@ -6247,13 +6525,17 @@ async function init(){
   renderSlots('modal');
   renderBookingSummary('main');
   renderBookingSummary('modal');
+  updateBookingStage('main');
+  updateBookingStage('modal');
   updateVacancies();
   updateAdminUI();
   if(!hasSupabaseConfig()) setSyncText('Agenda local pronta');
   await renderPublicGallery();
   await renderPublicReviews();
   state.publicReviewStars = 5;
+  document.querySelectorAll('.booking-success h4').forEach(node => node.innerHTML = '✦ Horário reservado');
   observeReveals();
+  initSeoSectionTitles();
 }
 
 init();
