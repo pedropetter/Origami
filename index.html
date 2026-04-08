@@ -2540,7 +2540,7 @@ details[open] summary{margin-bottom:0}
     <div class="reveal">
       <div class="eyebrow">Galeria de trabalhos</div>
       <h2 class="section-title">Resultados que falam por si. Cada dobra no <em>lugar certo.</em></h2>
-      <p class="section-copy">Trabalhos reais, clientes reais. A galeria é atualizada pelo painel admin diretamente pelo celular.</p>
+      <p class="section-copy">Trabalhos reais, clientes reais. Cada foto é um resultado entregue na cadeira da Origami.</p>
     </div>
     <div class="gallery-grid" id="galleryGrid"></div>
   </div>
@@ -3237,22 +3237,7 @@ details[open] summary{margin-bottom:0}
           <div class="admin-card origami-corner origami-shadow" style="margin-top:12px">
             <div class="mini-title">Galeria</div>
             <div class="admin-title" style="font-size:2rem">Fotos de trabalhos</div>
-            <p style="margin-top:10px;color:var(--white-dim);line-height:1.8">Adicione fotos dos trabalhos realizados. As imagens aparecem na seção Galeria do site automaticamente.</p>
-            <div class="gallery-form">
-              <div>
-                <label class="gallery-upload-label">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-                  <span id="galleryUploadLabel">Selecionar foto</span>
-                  <input type="file" accept="image/*" id="galleryFileInput" style="display:none" onchange="previewGalleryFile(this)">
-                </label>
-              </div>
-              <div class="gallery-form-row">
-                <div class="field" style="margin-top:0"><label for="galleryCategorySelect">Categoria</label><select id="galleryCategorySelect"><option value="corte">Corte</option><option value="barba">Barba</option><option value="combo">Combo</option><option value="tratamento">Tratamento</option></select></div>
-                <div class="field" style="margin-top:0"><label for="galleryCaptionInput">Legenda (opcional)</label><input id="galleryCaptionInput" type="text" placeholder="Ex: Degrade com textura"></div>
-                <button class="btn-outline" type="button" onclick="saveGalleryItem()">Publicar</button>
-              </div>
-            </div>
-            <div class="gallery-admin-grid" id="galleryAdminGrid"></div>
+            <p style="margin-top:10px;color:var(--white-dim);line-height:1.8">As fotos da galeria são definidas diretamente no código do site. Para adicionar, remover ou alterar imagens, edite o array <strong style="color:var(--gold)">GALLERY_PHOTOS</strong> no arquivo HTML — cada item tem <code>src</code> (URL ou caminho da imagem), <code>category</code> e <code>caption</code>.</p>
           </div>
         </div>
 
@@ -6059,47 +6044,6 @@ function renderOccupancyChart(){
 
 
 // ===== Supabase: Gallery =====
-async function readSupabaseGallery(){
-  const url = SUPABASE.url + '/rest/v1/' + SUPABASE.galleryTable + '?select=id,image_base64,category,caption,date,created_at&order=created_at.desc';
-  const response = await fetch(url, { method: 'GET', headers: supabaseHeaders() });
-  if(!response.ok) throw new Error('Falha ao ler galeria no Supabase: ' + response.status);
-  const rows = await response.json();
-  return rows.map(r => ({
-    id: r.id,
-    imageBase64: r.image_base64,
-    category: r.category,
-    caption: r.caption || '',
-    date: r.date || '',
-    createdAt: r.created_at || new Date().toISOString()
-  }));
-}
-
-async function upsertSupabaseGalleryItem(record){
-  const payload = {
-    id: record.id,
-    image_base64: record.imageBase64,
-    category: record.category,
-    caption: record.caption || '',
-    date: record.date || '',
-    created_at: record.createdAt || new Date().toISOString()
-  };
-  const response = await fetch(SUPABASE.url + '/rest/v1/' + SUPABASE.galleryTable, {
-    method: 'POST',
-    headers: supabaseHeaders({ Prefer: 'resolution=merge-duplicates,return=minimal' }),
-    body: JSON.stringify([payload])
-  });
-  if(!response.ok){
-    const errorText = await response.text().catch(() => '');
-    throw new Error(errorText || ('Falha ao salvar foto no Supabase: ' + response.status));
-  }
-}
-
-async function deleteSupabaseGalleryItem(id){
-  const url = SUPABASE.url + '/rest/v1/' + SUPABASE.galleryTable + '?id=eq.' + encodeURIComponent(id);
-  const response = await fetch(url, { method: 'DELETE', headers: supabaseHeaders({ Prefer: 'return=minimal' }) });
-  if(!response.ok) throw new Error('Falha ao remover foto no Supabase: ' + response.status);
-}
-
 // ===== Supabase: Reviews =====
 async function readSupabaseReviews(){
   const url = SUPABASE.url + '/rest/v1/' + SUPABASE.reviewsTable + '?select=id,name,text,stars,date,visible,created_at&order=created_at.desc';
@@ -6180,105 +6124,32 @@ async function dbDelete(storeName, id){
 }
 
 // ===== Gallery admin =====
-function previewGalleryFile(input){
-  const label = document.getElementById('galleryUploadLabel');
-  if(input.files && input.files[0]) label.textContent = input.files[0].name;
-}
+// ===== Gallery — fotos estáticas definidas no código =====
+// ✏️ PARA ADICIONAR OU REMOVER FOTOS: edite o array GALLERY_PHOTOS abaixo.
+// Cada item tem:
+//   src      → URL da imagem (ex: "https://..." ou caminho relativo "fotos/corte1.jpg")
+//   category → "corte" | "barba" | "combo" | "tratamento"
+//   caption  → legenda exibida sobre a foto (opcional, use "" para omitir)
+const GALLERY_PHOTOS = [
+  // { src: 'https://exemplo.com/foto1.jpg', category: 'corte',   caption: 'Degradê clássico'  },
+  // { src: 'https://exemplo.com/foto2.jpg', category: 'barba',   caption: 'Barba delineada'   },
+  // { src: 'https://exemplo.com/foto3.jpg', category: 'combo',   caption: 'Corte + Barba'     },
+  // { src: 'https://exemplo.com/foto4.jpg', category: 'corte',   caption: ''                  },
+];
 
-async function saveGalleryItem(){
-  const fileInput = document.getElementById('galleryFileInput');
-  const category = document.getElementById('galleryCategorySelect').value;
-  const caption = document.getElementById('galleryCaptionInput').value.trim();
-  if(!fileInput.files || !fileInput.files[0]){ showToast('Selecione uma imagem'); return; }
-  const file = fileInput.files[0];
-  const reader = new FileReader();
-  reader.onload = async function(e){
-    const record = {
-      id: 'gal-' + Date.now(),
-      imageBase64: e.target.result,
-      category,
-      caption,
-      date: todayISO(),
-      createdAt: new Date().toISOString()
-    };
-    await dbPut(DB_CONFIG.galleryStore, record);
-    if(hasSupabaseConfig()){
-      try{ await upsertSupabaseGalleryItem(record); }
-      catch(err){ console.error('Supabase gallery save error:', err); }
-    }
-    fileInput.value = '';
-    document.getElementById('galleryUploadLabel').textContent = 'Selecionar foto';
-    document.getElementById('galleryCaptionInput').value = '';
-    await renderPublicGallery();
-    renderAdminGallery();
-    showToast('Foto publicada na galeria');
-  };
-  reader.readAsDataURL(file);
-}
-
-async function removeGalleryItem(id){
-  await dbDelete(DB_CONFIG.galleryStore, id);
-  if(hasSupabaseConfig()){
-    try{ await deleteSupabaseGalleryItem(id); }
-    catch(err){ console.error('Supabase gallery delete error:', err); }
-  }
-  await renderPublicGallery();
-  renderAdminGallery();
-  showToast('Foto removida');
-}
-
-async function renderAdminGallery(){
-  const grid = document.getElementById('galleryAdminGrid');
-  if(!grid) return;
-  let items = [];
-  if(hasSupabaseConfig()){
-    try{ items = await readSupabaseGallery(); }
-    catch(err){ console.error('Supabase gallery read error:', err); items = (await dbGetAll(DB_CONFIG.galleryStore)).sort((a,b) => b.createdAt.localeCompare(a.createdAt)); }
-  } else {
-    items = (await dbGetAll(DB_CONFIG.galleryStore)).sort((a,b) => b.createdAt.localeCompare(a.createdAt));
-  }
-  if(!items.length){ grid.innerHTML = '<div class="subscriber-empty" style="margin-top:12px">Nenhuma foto publicada ainda.</div>'; return; }
-  grid.innerHTML = items.map(item => `
-    <div class="gallery-admin-item origami-corner">
-      <img class="gallery-admin-thumb" src="${item.imageBase64}" alt="${escapeHtml(item.caption || item.category)}" loading="lazy">
-      <div class="gallery-admin-info">
-        <span>${escapeHtml(item.category)}</span>
-        <p>${escapeHtml(item.caption || 'Sem legenda')}</p>
-        <button class="mini-btn" style="margin-top:6px;width:100%" type="button" onclick="removeGalleryItem('${item.id}')">Remover</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-// ===== Gallery public =====
-const GALLERY_PLACEHOLDER_SVG = `<svg viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg" fill="none" width="64" height="80">
-  <polygon points="60,10 110,45 90,110 30,110 10,45" stroke="#C9A84C" stroke-width="1.4" fill="rgba(201,168,76,.07)"/>
-  <polygon points="60,28 90,52 78,88 42,88 30,52" stroke="#C9A84C" stroke-width="1" opacity=".5"/>
-  <line x1="60" y1="10" x2="60" y2="110" stroke="#C9A84C" stroke-width=".8" opacity=".3"/>
-  <line x1="10" y1="45" x2="110" y2="45" stroke="#C9A84C" stroke-width=".8" opacity=".3"/>
-</svg>`;
-
-async function renderPublicGallery(){
+function renderPublicGallery(){
   const grid = document.getElementById('galleryGrid');
   if(!grid) return;
-  let items = [];
-  if(hasSupabaseConfig()){
-    try{ items = await readSupabaseGallery(); }
-    catch(err){ console.error('Supabase gallery read error:', err); items = (await dbGetAll(DB_CONFIG.galleryStore)).sort((a,b) => b.createdAt.localeCompare(a.createdAt)); }
-  } else {
-    items = (await dbGetAll(DB_CONFIG.galleryStore)).sort((a,b) => b.createdAt.localeCompare(a.createdAt));
-  }
-  if(!items.length){
+  if(!GALLERY_PHOTOS.length){
     grid.innerHTML = `
       <article class="gallery-empty-state origami-corner origami-shadow reveal" style="grid-column:1/-1">
-        <div class="gallery-placeholder" style="min-height:180px">${GALLERY_PLACEHOLDER_SVG}</div>
         <p style="margin-top:16px">Em breve, trabalhos reais aqui. Acompanhe também no Instagram <a href="${CONFIG.instagram}" target="_blank" rel="noopener">@origamibarbearia</a>.</p>
       </article>
     `;
   } else {
-    grid.innerHTML = items.map(item => `
+    grid.innerHTML = GALLERY_PHOTOS.map(item => `
       <div class="gallery-card reveal">
-        <img src="${item.imageBase64}" alt="${escapeHtml(item.caption || item.category)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+        <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.caption || item.category)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
         <div class="gallery-card-overlay">
           <span class="gallery-badge">${escapeHtml(item.category)}</span>
           ${item.caption ? `<div class="gallery-caption">${escapeHtml(item.caption)}</div>` : ''}
@@ -6288,6 +6159,8 @@ async function renderPublicGallery(){
   }
   observeReveals();
 }
+
+function renderAdminGallery(){ /* galeria agora é estática — editar GALLERY_PHOTOS no código */ }
 
 // ===== Reviews public modal =====
 function openReviewModal(){
@@ -6615,7 +6488,7 @@ async function init(){
   updateVacancies();
   updateAdminUI();
   if(!hasSupabaseConfig()) setSyncText('Agenda local pronta');
-  await renderPublicGallery();
+  renderPublicGallery();
   await renderPublicReviews();
   state.publicReviewStars = 5;
   document.querySelectorAll('.booking-success h4').forEach(node => node.innerHTML = '✦ Horário reservado');
