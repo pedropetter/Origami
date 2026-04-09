@@ -8,24 +8,27 @@ create table if not exists public.admin_state (
 alter table public.admin_state enable row level security;
 
 drop policy if exists "admin_state_select_authenticated" on public.admin_state;
-create policy "admin_state_select_authenticated"
+drop policy if exists "admin_state_select_anon" on public.admin_state;
+create policy "admin_state_select_anon"
 on public.admin_state
 for select
-to authenticated
+to anon
 using (true);
 
 drop policy if exists "admin_state_insert_authenticated" on public.admin_state;
-create policy "admin_state_insert_authenticated"
+drop policy if exists "admin_state_insert_anon" on public.admin_state;
+create policy "admin_state_insert_anon"
 on public.admin_state
 for insert
-to authenticated
+to anon
 with check (true);
 
 drop policy if exists "admin_state_update_authenticated" on public.admin_state;
-create policy "admin_state_update_authenticated"
+drop policy if exists "admin_state_update_anon" on public.admin_state;
+create policy "admin_state_update_anon"
 on public.admin_state
 for update
-to authenticated
+to anon
 using (true)
 with check (true);
 
