@@ -4419,6 +4419,10 @@ async function syncStateFromSupabase(){
       readSupabaseBookings(),
       readSupabaseAdminState()
     ]);
+    // DIAGNÓSTICO TEMPORÁRIO
+    const _totalRemote = Object.values(remoteBookings || {}).reduce((acc, slots) => acc + Object.keys(slots).length, 0);
+    console.log('[DIAG] Bookings do Supabase:', _totalRemote, JSON.stringify(remoteBookings));
+    showToast('Supabase: ' + _totalRemote + ' agendamento(s) recebido(s)', 6000);
     // Merge: remoto é autoritativo, mas preserva entradas locais ainda não sincronizadas
     const remote = purgeOldBookings(remoteBookings || {});
     const merged = Object.assign({}, state.bookings);
@@ -5126,12 +5130,10 @@ async function confirmBooking(mode){
       } else {
         console.error('[Supabase REST] Falha ao criar agendamento:', result.errorText);
         setSyncText('Falha ao salvar no Supabase — salvando localmente');
-        showToast('ERRO SUPABASE: ' + (result.errorText || 'sem detalhes'), 8000);
       }
     }catch(e){
       console.error('[Supabase REST] Exceção ao criar agendamento:', e);
       setSyncText('Erro de conexão — salvando localmente');
-      showToast('ERRO CONEXÃO: ' + (e && e.message ? e.message : String(e)), 8000);
     }
   }
 
