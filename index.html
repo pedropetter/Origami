@@ -113,61 +113,6 @@ img{max-width:100%;display:block}
 }
 .origami-shadow{box-shadow:var(--shadow-fold)}
 .origami-corner{position:relative}
-/* ===== PLAN LOGIN PANEL ===== */
-.plan-login-banner{
-  margin-bottom:16px;
-  border:1px solid rgba(201,168,76,.28);
-  background:rgba(201,168,76,.04);
-}
-.plan-login-toggle{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:14px 16px;
-  cursor:pointer;
-  font-size:.72rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--gold);
-  font-weight:700;
-  user-select:none;
-  transition:background .2s;
-}
-.plan-login-toggle:hover{background:rgba(201,168,76,.08)}
-.plan-login-arrow{margin-left:auto;transition:transform .2s}
-.plan-login-arrow.open{transform:rotate(90deg)}
-.plan-login-panel{padding:0 16px 16px}
-.plan-login-msg{
-  margin-top:10px;
-  padding:10px 12px;
-  font-size:.76rem;
-  line-height:1.7;
-  display:none;
-}
-.plan-login-msg.error{display:block;background:rgba(139,26,26,.18);border:1px solid rgba(139,26,26,.4);color:#f2c7c7}
-.plan-login-msg.success{display:block;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.35);color:var(--gold)}
-.plan-auth-badge{
-  margin-top:12px;
-  padding:12px 14px;
-  background:rgba(201,168,76,.08);
-  border:1px solid rgba(201,168,76,.3);
-  border-left:3px solid var(--gold);
-  font-size:.76rem;
-  line-height:1.7;
-  color:var(--paper);
-}
-.plan-auth-badge strong{color:var(--gold);display:block;margin-bottom:4px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
-.plan-auth-badge .plan-auth-limit{
-  display:inline-block;
-  margin-top:6px;
-  padding:4px 10px;
-  background:rgba(201,168,76,.18);
-  border:1px solid rgba(201,168,76,.28);
-  font-size:.66rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--gold);
-}
 .origami-corner::after{
   content:"";
   position:absolute;
@@ -1636,7 +1581,6 @@ footer{border-top:1px solid rgba(201,168,76,.12);background:#0b0b0b}
 .subscriber-status.ativo{color:#d6ffd6}
 .subscriber-status.pendente{color:#ffe9a3}
 .subscriber-status.pausado{color:#d8e8ff}
-.subscriber-status.expirado{color:#ffd9a6}
 .subscriber-status.cancelado{color:#ffcccc}
 .subscriber-empty{
   padding:24px;
@@ -2363,8 +2307,122 @@ details[open] summary{margin-bottom:0}
   100%{background-position:-200% 0}
 }
 
+/* ===== PLAN LOGIN PANEL ===== */
+.plan-login-banner{
+  margin-bottom:16px;
+  border:1px solid rgba(201,168,76,.28);
+  background:rgba(201,168,76,.04);
+}
+.plan-login-toggle{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 16px;
+  cursor:pointer;
+  font-size:.72rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:700;
+  user-select:none;
+  transition:background .2s;
+}
+.plan-login-toggle:hover{background:rgba(201,168,76,.08)}
+.plan-login-arrow{margin-left:auto;transition:transform .2s}
+.plan-login-arrow.open{transform:rotate(90deg)}
+.plan-login-panel{padding:0 16px 16px}
+.plan-login-msg{
+  margin-top:10px;
+  padding:10px 12px;
+  font-size:.76rem;
+  line-height:1.7;
+  display:none;
+}
+.plan-login-msg.error{display:block;background:rgba(139,26,26,.18);border:1px solid rgba(139,26,26,.4);color:#f2c7c7}
+.plan-login-msg.success{display:block;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.35);color:var(--gold)}
+.plan-auth-badge{
+  margin-top:12px;
+  padding:12px 14px;
+  background:rgba(201,168,76,.08);
+  border:1px solid rgba(201,168,76,.3);
+  border-left:3px solid var(--gold);
+  font-size:.76rem;
+  line-height:1.7;
+  color:var(--paper);
+}
+.plan-auth-badge strong{color:var(--gold);display:block;margin-bottom:4px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
+.plan-auth-badge .plan-auth-limit{
+  display:inline-block;
+  margin-top:6px;
+  padding:4px 10px;
+  background:rgba(201,168,76,.18);
+  border:1px solid rgba(201,168,76,.28);
+  font-size:.66rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+
+/* ===== PLAN CARDS ===== */
+#planos{background:linear-gradient(180deg,#111 0,#161616 100%)}
+.plans-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+  margin-top:38px;
+}
+.plan-card{
+  padding:26px 22px;
+  border:1px solid rgba(201,168,76,.16);
+  background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01));
+  display:flex;
+  flex-direction:column;
+}
+.plan-card.featured{
+  border-color:rgba(201,168,76,.45);
+  background:linear-gradient(180deg,rgba(201,168,76,.07),rgba(255,255,255,.01));
+}
+.plan-kicker{
+  font-size:.62rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+.plan-name{
+  font-family:var(--serif);
+  font-size:2rem;
+  line-height:.95;
+  margin-bottom:14px;
+}
+.plan-art{width:100%;height:auto;margin-bottom:14px;opacity:.9}
+.plan-copy{color:var(--white-dim);line-height:1.8;font-size:.88rem;margin-bottom:16px}
+.plan-price{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:2.5rem;
+  color:var(--gold);
+  line-height:1;
+  margin-bottom:16px;
+}
+.plan-price small{font-family:var(--sans);font-style:normal;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--white-dim)}
+.plan-list{display:grid;gap:10px;margin-bottom:22px;flex:1}
+.plan-list div{
+  color:var(--white-dim);
+  padding-left:16px;
+  position:relative;
+  line-height:1.65;
+  font-size:.88rem;
+}
+.plan-list div::before{content:"";position:absolute;left:0;top:.65em;width:7px;height:1px;background:var(--gold)}
+.plan-actions{display:flex;flex-direction:column;gap:8px;margin-top:auto}
+
+/* ===== CHECKOUT PLAN FIELDS ===== */
+.plan-checkout-password-fields{margin-top:16px;display:grid;gap:12px}
+.checkout-pix-section{margin-top:18px}
+
 /* RESPONSIVE ADDITIONS */
-@media (max-width:1080px){.steps-grid{grid-template-columns:1fr}.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:1080px){.steps-grid{grid-template-columns:1fr}.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.plans-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:860px){.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:620px){.steps-grid{grid-template-columns:1fr}.gallery-grid{grid-template-columns:1fr}.gallery-form-row{grid-template-columns:1fr}}
 @media (max-width:620px){
@@ -2599,6 +2657,103 @@ details[open] summary{margin-bottom:0}
       <p class="section-copy">Trabalhos reais, clientes reais. Cada foto é um resultado entregue na cadeira da Origami.</p>
     </div>
     <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</section>
+
+<div class="zigzag-divider"></div>
+
+<section id="planos" class="section-shell section-pad">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">Planos mensais</div>
+      <h2 class="section-title">Mantenha o padrão em dia com planos feitos para quem quer <em>constância.</em></h2>
+      <p class="section-copy">Se você prefere estar sempre alinhado sem depender de encaixe, os planos mensais da Origami entregam prioridade, economia e frequência inteligente para seu visual nunca cair de nível.</p>
+    </div>
+    <div class="plans-grid">
+      <article class="plan-card origami-corner origami-shadow reveal">
+        <div class="plan-kicker">Plano Essencial</div>
+        <div class="plan-name">Origami Essencial</div>
+        <svg class="plan-art" viewBox="0 0 220 88" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <polygon points="28,44 60,14 94,44 60,74" stroke="#C9A84C" stroke-width="2" fill="rgba(201,168,76,.07)"/>
+          <line x1="60" y1="14" x2="60" y2="74" stroke="#F5F2EB" stroke-width="1.2" opacity=".6"/>
+          <line x1="28" y1="44" x2="94" y2="44" stroke="#F5F2EB" stroke-width="1.2" opacity=".6"/>
+          <line x1="122" y1="24" x2="196" y2="24" stroke="#C9A84C" stroke-width="2"/>
+          <line x1="122" y1="44" x2="184" y2="44" stroke="#C9A84C" stroke-width="2" opacity=".75"/>
+          <line x1="122" y1="64" x2="172" y2="64" stroke="#C9A84C" stroke-width="2" opacity=".55"/>
+        </svg>
+        <div class="plan-copy">Ideal para quem quer manter o corte em dia com frequência estratégica e custo mais inteligente ao longo do mês.</div>
+        <div class="plan-price">R$ 79 <small>/mês</small></div>
+        <div class="plan-list">
+          <div>2 cortes por mês</div>
+          <div>Prioridade básica na agenda</div>
+          <div>Prioridade em remarcações</div>
+          <div>Renovação simples pelo WhatsApp</div>
+        </div>
+        <div class="plan-actions">
+          <button class="btn-outline" type="button" onclick="openPlanCheckout('essencial')">Quero esse plano</button>
+        </div>
+      </article>
+      <article class="plan-card featured origami-corner origami-shadow reveal">
+        <div class="plan-kicker">Plano mais escolhido</div>
+        <div class="plan-name">Origami Signature</div>
+        <svg class="plan-art" viewBox="0 0 220 88" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <polygon points="88,10 120,30 100,35 128,53 84,47 70,76 62,45 30,56 54,34 36,20 68,24" stroke="#C9A84C" stroke-width="2" fill="rgba(201,168,76,.1)"/>
+          <line x1="68" y1="24" x2="84" y2="47" stroke="#F5F2EB" stroke-width="1.3" opacity=".8"/>
+          <line x1="54" y1="34" x2="100" y2="35" stroke="#F5F2EB" stroke-width="1.3" opacity=".6"/>
+          <line x1="70" y1="76" x2="84" y2="47" stroke="#F5F2EB" stroke-width="1.3" opacity=".6"/>
+          <polyline points="152,18 176,36 154,54 184,72" stroke="#C9A84C" stroke-width="2"/>
+        </svg>
+        <div class="plan-copy">Para quem quer presença constante, barba sempre alinhada e uma rotina de cuidado mais completa sem pagar atendimento avulso toda vez.</div>
+        <div class="plan-price">R$ 129 <small>/mês</small></div>
+        <div class="plan-list">
+          <div>2 cortes + 1 barba por mês</div>
+          <div>Prioridade alta na agenda</div>
+          <div>Prioridade alta em remarcações</div>
+          <div>Condição especial para upgrades de serviço</div>
+        </div>
+        <div class="plan-actions">
+          <button class="btn" type="button" onclick="openPlanCheckout('signature')">Assinar agora</button>
+          <a class="btn-outline" href="https://wa.me/5561994259943?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20plano%20Origami%20Signature." target="_blank" rel="noopener">Falar no WhatsApp</a>
+        </div>
+      </article>
+      <article class="plan-card origami-corner origami-shadow reveal">
+        <div class="plan-kicker">Plano premium</div>
+        <div class="plan-name">Origami Black</div>
+        <svg class="plan-art" viewBox="0 0 220 88" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <circle cx="36" cy="22" r="11" stroke="#C9A84C" stroke-width="2"/>
+          <circle cx="36" cy="58" r="11" stroke="#C9A84C" stroke-width="2"/>
+          <circle cx="53" cy="40" r="4" fill="#C9A84C" opacity=".5"/>
+          <line x1="58" y1="38" x2="126" y2="14" stroke="#C9A84C" stroke-width="2"/>
+          <line x1="58" y1="42" x2="126" y2="66" stroke="#C9A84C" stroke-width="2"/>
+          <polygon points="150,12 190,22 170,46 198,60 146,68 156,40" stroke="#C9A84C" stroke-width="2" fill="rgba(201,168,76,.08)"/>
+        </svg>
+        <div class="plan-copy">Pensado para quem exige imagem impecável durante o mês inteiro e quer ter prioridade máxima, flexibilidade e vantagens reais.</div>
+        <div class="plan-price">R$ 189 <small>/mês</small></div>
+        <div class="plan-list">
+          <div>4 atendimentos flexíveis por mês</div>
+          <div>Prioridade máxima de encaixe</div>
+          <div>Prioridade máxima em remarcações</div>
+          <div>Benefício exclusivo para cliente recorrente</div>
+        </div>
+        <div class="plan-actions">
+          <button class="btn-outline" type="button" onclick="openPlanCheckout('black')">Ir para pagamento</button>
+        </div>
+      </article>
+    </div>
+    <div class="reveal" style="margin-top:42px;display:grid;gap:14px;max-width:680px">
+      <details style="padding:18px 20px;border:1px solid var(--line-strong);background:rgba(255,255,255,.015);cursor:pointer">
+        <summary style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);list-style:none">Os cortes expiram ao fim do mês?</summary>
+        <p style="margin-top:12px;color:var(--white-dim);line-height:1.85">Sim. Os atendimentos incluídos no plano são válidos dentro do mês vigente e não acumulam para o mês seguinte. A ideia é manter a frequência ideal para o seu visual.</p>
+      </details>
+      <details style="padding:18px 20px;border:1px solid var(--line-strong);background:rgba(255,255,255,.015);cursor:pointer">
+        <summary style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);list-style:none">Como funciona o agendamento como assinante?</summary>
+        <p style="margin-top:12px;color:var(--white-dim);line-height:1.85">Assinantes têm prioridade na agenda. Você agenda normalmente pelo site ou pelo WhatsApp — ao confirmar o plano ativo, seu horário entra na fila preferencial antes dos clientes avulsos.</p>
+      </details>
+      <details style="padding:18px 20px;border:1px solid var(--line-strong);background:rgba(255,255,255,.015);cursor:pointer">
+        <summary style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);list-style:none">Posso cancelar quando quiser?</summary>
+        <p style="margin-top:12px;color:var(--white-dim);line-height:1.85">Sim. O cancelamento é feito pelo WhatsApp com pelo menos 5 dias de antecedência antes da próxima renovação. Não há fidelidade mínima obrigatória.</p>
+      </details>
+    </div>
   </div>
 </section>
 
@@ -3038,13 +3193,13 @@ details[open] summary{margin-bottom:0}
             <div class="field"><label for="checkoutName">Nome completo</label><input id="checkoutName" type="text" placeholder="Seu nome"></div>
             <div class="field"><label for="checkoutPhone">WhatsApp</label><input id="checkoutPhone" type="tel" placeholder="(61) 99425-9943"></div>
           </div>
-          <div class="field-grid" style="margin-top:12px">
-            <div class="field"><label for="planCheckoutPassword">Senha de acesso</label><input id="planCheckoutPassword" type="password" placeholder="Crie uma senha de acesso (mín. 4 caracteres)" autocomplete="new-password"></div>
-            <div class="field"><label for="planCheckoutPasswordConfirm">Confirmar senha</label><input id="planCheckoutPasswordConfirm" type="password" placeholder="Confirme sua senha" autocomplete="new-password"></div>
-          </div>
           <div class="field" id="checkoutAddressField"><label for="checkoutAddress" id="checkoutAddressLabel">Endereço para entrega</label><input id="checkoutAddress" type="text" placeholder="Rua, número, bairro, cidade - UF"></div>
+          <div class="plan-checkout-password-fields" id="planCheckoutPasswordFields" style="display:none">
+            <div class="field" style="margin-top:0"><label for="planCheckoutPassword">Senha de acesso</label><input id="planCheckoutPassword" type="password" placeholder="Crie uma senha para acessar seu plano"></div>
+            <div class="field" style="margin-top:0"><label for="planCheckoutPasswordConfirm">Confirmar senha</label><input id="planCheckoutPasswordConfirm" type="password" placeholder="Repita a senha"></div>
+          </div>
         </div>
-        <div class="checkout-section" id="checkoutPixSection">
+        <div class="checkout-section">
           <div class="mini-title">Pagamento via PIX</div>
           <div class="pix-box origami-corner origami-shadow">
             <div class="pix-amount" id="pixAmount">R$ 0,00</div>
@@ -3075,13 +3230,13 @@ details[open] summary{margin-bottom:0}
             </div>
             <div class="payment-policy" id="paymentPolicyNote">Seu atendimento só entra como confirmado depois do pagamento. Em caso de falta no horário marcado, haverá apenas <strong>50% de estorno</strong> do valor pago.</div>
           </div>
+          <button class="btn" style="width:100%;margin-top:18px" type="button" id="confirmPaymentBtn" onclick="confirmPayment()">Já realizei o pagamento</button>
         </div>
-        <button class="btn" style="width:100%;margin-top:18px" type="button" id="confirmPaymentBtn" onclick="confirmPayment()">Já realizei o pagamento</button>
       </div>
       <div class="payment-success" id="paymentSuccess">
         <h4 id="paymentSuccessHeading">Plano reservado</h4>
         <p id="paymentSuccessText"></p>
-        <div class="proof-box origami-corner origami-shadow" id="paymentInstructionsBox">
+        <div class="proof-box origami-corner origami-shadow">
           <div class="mini-title">Como enviar o comprovante</div>
           <ol>
             <li id="proofStep1">Salve o comprovante do PIX.</li>
@@ -3337,7 +3492,7 @@ details[open] summary{margin-bottom:0}
               <div class="field" style="margin-top:0"><label for="subscriberName">Nome</label><input id="subscriberName" type="text" placeholder="Nome do assinante"></div>
               <div class="field" style="margin-top:0"><label for="subscriberPhone">WhatsApp</label><input id="subscriberPhone" type="tel" placeholder="(61) 99425-9943"></div>
               <div class="field" style="margin-top:0"><label for="subscriberPlan">Plano</label><select id="subscriberPlan"></select></div>
-              <div class="field" style="margin-top:0"><label for="subscriberStatus">Status</label><select id="subscriberStatus"><option value="ativo">Ativo</option><option value="pendente">Pendente</option><option value="pausado">Pausado</option><option value="expirado">Expirado</option><option value="cancelado">Cancelado</option></select></div>
+              <div class="field" style="margin-top:0"><label for="subscriberStatus">Status</label><select id="subscriberStatus"><option value="ativo">Ativo</option><option value="pendente">Pendente</option><option value="pausado">Pausado</option><option value="cancelado">Cancelado</option></select></div>
               <button class="btn-outline" type="button" onclick="addSubscriberManually()">Registrar</button>
             </div>
             <div class="subscriber-list" id="subscriberList"></div>
@@ -3787,48 +3942,11 @@ function resetPlanProofPanel(){
   if(status) status.textContent = '';
 }
 
-function resetPlanCheckoutPasswordFields(){
-  const passwordField = document.getElementById('planCheckoutPassword');
-  const confirmField = document.getElementById('planCheckoutPasswordConfirm');
-  if(passwordField) passwordField.value = '';
-  if(confirmField) confirmField.value = '';
-}
-
-function toggleCheckoutPixSection(show){
-  const section = document.getElementById('checkoutPixSection');
-  if(section) section.style.display = show ? '' : 'none';
-}
-
-function toggleTestPlanActivateButton(show){
-  const button = document.getElementById('testPlanActivateBtn');
-  if(button) button.style.display = show ? '' : 'none';
-}
-
-function togglePaymentInstructionsBox(show){
-  const box = document.getElementById('paymentInstructionsBox');
-  if(box) box.style.display = show ? '' : 'none';
-}
-
 function togglePlanProofPanel(show){
   const panel = document.getElementById('planProofPanel');
   if(!panel) return;
   panel.classList.toggle('show', !!show);
   if(!show) resetPlanProofPanel();
-}
-
-async function activatePendingTestPlan(){
-  if(!state.pendingTestPlanId){
-    showToast('Nenhum plano de teste pendente para ativar');
-    return;
-  }
-  await updateSubscriberStatus(state.pendingTestPlanId, 'ativo');
-  const subscriber = state.subscribers.find(item => item.id === state.pendingTestPlanId);
-  const firstName = subscriber ? subscriber.name.split(' ')[0] : 'Cliente';
-  document.getElementById('paymentSuccessHeading').textContent = 'Plano de teste ativo';
-  document.getElementById('paymentSuccessText').textContent = firstName + ', seu plano de teste foi ativado com sucesso. O cadastro já está contando no sistema e pronto para homologação.';
-  toggleTestPlanActivateButton(false);
-  state.pendingTestPlanId = null;
-  showToast('Plano de teste ativado');
 }
 
 function readFileAsDataUrl(file){
@@ -4195,13 +4313,6 @@ function decodeRemoteBookingService(value){
 }
 
 function normalizeRemoteSubscriber(row){
-  let monthlyUsages = [];
-  try{
-    if(Array.isArray(row.monthly_usages)) monthlyUsages = row.monthly_usages;
-    else if(typeof row.monthly_usages === 'string' && row.monthly_usages.trim()) monthlyUsages = JSON.parse(row.monthly_usages);
-  }catch(error){
-    monthlyUsages = [];
-  }
   return {
     id: row.id,
     name: row.name || '',
@@ -4211,48 +4322,17 @@ function normalizeRemoteSubscriber(row){
     status: row.status || 'pendente',
     source: row.source || 'site',
     notes: row.notes || '',
-    passwordHash: row.password_hash || '',
-    passwordSetAt: row.password_set_at || null,
-    activatedAt: row.activated_at || null,
-    expiresAt: row.expires_at || null,
-    monthlyUsages,
     createdAt: row.created_at || new Date().toISOString(),
     updatedAt: row.updated_at || row.created_at || new Date().toISOString()
   };
 }
 
-function normalizeSubscriberRecord(record){
-  return {
-    id: record.id || ('sub-' + Date.now()),
-    name: record.name || '',
-    phone: record.phone || '',
-    planId: record.planId || '',
-    amount: Number(record.amount || 0),
-    status: record.status || 'pendente',
-    source: record.source || 'site',
-    notes: record.notes || '',
-    passwordHash: record.passwordHash || '',
-    passwordSetAt: record.passwordSetAt || null,
-    activatedAt: record.activatedAt || null,
-    expiresAt: record.expiresAt || null,
-    monthlyUsages: Array.isArray(record.monthlyUsages) ? record.monthlyUsages : [],
-    createdAt: record.createdAt || new Date().toISOString(),
-    updatedAt: record.updatedAt || record.createdAt || new Date().toISOString()
-  };
-}
-
-function addThirtyDaysIso(baseIso){
-  const base = baseIso ? new Date(baseIso) : new Date();
-  return new Date(base.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString();
-}
-
 function pruneStatusesMap(bookings, statuses){
   const next = {};
   Object.keys(statuses || {}).forEach(key => {
-    const pipeIdx = key.indexOf('|');
-    if(pipeIdx === -1) return;
-    const date = key.slice(0, pipeIdx);
-    const slot = key.slice(pipeIdx + 1);
+    const parts = key.split('|');
+    const date = parts[0];
+    const slot = parts.slice(1).join('|');
     if(bookings[date] && bookings[date][slot]) next[key] = statuses[key];
   });
   return next;
@@ -4337,40 +4417,25 @@ async function writeSupabaseAdminState(){
 }
 
 async function readSupabaseSubscribers(){
-  const richSelect = 'id,name,phone,plan_id,amount,status,source,notes,password_hash,password_set_at,activated_at,expires_at,monthly_usages,created_at,updated_at';
-  const legacySelect = 'id,name,phone,plan_id,amount,status,source,notes,created_at,updated_at';
-  const attempt = async (select) => {
-    const url = SUPABASE.url + '/rest/v1/' + SUPABASE.subscribersTable + '?select=' + select + '&order=created_at.desc';
-    const response = await fetch(url, { method: 'GET', headers: supabaseHeaders() });
-    if(!response.ok) throw new Error('Falha ao ler assinaturas no Supabase: ' + response.status);
-    const rows = await response.json();
-    return rows.map(normalizeRemoteSubscriber);
-  };
-  try{
-    return await attempt(richSelect);
-  }catch(error){
-    return await attempt(legacySelect);
-  }
+  const url = SUPABASE.url + '/rest/v1/' + SUPABASE.subscribersTable + '?select=id,name,phone,plan_id,amount,status,source,notes,created_at,updated_at&order=created_at.desc';
+  const response = await fetch(url, { method: 'GET', headers: supabaseHeaders() });
+  if(!response.ok) throw new Error('Falha ao ler assinaturas no Supabase: ' + response.status);
+  const rows = await response.json();
+  return rows.map(normalizeRemoteSubscriber);
 }
 
 async function upsertSupabaseSubscriber(record){
-  const normalized = normalizeSubscriberRecord(record);
   const payload = {
-    id: normalized.id,
-    name: normalized.name,
-    phone: normalized.phone,
-    plan_id: normalized.planId,
-    amount: Number(normalized.amount || 0),
-    status: normalized.status || 'pendente',
-    source: normalized.source || 'site',
-    notes: normalized.notes || '',
-    password_hash: normalized.passwordHash || '',
-    password_set_at: normalized.passwordSetAt || null,
-    activated_at: normalized.activatedAt || null,
-    expires_at: normalized.expiresAt || null,
-    monthly_usages: normalized.monthlyUsages || [],
-    created_at: normalized.createdAt || new Date().toISOString(),
-    updated_at: normalized.updatedAt || new Date().toISOString()
+    id: record.id,
+    name: record.name,
+    phone: record.phone,
+    plan_id: record.planId,
+    amount: Number(record.amount || 0),
+    status: record.status || 'pendente',
+    source: record.source || 'site',
+    notes: record.notes || '',
+    created_at: record.createdAt || new Date().toISOString(),
+    updated_at: record.updatedAt || new Date().toISOString()
   };
   const response = await fetch(SUPABASE.url + '/rest/v1/' + SUPABASE.subscribersTable, {
     method: 'POST',
@@ -4378,27 +4443,8 @@ async function upsertSupabaseSubscriber(record){
     body: JSON.stringify([payload])
   });
   if(!response.ok){
-    const legacyPayload = {
-      id: normalized.id,
-      name: normalized.name,
-      phone: normalized.phone,
-      plan_id: normalized.planId,
-      amount: Number(normalized.amount || 0),
-      status: normalized.status || 'pendente',
-      source: normalized.source || 'site',
-      notes: normalized.notes || '',
-      created_at: normalized.createdAt || new Date().toISOString(),
-      updated_at: normalized.updatedAt || new Date().toISOString()
-    };
-    const fallback = await fetch(SUPABASE.url + '/rest/v1/' + SUPABASE.subscribersTable, {
-      method: 'POST',
-      headers: supabaseHeaders({ Prefer: 'resolution=merge-duplicates,return=minimal' }),
-      body: JSON.stringify([legacyPayload])
-    });
-    if(!fallback.ok){
-      const errorText = await fallback.text().catch(() => '');
-      throw new Error(errorText || ('Falha ao salvar assinatura no Supabase: ' + fallback.status));
-    }
+    const errorText = await response.text().catch(() => '');
+    throw new Error(errorText || ('Falha ao salvar assinatura no Supabase: ' + response.status));
   }
 }
 
@@ -4433,7 +4479,7 @@ async function syncStateFromSupabase(){
     return true;
   }catch(error){
     console.error(error);
-    setSyncText('Falha no Supabase → usando modo local');
+    setSyncText('Falha no Supabase ? usando modo local');
     return false;
   }
 }
@@ -4473,38 +4519,26 @@ function subscriberStatusLabel(status){
     ativo: 'Ativo',
     pendente: 'Pendente',
     pausado: 'Pausado',
-    cancelado: 'Cancelado',
-    expirado: 'Expirado'
+    cancelado: 'Cancelado'
   })[status] || status;
 }
 
-async function upsertSubscriberRecord(record, options = {}){
-  const normalized = normalizeSubscriberRecord(record);
+async function upsertSubscriberRecord(record){
   if(hasSupabaseConfig()){
     try{
-      await upsertSupabaseSubscriber(normalized);
-      if(options.reload !== false) await loadSubscribers();
+      await upsertSupabaseSubscriber(record);
+      await loadSubscribers();
       return;
     }catch(error){
       console.error(error);
-      await saveSubscriberRecord(normalized);
+      await saveSubscriberRecord(record);
       setSyncText('Falha no Supabase ? assinatura salva localmente');
-      if(options.reload !== false) await loadSubscribers(true);
+      await loadSubscribers(true);
       return;
     }
   }
-  await saveSubscriberRecord(normalized);
-  if(options.reload !== false) await loadSubscribers(true);
-}
-
-async function checkSubscriberExpiration(subscriber){
-  if(!subscriber || subscriber.status !== 'ativo' || !subscriber.expiresAt) return subscriber;
-  if(new Date() > new Date(subscriber.expiresAt)){
-    const updated = { ...subscriber, status: 'expirado', updatedAt: new Date().toISOString() };
-    await upsertSubscriberRecord(updated, { reload: false });
-    return updated;
-  }
-  return subscriber;
+  await saveSubscriberRecord(record);
+  await loadSubscribers(true);
 }
 
 function getBookingKey(dateStr, slot){
@@ -4543,24 +4577,14 @@ function loadState(){
 async function loadSubscribers(forceLocal = false){
   if(!forceLocal && hasSupabaseConfig()){
     try{
-      const remoteSubscribers = (await readSupabaseSubscribers()).map(normalizeSubscriberRecord).sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
-      const checked = [];
-      for(const subscriber of remoteSubscribers){
-        checked.push(await checkSubscriberExpiration(subscriber));
-      }
-      state.subscribers = checked.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+      state.subscribers = (await readSupabaseSubscribers()).sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
       return;
     }catch(error){
       console.error(error);
       setSyncText('Falha no Supabase ? assinaturas em modo local');
     }
   }
-  const localSubscribers = (await readSubscribersFromDb()).map(normalizeSubscriberRecord).sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
-  const checked = [];
-  for(const subscriber of localSubscribers){
-    checked.push(await checkSubscriberExpiration(subscriber));
-  }
-  state.subscribers = checked.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+  state.subscribers = (await readSubscribersFromDb()).sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
 }
 
 function saveBookings(){
@@ -4582,7 +4606,6 @@ function disableStoreFeatures(){
 }
 function saveStock(){ writeStore(STORAGE.stock, state.stock); }
 function saveStatuses(){
-  // Prune only entries whose booking slot no longer exists
   state.statuses = pruneStatusesMap(state.bookings, state.statuses);
   writeStore(STORAGE.statuses, state.statuses);
 }
@@ -4818,12 +4841,18 @@ function openCheckout(){
   document.body.classList.add('no-scroll');
 }
 
-function openPlanCheckoutLegacy(planId){
+function openPlanCheckout(planId){
   const plan = getPlanById(planId);
   if(!plan) return;
   state.checkoutMode = 'plan';
   state.selectedPlanId = planId;
-  document.getElementById('checkoutTitle').textContent = 'Pagamento do Plano';
+  state.pendingPlanProof = null;
+  state.pendingTestPlanId = null;
+  togglePlanProofPanel(false);
+  toggleTestPlanActivateButton(false);
+  togglePaymentInstructionsBox(true);
+  resetPlanCheckoutPasswordFields();
+  document.getElementById('checkoutTitle').textContent = plan.price === 0 ? 'Ativar Plano de Teste' : 'Pagamento do Plano';
   document.getElementById('checkoutSummaryTitle').textContent = 'Resumo da assinatura';
   document.getElementById('checkoutItems').innerHTML = `
     <div class="checkout-item"><span>${plan.name}</span><strong>${money(plan.price)}</strong></div>
@@ -4832,8 +4861,12 @@ function openPlanCheckoutLegacy(planId){
   document.getElementById('checkoutTotal').textContent = money(plan.price);
   document.getElementById('pixAmount').textContent = money(plan.price);
   document.getElementById('checkoutAddressField').style.display = 'none';
-  document.getElementById('confirmPaymentBtn').textContent = 'Já paguei o plano';
-  document.getElementById('paymentSuccessHeading').textContent = 'Plano reservado';
+  const pwFields = document.getElementById('planCheckoutPasswordFields');
+  if(pwFields) pwFields.style.display = 'grid';
+  toggleCheckoutPixSection(plan.price > 0);
+  document.getElementById('proofLink').style.display = '';
+  document.getElementById('confirmPaymentBtn').textContent = plan.price === 0 ? 'Criar cadastro de teste' : 'Já paguei o plano';
+  document.getElementById('paymentSuccessHeading').textContent = plan.price === 0 ? 'Cadastro de teste' : 'Plano em análise';
   document.getElementById('paymentSuccess').classList.remove('show');
   document.getElementById('checkoutForm').style.display = 'block';
   document.getElementById('checkoutOverlay').classList.add('open');
@@ -4841,7 +4874,19 @@ function openPlanCheckoutLegacy(planId){
   document.body.classList.add('no-scroll');
 }
 
+function openPlanCheckoutLegacy(planId){
+  openPlanCheckout(planId);
+}
+
 function closeCheckout(){
+  state.pendingPlanProof = null;
+  state.pendingTestPlanId = null;
+  togglePlanProofPanel(false);
+  toggleTestPlanActivateButton(false);
+  togglePaymentInstructionsBox(true);
+  toggleCheckoutPixSection(true);
+  resetPlanCheckoutPasswordFields();
+  document.getElementById('proofLink').style.display = '';
   document.getElementById('checkoutOverlay').classList.remove('open');
   document.getElementById('checkoutWrap').classList.remove('open');
   document.body.classList.remove('no-scroll');
@@ -4865,59 +4910,116 @@ async function applyStockReduction(items){
   renderAdmin();
 }
 
-async function confirmPaymentLegacy(){
+async function confirmPayment(){
   const name = document.getElementById('checkoutName').value.trim();
   const phone = document.getElementById('checkoutPhone').value.trim();
   const address = document.getElementById('checkoutAddress').value.trim();
+  const password = document.getElementById('planCheckoutPassword') ? document.getElementById('planCheckoutPassword').value : '';
+  const passwordConfirm = document.getElementById('planCheckoutPasswordConfirm') ? document.getElementById('planCheckoutPasswordConfirm').value : '';
   if(!name){ showToast('Informe seu nome'); return; }
   if(!phone){ showToast('Informe seu WhatsApp'); return; }
   if(state.checkoutMode === 'store' && !address){ showToast('Informe o endereço'); return; }
+
   const items = cartDetailedItems();
   const total = state.checkoutMode === 'plan' ? (getPlanById(state.selectedPlanId).price || 0) : cartTotal();
   let message = '';
+
   if(state.checkoutMode === 'plan'){
     const plan = getPlanById(state.selectedPlanId);
     if(!plan) return;
-    const existingSubscriber = state.subscribers.find(item => item.phone === phone && item.planId === plan.id && item.status !== 'cancelado');
-    await upsertSubscriberRecord({
-      id: existingSubscriber ? existingSubscriber.id : 'sub-' + Date.now(),
-      name,
-      phone,
+    if(!password || !passwordConfirm){
+      showToast('Preencha e confirme sua senha de acesso');
+      return;
+    }
+    if(password.length < 4){
+      showToast('A senha precisa ter no mínimo 4 caracteres');
+      return;
+    }
+    if(password !== passwordConfirm){
+      showToast('As senhas não coincidem');
+      return;
+    }
+    const passwordHash = await sha256Hex(password);
+    const passwordSetAt = new Date().toISOString();
+    if(plan.price === 0){
+      const now = new Date().toISOString();
+      const existingSubscriber = state.subscribers.find(item => item.phone === phone && item.planId === plan.id && item.status !== 'cancelado');
+      const subscriberId = existingSubscriber ? existingSubscriber.id : ('sub-' + Date.now());
+      await upsertSubscriberRecord({
+        ...(existingSubscriber || {}),
+        id: subscriberId,
+        name, phone,
+        planId: plan.id,
+        amount: plan.price,
+        status: existingSubscriber && existingSubscriber.status === 'ativo' ? 'ativo' : 'pendente',
+        source: 'site',
+        notes: 'Plano gratuito de teste criado sem cobrança para homologação',
+        passwordHash, passwordSetAt,
+        activatedAt: existingSubscriber ? (existingSubscriber.activatedAt || null) : null,
+        expiresAt: existingSubscriber ? (existingSubscriber.expiresAt || null) : null,
+        monthlyUsages: existingSubscriber && Array.isArray(existingSubscriber.monthlyUsages) ? existingSubscriber.monthlyUsages : [],
+        createdAt: existingSubscriber ? existingSubscriber.createdAt : now,
+        updatedAt: now
+      });
+      renderAdmin();
+      document.getElementById('checkoutForm').style.display = 'none';
+      document.getElementById('paymentSuccess').classList.add('show');
+      document.getElementById('paymentSuccessHeading').textContent = existingSubscriber && existingSubscriber.status === 'ativo' ? 'Plano de teste atualizado' : 'Cadastro de teste criado';
+      document.getElementById('paymentSuccessText').textContent = existingSubscriber && existingSubscriber.status === 'ativo'
+        ? name + ', seu plano de teste já estava ativo e os dados de acesso foram atualizados.'
+        : name + ', seu cadastro de teste foi criado. Clique em ativar para iniciar o ciclo sem pagamento.';
+      document.getElementById('proofLink').style.display = 'none';
+      togglePaymentInstructionsBox(false);
+      togglePlanProofPanel(false);
+      toggleTestPlanActivateButton(!(existingSubscriber && existingSubscriber.status === 'ativo'));
+      state.pendingTestPlanId = !(existingSubscriber && existingSubscriber.status === 'ativo') ? subscriberId : null;
+      resetPlanCheckoutPasswordFields();
+      showToast(existingSubscriber && existingSubscriber.status === 'ativo' ? 'Plano de teste atualizado' : 'Cadastro de teste criado');
+      return;
+    }
+    state.pendingPlanProof = {
+      proofId: 'plan-proof-' + Date.now(),
+      name, phone,
       planId: plan.id,
       amount: plan.price,
-      status: 'pendente',
-      source: 'site',
-      notes: 'Assinatura iniciada pelo fluxo do site',
-      createdAt: existingSubscriber ? existingSubscriber.createdAt : new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    });
+      passwordHash, passwordSetAt,
+      createdAt: new Date().toISOString()
+    };
     message = [
       'Olá! Acabei de pagar um plano mensal da Barbearia Origami.',
-      '',
-      'Nome: ' + name,
-      'WhatsApp: ' + phone,
-      'Plano: ' + plan.name,
-      'Valor: ' + money(plan.price),
-      '',
-      'Benefícios:',
+      '', 'Nome: ' + name, 'WhatsApp: ' + phone,
+      'Plano: ' + plan.name, 'Valor: ' + money(plan.price),
+      '', 'Benefícios:',
       ...plan.items.map(item => '- ' + item),
-      '',
-      'Vou enviar o comprovante do PIX na sequência para ativar a assinatura.'
+      '', 'Vou enviar o comprovante do PIX na sequência para validar o valor e ativar a assinatura.'
     ].join('\n');
-  }else{
+  } else {
     message = ['Olá! Acabei de pagar um pedido na Barbearia Origami.','','Nome: ' + name,'WhatsApp: ' + phone,'Endereço: ' + address,'','Pedido:',...items.map(item => '- ' + item.product.name + ' x ' + item.qty + ' = ' + money(item.subtotal)),'','Total: ' + money(total),'','Vou enviar o comprovante do PIX na sequência.'].join('\n');
     await applyStockReduction(items);
     state.cart = [];
     saveCart();
     renderCart();
   }
+
   renderAdmin();
   document.getElementById('checkoutForm').style.display = 'none';
   document.getElementById('paymentSuccess').classList.add('show');
   document.getElementById('paymentSuccessText').textContent = state.checkoutMode === 'plan'
-    ? name + ', seu plano foi reservado. Agora envie o comprovante PIX pelo WhatsApp para ativarmos sua assinatura.'
+    ? name + ', seu plano ainda não entrou no cadastro. Envie o comprovante abaixo: o OCR tentará ler a imagem ou PDF e a assinatura só será criada se encontrar a chave PIX ' + CONFIG.pixKey + ', o valor exato do plano e a data de hoje.'
     : name + ', seu pedido foi registrado. Agora envie o comprovante PIX pelo WhatsApp para confirmar a entrega.';
+  togglePaymentInstructionsBox(true);
+  toggleTestPlanActivateButton(false);
   document.getElementById('proofLink').href = waLink(message);
+  if(state.checkoutMode === 'plan') resetPlanCheckoutPasswordFields();
+  togglePlanProofPanel(state.checkoutMode === 'plan');
+  if(state.checkoutMode === 'plan'){
+    const planStatus = document.getElementById('planProofStatus');
+    if(planStatus) planStatus.textContent = 'Plano: ' + getPlanById(state.selectedPlanId).name + ' ⬢ chave PIX: ' + CONFIG.pixKey + ' ⬢ valor: ' + money(total) + ' ⬢ data: ' + currentProofDateParts().br;
+  }
+}
+
+async function confirmPaymentLegacy(){
+  return confirmPayment();
 }
 
 function openDetail(){
@@ -5056,27 +5158,6 @@ async function confirmBooking(mode){
   if(!service){ showToast('Selecione um serviço'); return; }
   if(!calendarState.selectedDate || !calendarState.selectedSlot){ showToast('Selecione data e horário'); return; }
   if(!professional){ showToast('Selecione o profissional'); return; }
-
-  // === Verificação de autenticação por plano ===
-  const viaPlan = isBookingViaPlan(mode);
-  if(viaPlan){
-    const auth = state.planAuth[mode];
-    await loadSubscribers();
-    const subscriber = state.subscribers.find(s => s.id === auth.subscriberId);
-    if(!subscriber || subscriber.status !== 'ativo' || isPlanExpired(subscriber)){
-      showToast('Seu plano não está mais ativo. Refaça o login ou use pagamento avulso.');
-      clearPlanAuth(mode);
-      return;
-    }
-    const remaining = planRemainingAllowance(subscriber);
-    if(remaining <= 0){
-      const plan = getPlanById(subscriber.planId);
-      showToast('Limite de ' + (plan ? plan.monthlyAllowance : '?') + ' atendimentos do ciclo atingido. Use o pagamento avulso.');
-      clearPlanAuth(mode);
-      return;
-    }
-  }
-
   await refreshCalendarBookings(false);
   if(isSlotTaken(calendarState.selectedDate, calendarState.selectedSlot) || isSlotExpired(calendarState.selectedDate, calendarState.selectedSlot)){
     showToast('Esse horário não está mais disponível');
@@ -5085,9 +5166,6 @@ async function confirmBooking(mode){
     renderBookingSummary(mode);
     return;
   }
-
-  const dateStr = calendarState.selectedDate;
-  const slot = calendarState.selectedSlot;
   const bookingRecord = { name, phone, serviceId, professionalId, createdAt: new Date().toISOString(), paymentProofPendingAt: new Date().toISOString() };
   if(hasSupabaseConfig()){
     try{
@@ -5130,7 +5208,7 @@ async function confirmBooking(mode){
       return;
     }catch(error){
       console.error(error);
-      setSyncText('Falha na Function → usando fluxo local');
+      setSyncText('Falha na Function ? usando fluxo local');
     }
   }
   if(hasSupabaseConfig()){
@@ -5148,7 +5226,7 @@ async function confirmBooking(mode){
       }
     }catch(error){
       console.error(error);
-      setSyncText('Falha no Supabase → agendamento salvo localmente');
+      setSyncText('Falha no Supabase ? agendamento salvo localmente');
     }
   }
   if(!state.bookings[calendarState.selectedDate]) state.bookings[calendarState.selectedDate] = {};
@@ -5161,37 +5239,18 @@ async function confirmBooking(mode){
   renderAdmin();
   updateVacancies();
   setSyncText(hasSupabaseConfig() ? 'Agendamento em análise e sincronizado' : 'Agendamento em análise salvo localmente');
-
-  // Montar link WhatsApp
-  const waPayload = { name, phone, serviceName: service.name, servicePrice: service.price, professionalName: professional.name, date: dateStr, slot };
-  const link = waLink(buildWhatsAppBookingMessage(waPayload));
-
+  const payload = { name, phone, serviceName: service.name, servicePrice: service.price, professionalName: professional.name, date: calendarState.selectedDate, slot: calendarState.selectedSlot };
+  const link = waLink(buildWhatsAppBookingMessage(payload));
   bookingField(mode, 'success').classList.add('show');
   document.getElementById('bookingPixGate_' + mode).classList.remove('show');
-
-  if(viaPlan){
-    await recordPlanUsage(mode, dateStr, slot, serviceId);
-    const auth = state.planAuth[mode];
-    const sub = state.subscribers.find(s => s.id === auth.subscriberId);
-    const plan = sub ? getPlanById(sub.planId) : null;
-    const remaining = sub ? planRemainingAllowance(sub) : 0;
-    bookingField(mode, 'successText').textContent = name + ', seu horário de ' + slot + ' em ' + longDate(dateStr) + ' foi confirmado pelo seu plano ' + (plan ? plan.name : '') + '. Ainda restam ' + remaining + ' atendimento(s) neste ciclo.';
-    clearPlanAuth(mode);
-  } else {
-    bookingField(mode, 'successText').textContent = name + ', seu horário de ' + slot + ' em ' + longDate(dateStr) + ' foi registrado em análise para ' + service.name + ' com ' + professional.name + '. Envie o comprovante abaixo para confirmar automaticamente.';
-  }
-
+  bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi registrado em análise para ' + service.name + ' com ' + professional.name + '. Envie o comprovante abaixo para confirmar automaticamente.';
   bookingField(mode, 'successLink').href = link;
   const proofInput = proofField(mode, 'input');
   const proofName = proofField(mode, 'name');
   if(proofInput) proofInput.value = '';
   if(proofName) proofName.textContent = 'Nenhum comprovante selecionado.';
-  const successEl = bookingField(mode, 'success');
-  if(successEl){
-    const proofUpload = successEl.querySelector('.proof-upload');
-    if(proofUpload) proofUpload.style.display = viaPlan ? 'none' : '';
-  }
 }
+
 function stopCalendarPolling(mode){
   if(calendarPolling[mode]){
     clearInterval(calendarPolling[mode]);
@@ -5216,7 +5275,7 @@ async function refreshCalendarBookings(updateSyncText = true){
     }
   }catch(error){
     console.error(error);
-    if(updateSyncText) setSyncText('Falha ao consultar o Supabase → usando agenda local');
+    if(updateSyncText) setSyncText('Falha ao consultar o Supabase ? usando agenda local');
   }
   state.bookings = purgeOldBookings(readStore(STORAGE.bookings, {}));
   state.statuses = pruneStatusesMap(state.bookings, readStore(STORAGE.statuses, {}));
@@ -5465,15 +5524,7 @@ function renderAdminStats(entries){
 async function updateBookingStatus(date, slot, status){
   state.statuses[getBookingKey(date, slot)] = status;
   saveStatuses();
-  if(hasSupabaseConfig()){
-    try{
-      await writeSupabaseAdminState();
-      setSyncText('Status atualizado no Supabase');
-    }catch(e){
-      console.error('[Supabase] Falha ao atualizar status:', e);
-      setSyncText('Status salvo localmente — falha no Supabase');
-    }
-  }
+  await syncAdminState();
   renderAdmin();
   showToast('Status atualizado');
 }
@@ -5583,53 +5634,7 @@ function renderSubscriberPlanOptions(){
   select.innerHTML = PLANS.map(plan => `<option value="${plan.id}">${plan.name}</option>`).join('');
 }
 
-function renderSubscribers(){
-  const list = document.getElementById('subscriberList');
-  if(!list) return;
-  if(!state.subscribers.length){
-    list.innerHTML = '<div class="subscriber-empty">Nenhum assinante registrado ainda. As assinaturas pagas pelo site entram automaticamente aqui, e você também pode cadastrar manualmente.</div>';
-    return;
-  }
-  list.innerHTML = state.subscribers.map(subscriber => {
-    const plan = getPlanById(subscriber.planId);
-    const activeFrom = subscriber.activatedAt ? new Date(subscriber.activatedAt) : null;
-    const usagesThisCycle = activeFrom
-      ? (subscriber.monthlyUsages || []).filter(usage => new Date(usage.usedAt) >= activeFrom).length
-      : 0;
-    const totalAllowance = plan ? plan.monthlyAllowance : '?';
-    const expiresLabel = subscriber.expiresAt
-      ? new Date(subscriber.expiresAt).toLocaleDateString('pt-BR')
-      : 'não ativado';
-    return `
-      <article class="subscriber-item origami-corner">
-        <div class="subscriber-head">
-          <div>
-            <strong>${escapeHtml(subscriber.name)}</strong>
-            <span>${escapeHtml(subscriber.phone)}<br>${escapeHtml(plan ? plan.name : subscriber.planId)} ⬢ ${money(subscriber.amount || 0)}</span>
-          </div>
-          <span class="subscriber-status ${subscriber.status}">${subscriberStatusLabel(subscriber.status)}</span>
-        </div>
-        <div class="subscriber-meta">
-          <span class="subscriber-chip">origem: ${escapeHtml(subscriber.source || 'manual')}</span>
-          <span class="subscriber-chip">criado em: ${escapeHtml(new Date(subscriber.createdAt).toLocaleDateString('pt-BR'))}</span>
-          <span class="subscriber-chip">usos este ciclo: ${usagesThisCycle} / ${totalAllowance}</span>
-          <span class="subscriber-chip">expira em: ${escapeHtml(expiresLabel)}</span>
-          <span class="subscriber-chip">senha: ${subscriber.passwordHash ? 'cadastrada' : 'não cadastrada'}</span>
-          ${subscriber.notes ? `<span class="subscriber-chip">${escapeHtml(subscriber.notes)}</span>` : ''}
-        </div>
-        <div class="pill-row">
-          <button class="mini-btn${subscriber.status === 'pendente' ? ' active' : ''}" type="button" onclick="updateSubscriberStatus('${subscriber.id}','pendente')">Pendente</button>
-          <button class="mini-btn${subscriber.status === 'ativo' ? ' active' : ''}" type="button" onclick="updateSubscriberStatus('${subscriber.id}','ativo')">Ativo</button>
-          <button class="mini-btn${subscriber.status === 'pausado' ? ' active' : ''}" type="button" onclick="updateSubscriberStatus('${subscriber.id}','pausado')">Pausado</button>
-          <button class="mini-btn${subscriber.status === 'expirado' ? ' active' : ''}" type="button" onclick="updateSubscriberStatus('${subscriber.id}','expirado')">Expirado</button>
-          <button class="mini-btn${subscriber.status === 'cancelado' ? ' active' : ''}" type="button" onclick="updateSubscriberStatus('${subscriber.id}','cancelado')">Cancelado</button>
-          <button class="mini-btn" type="button" onclick="renewSubscriberPlan('${subscriber.id}')">Renovar Plano</button>
-          <button class="mini-btn" type="button" onclick="removeSubscriber('${subscriber.id}')">Remover</button>
-        </div>
-      </article>
-    `;
-  }).join('');
-}
+
 
 function renderPaymentProofLibrary(){
   const grid = document.getElementById('paymentProofGrid');
@@ -5703,9 +5708,7 @@ async function addSubscriberManually(){
   const now = new Date().toISOString();
   await upsertSubscriberRecord({
     id: 'sub-' + Date.now(),
-    name,
-    phone,
-    planId,
+    name, phone, planId,
     amount: plan.price,
     status,
     source: 'manual',
@@ -5730,7 +5733,7 @@ async function updateSubscriberStatus(id, status){
   if(!current) return;
   const updates = { ...current, status, updatedAt: new Date().toISOString() };
   if(status === 'ativo'){
-    const wasInactive = !current.activatedAt || ['expirado', 'cancelado', 'pausado'].includes(current.status);
+    const wasInactive = !current.activatedAt || ['expirado','cancelado','pausado'].includes(current.status);
     if(wasInactive){
       updates.activatedAt = new Date().toISOString();
       updates.expiresAt = addThirtyDaysIso(updates.activatedAt);
@@ -5746,14 +5749,7 @@ async function renewSubscriberPlan(id){
   const subscriber = state.subscribers.find(item => item.id === id);
   if(!subscriber) return;
   const now = new Date().toISOString();
-  await upsertSubscriberRecord({
-    ...subscriber,
-    status: 'ativo',
-    activatedAt: now,
-    expiresAt: addThirtyDaysIso(now),
-    monthlyUsages: [],
-    updatedAt: now
-  });
+  await upsertSubscriberRecord({ ...subscriber, status:'ativo', activatedAt:now, expiresAt:addThirtyDaysIso(now), monthlyUsages:[], updatedAt:now });
   renderAdmin();
   showToast('Plano renovado — novo ciclo de 30 dias iniciado');
 }
@@ -5765,179 +5761,7 @@ async function removeSubscriber(id){
   showToast('Assinante removido');
 }
 
-function openPlanCheckout(planId){
-  const plan = getPlanById(planId);
-  if(!plan) return;
-  state.checkoutMode = 'plan';
-  state.selectedPlanId = planId;
-  state.pendingPlanProof = null;
-  state.pendingTestPlanId = null;
-  togglePlanProofPanel(false);
-  toggleTestPlanActivateButton(false);
-  togglePaymentInstructionsBox(true);
-  resetPlanCheckoutPasswordFields();
-  document.getElementById('checkoutTitle').textContent = plan.price === 0 ? 'Ativar Plano de Teste' : 'Pagamento do Plano';
-  document.getElementById('checkoutSummaryTitle').textContent = 'Resumo da assinatura';
-  document.getElementById('checkoutItems').innerHTML = `
-    <div class="checkout-item"><span>${plan.name}</span><strong>${money(plan.price)}</strong></div>
-    ${plan.items.map(item => `<div class="checkout-item"><span>${item}</span><strong>incluído</strong></div>`).join('')}
-  `;
-  document.getElementById('checkoutTotal').textContent = money(plan.price);
-  document.getElementById('pixAmount').textContent = money(plan.price);
-  document.getElementById('checkoutAddressField').style.display = 'none';
-  toggleCheckoutPixSection(plan.price > 0);
-  document.getElementById('proofLink').style.display = '';
-  document.getElementById('confirmPaymentBtn').textContent = plan.price === 0 ? 'Criar cadastro de teste' : 'Já paguei o plano';
-  document.getElementById('paymentSuccessHeading').textContent = plan.price === 0 ? 'Cadastro de teste' : 'Plano em análise';
-  document.getElementById('paymentSuccess').classList.remove('show');
-  document.getElementById('checkoutForm').style.display = 'block';
-  document.getElementById('checkoutOverlay').classList.add('open');
-  document.getElementById('checkoutWrap').classList.add('open');
-  document.body.classList.add('no-scroll');
-}
 
-function closeCheckout(){
-  state.pendingPlanProof = null;
-  state.pendingTestPlanId = null;
-  togglePlanProofPanel(false);
-  toggleTestPlanActivateButton(false);
-  togglePaymentInstructionsBox(true);
-  toggleCheckoutPixSection(true);
-  resetPlanCheckoutPasswordFields();
-  document.getElementById('proofLink').style.display = '';
-  document.getElementById('checkoutOverlay').classList.remove('open');
-  document.getElementById('checkoutWrap').classList.remove('open');
-  document.body.classList.remove('no-scroll');
-}
-
-async function confirmPayment(){
-  const name = document.getElementById('checkoutName').value.trim();
-  const phone = document.getElementById('checkoutPhone').value.trim();
-  const address = document.getElementById('checkoutAddress').value.trim();
-  const password = document.getElementById('planCheckoutPassword').value;
-  const passwordConfirm = document.getElementById('planCheckoutPasswordConfirm').value;
-  if(!name){ showToast('Informe seu nome'); return; }
-  if(!phone){ showToast('Informe seu WhatsApp'); return; }
-  if(state.checkoutMode === 'store' && !address){ showToast('Informe o endereço'); return; }
-
-  const items = cartDetailedItems();
-  const total = state.checkoutMode === 'plan' ? (getPlanById(state.selectedPlanId).price || 0) : cartTotal();
-  let message = '';
-
-  if(state.checkoutMode === 'plan'){
-    const plan = getPlanById(state.selectedPlanId);
-    if(!plan) return;
-    if(!password || !passwordConfirm){
-      showToast('Preencha e confirme sua senha de acesso');
-      return;
-    }
-    if(password.length < 4){
-      showToast('A senha precisa ter no mínimo 4 caracteres');
-      return;
-    }
-    if(password !== passwordConfirm){
-      showToast('As senhas não coincidem');
-      return;
-    }
-    const passwordHash = await sha256Hex(password);
-    const passwordSetAt = new Date().toISOString();
-    if(plan.price === 0){
-      const now = new Date().toISOString();
-      const existingSubscriber = state.subscribers.find(item => item.phone === phone && item.planId === plan.id && item.status !== 'cancelado');
-      const subscriberId = existingSubscriber ? existingSubscriber.id : ('sub-' + Date.now());
-      await upsertSubscriberRecord({
-        ...(existingSubscriber || {}),
-        id: subscriberId,
-        name,
-        phone,
-        planId: plan.id,
-        amount: plan.price,
-        status: existingSubscriber && existingSubscriber.status === 'ativo' ? 'ativo' : 'pendente',
-        source: 'site',
-        notes: 'Plano gratuito de teste criado sem cobrança para homologação',
-        passwordHash,
-        passwordSetAt,
-        activatedAt: existingSubscriber ? (existingSubscriber.activatedAt || null) : null,
-        expiresAt: existingSubscriber ? (existingSubscriber.expiresAt || null) : null,
-        monthlyUsages: existingSubscriber && Array.isArray(existingSubscriber.monthlyUsages) ? existingSubscriber.monthlyUsages : [],
-        createdAt: existingSubscriber ? existingSubscriber.createdAt : now,
-        updatedAt: now
-      });
-      renderAdmin();
-      document.getElementById('checkoutForm').style.display = 'none';
-      document.getElementById('paymentSuccess').classList.add('show');
-      document.getElementById('paymentSuccessHeading').textContent = existingSubscriber && existingSubscriber.status === 'ativo' ? 'Plano de teste atualizado' : 'Cadastro de teste criado';
-      document.getElementById('paymentSuccessText').textContent = existingSubscriber && existingSubscriber.status === 'ativo'
-        ? name + ', seu plano de teste já estava ativo e os dados de acesso foram atualizados com sucesso.'
-        : name + ', seu cadastro de teste foi criado com sucesso. Agora clique em ativar para iniciar o ciclo sem pagamento e validar a mecânica do sistema.';
-      document.getElementById('proofLink').style.display = 'none';
-      togglePaymentInstructionsBox(false);
-      togglePlanProofPanel(false);
-      toggleTestPlanActivateButton(!(existingSubscriber && existingSubscriber.status === 'ativo'));
-      state.pendingTestPlanId = !(existingSubscriber && existingSubscriber.status === 'ativo') ? subscriberId : null;
-      resetPlanCheckoutPasswordFields();
-      showToast(existingSubscriber && existingSubscriber.status === 'ativo' ? 'Plano de teste atualizado' : 'Cadastro de teste criado');
-      return;
-    }
-    state.pendingPlanProof = {
-      proofId: 'plan-proof-' + Date.now(),
-      name,
-      phone,
-      planId: plan.id,
-      amount: plan.price,
-      passwordHash,
-      passwordSetAt,
-      createdAt: new Date().toISOString()
-    };
-    message = [
-      'Olá! Acabei de pagar um plano mensal da Barbearia Origami.',
-      '',
-      'Nome: ' + name,
-      'WhatsApp: ' + phone,
-      'Plano: ' + plan.name,
-      'Valor: ' + money(plan.price),
-      '',
-      'Benefícios:',
-      ...plan.items.map(item => '- ' + item),
-      '',
-      'Vou enviar o comprovante do PIX na sequência para validar o valor e ativar a assinatura.'
-    ].join('\n');
-  }else{
-    message = [
-      'Olá! Acabei de pagar um pedido na Barbearia Origami.',
-      '',
-      'Nome: ' + name,
-      'WhatsApp: ' + phone,
-      'Endereço: ' + address,
-      '',
-      'Pedido:',
-      ...items.map(item => '- ' + item.product.name + ' x ' + item.qty + ' = ' + money(item.subtotal)),
-      '',
-      'Total: ' + money(total),
-      '',
-      'Vou enviar o comprovante do PIX na sequência.'
-    ].join('\n');
-    await applyStockReduction(items);
-    state.cart = [];
-    saveCart();
-    renderCart();
-  }
-
-  renderAdmin();
-  document.getElementById('checkoutForm').style.display = 'none';
-  document.getElementById('paymentSuccess').classList.add('show');
-  document.getElementById('paymentSuccessText').textContent = state.checkoutMode === 'plan'
-    ? name + ', seu plano ainda não entrou no cadastro. Envie o comprovante abaixo: o OCR tentará ler a imagem ou o PDF e a assinatura só será criada se encontrar a chave PIX ' + CONFIG.pixKey + ', o valor exato do plano selecionado e a data de hoje.'
-    : name + ', seu pedido foi registrado. Agora envie o comprovante PIX pelo WhatsApp para confirmar a entrega.';
-  togglePaymentInstructionsBox(true);
-  toggleTestPlanActivateButton(false);
-  document.getElementById('proofLink').href = waLink(message);
-  if(state.checkoutMode === 'plan') resetPlanCheckoutPasswordFields();
-  togglePlanProofPanel(state.checkoutMode === 'plan');
-  if(state.checkoutMode === 'plan'){
-    document.getElementById('planProofStatus').textContent = 'Plano escolhido: ' + getPlanById(state.selectedPlanId).name + ' ⬢ chave PIX esperada: ' + CONFIG.pixKey + ' ⬢ valor esperado: ' + money(total) + ' ⬢ data esperada: ' + currentProofDateParts().br + ' ⬢ OCR automático habilitado quando o Supabase estiver configurado.';
-  }
-}
 
 async function submitPlanProof(){
   const context = state.pendingPlanProof;
@@ -5998,32 +5822,10 @@ async function submitPlanProof(){
       if(fileNameLabel) fileNameLabel.textContent = 'Comprovante enviado com sucesso.';
 
       if(payload.activationStatus === 'ativo'){
-        const activeNow = new Date().toISOString();
-        const existingSubscriber = state.subscribers.find(item => item.phone === context.phone && item.planId === plan.id && item.status !== 'cancelado');
-        const shouldResetCycle = !existingSubscriber || !existingSubscriber.activatedAt || ['expirado', 'cancelado', 'pausado'].includes(existingSubscriber.status);
-        await upsertSubscriberRecord({
-          ...(existingSubscriber || {}),
-          id: existingSubscriber ? existingSubscriber.id : ('sub-' + Date.now()),
-          name: context.name,
-          phone: context.phone,
-          planId: plan.id,
-          amount: plan.price,
-          status: 'ativo',
-          source: 'site',
-          notes: 'Assinatura ativada automaticamente após validação do comprovante',
-          passwordHash: context.passwordHash || (existingSubscriber ? existingSubscriber.passwordHash : ''),
-          passwordSetAt: context.passwordSetAt || (existingSubscriber ? existingSubscriber.passwordSetAt : null),
-          activatedAt: shouldResetCycle ? activeNow : existingSubscriber.activatedAt,
-          expiresAt: shouldResetCycle ? addThirtyDaysIso(activeNow) : existingSubscriber.expiresAt,
-          monthlyUsages: shouldResetCycle ? [] : (existingSubscriber && Array.isArray(existingSubscriber.monthlyUsages) ? existingSubscriber.monthlyUsages : []),
-          createdAt: existingSubscriber ? existingSubscriber.createdAt : (context.createdAt || activeNow),
-          updatedAt: activeNow
-        });
         state.pendingPlanProof = null;
         document.getElementById('paymentSuccessHeading').textContent = 'Plano ativado';
         document.getElementById('paymentSuccessText').textContent = context.name + ', comprovante validado via OCR com sucesso. Sua assinatura ' + plan.name + ' foi cadastrada automaticamente porque chave PIX, valor e data de hoje bateram.';
         togglePlanProofPanel(false);
-        resetPlanCheckoutPasswordFields();
         showToast('Plano ativado com sucesso.');
       }else if(proofAnalysis && !proofAnalysis.hasExpectedAmount){
         if(status) status.textContent = 'O OCR leu o arquivo, mas o valor encontrado não corresponde ao plano ' + plan.name + ' (' + money(plan.price) + '). O comprovante ficou salvo para revisão manual.';
@@ -6106,10 +5908,7 @@ async function submitPlanProof(){
     }
 
     const existingSubscriber = state.subscribers.find(item => item.phone === context.phone && item.planId === plan.id && item.status !== 'cancelado');
-    const activeNow = new Date().toISOString();
-    const shouldResetCycle = !existingSubscriber || !existingSubscriber.activatedAt || ['expirado', 'cancelado', 'pausado'].includes(existingSubscriber.status);
     await upsertSubscriberRecord({
-      ...(existingSubscriber || {}),
       id: existingSubscriber ? existingSubscriber.id : 'sub-' + Date.now(),
       name: context.name,
       phone: context.phone,
@@ -6117,21 +5916,15 @@ async function submitPlanProof(){
       amount: plan.price,
       status: 'ativo',
       source: 'site',
-      notes: 'Assinatura ativada automaticamente após validação do comprovante',
-      passwordHash: context.passwordHash || (existingSubscriber ? existingSubscriber.passwordHash : ''),
-      passwordSetAt: context.passwordSetAt || (existingSubscriber ? existingSubscriber.passwordSetAt : null),
-      activatedAt: shouldResetCycle ? activeNow : existingSubscriber.activatedAt,
-      expiresAt: shouldResetCycle ? addThirtyDaysIso(activeNow) : existingSubscriber.expiresAt,
-      monthlyUsages: shouldResetCycle ? [] : (existingSubscriber && Array.isArray(existingSubscriber.monthlyUsages) ? existingSubscriber.monthlyUsages : []),
-      createdAt: existingSubscriber ? existingSubscriber.createdAt : (context.createdAt || activeNow),
-      updatedAt: activeNow
+      notes: 'Assinatura ativada automaticamente após validação do valor do comprovante',
+      createdAt: existingSubscriber ? existingSubscriber.createdAt : (context.createdAt || new Date().toISOString()),
+      updatedAt: new Date().toISOString()
     });
 
     state.pendingPlanProof = null;
     document.getElementById('paymentSuccessHeading').textContent = 'Plano ativado';
     document.getElementById('paymentSuccessText').textContent = context.name + ', comprovante validado com sucesso. Sua assinatura ' + plan.name + ' foi cadastrada automaticamente.';
     togglePlanProofPanel(false);
-    resetPlanCheckoutPasswordFields();
     renderAdmin();
     showToast('Plano ativado com sucesso.');
   }catch(error){
@@ -6437,13 +6230,10 @@ async function cancelBooking(date, slot, name){
   if(hasSupabaseConfig()){
     try{
       await deleteSupabaseBooking(date, slot);
+      await syncAdminState();
     }catch(error){
-      console.error('[Supabase] Falha ao remover agendamento:', error);
-    }
-    try{
-      await writeSupabaseAdminState();
-    }catch(error){
-      console.error('[Supabase] Falha ao atualizar admin_state após cancelamento:', error);
+      console.error(error);
+      setSyncText('Falha ao remover no Supabase ? cancelamento salvo localmente');
     }
   }
   updateVacancies();
@@ -6937,6 +6727,250 @@ function initSeoSectionTitles(){
 }
 
 
+// ===== PLAN TOGGLE/UI HELPERS =====
+function togglePlanProofPanel(show){
+  const panel = document.getElementById('planProofPanel');
+  if(!panel) return;
+  panel.classList.toggle('show', !!show);
+  if(!show) resetPlanProofPanel();
+}
+
+function resetPlanProofPanel(){
+  const fileInput = document.getElementById('planProofFile');
+  const textInput = document.getElementById('planProofText');
+  const fileName = document.getElementById('planProofFileName');
+  const status = document.getElementById('planProofStatus');
+  if(fileInput) fileInput.value = '';
+  if(textInput) textInput.value = '';
+  if(fileName) fileName.textContent = 'Nenhum comprovante selecionado.';
+  if(status) status.textContent = '';
+}
+
+function resetPlanCheckoutPasswordFields(){
+  const pw = document.getElementById('planCheckoutPassword');
+  const pwc = document.getElementById('planCheckoutPasswordConfirm');
+  if(pw) pw.value = '';
+  if(pwc) pwc.value = '';
+  const pwFields = document.getElementById('planCheckoutPasswordFields');
+  if(pwFields) pwFields.style.display = 'none';
+}
+
+function toggleTestPlanActivateButton(show){
+  const btn = document.getElementById('testPlanActivateBtn');
+  if(btn) btn.style.display = show ? 'block' : 'none';
+}
+
+function togglePaymentInstructionsBox(show){
+  const box = document.getElementById('paymentInstructionsBox');
+  if(box) box.style.display = show ? '' : 'none';
+}
+
+function toggleCheckoutPixSection(show){
+  const section = document.querySelector('.checkout-pix-section') || document.querySelector('.pix-box');
+  if(!section) return;
+  const parent = section.closest('.checkout-section');
+  if(parent) parent.style.display = show ? '' : 'none';
+}
+
+async function activatePendingTestPlan(){
+  const id = state.pendingTestPlanId;
+  if(!id){ showToast('Nenhum plano de teste pendente'); return; }
+  const subscriber = state.subscribers.find(s => s.id === id);
+  if(!subscriber){ showToast('Cadastro não encontrado'); return; }
+  const now = new Date().toISOString();
+  await upsertSubscriberRecord({ ...subscriber, status:'ativo', activatedAt:now, expiresAt:addThirtyDaysIso(now), monthlyUsages:[], updatedAt:now });
+  state.pendingTestPlanId = null;
+  toggleTestPlanActivateButton(false);
+  document.getElementById('paymentSuccessHeading').textContent = 'Plano de teste ativo';
+  document.getElementById('paymentSuccessText').textContent = subscriber.name + ', plano de teste ativado com sucesso. Ciclo de 30 dias iniciado.';
+  renderAdmin();
+  showToast('Plano de teste ativado!');
+}
+
+// ===== SUBSCRIBER RENDERIZATION =====
+function subscriberStatusLabel(status){
+  const labels = { ativo:'Ativo', pendente:'Pendente', pausado:'Pausado', expirado:'Expirado', cancelado:'Cancelado' };
+  return labels[status] || status;
+}
+
+function renderSubscriberPlanOptions(){
+  const select = document.getElementById('subscriberPlan');
+  if(!select) return;
+  select.innerHTML = PLANS.map(plan => `<option value="${plan.id}">${plan.name}</option>`).join('');
+}
+
+function renderSubscribers(){
+  const list = document.getElementById('subscriberList');
+  if(!list) return;
+  if(!state.subscribers.length){
+    list.innerHTML = '<div class="subscriber-empty">Nenhum assinante registrado ainda. As assinaturas pagas pelo site entram automaticamente aqui, e você também pode cadastrar manualmente.</div>';
+    return;
+  }
+  list.innerHTML = state.subscribers.map(subscriber => {
+    const plan = getPlanById(subscriber.planId);
+    const activeFrom = subscriber.activatedAt ? new Date(subscriber.activatedAt) : null;
+    const usagesThisCycle = activeFrom ? (subscriber.monthlyUsages || []).filter(u => new Date(u.usedAt) >= activeFrom).length : 0;
+    const totalAllowance = plan ? plan.monthlyAllowance : '?';
+    const expiresLabel = subscriber.expiresAt ? new Date(subscriber.expiresAt).toLocaleDateString('pt-BR') : 'não ativado';
+    return `
+      <article class="subscriber-item origami-corner">
+        <div class="subscriber-head">
+          <div>
+            <strong>${escapeHtml(subscriber.name)}</strong>
+            <span>${escapeHtml(subscriber.phone)}<br>${escapeHtml(plan ? plan.name : subscriber.planId)} ⬢ ${money(subscriber.amount || 0)}</span>
+          </div>
+          <span class="subscriber-status ${subscriber.status}">${subscriberStatusLabel(subscriber.status)}</span>
+        </div>
+        <div class="subscriber-meta">
+          <span class="subscriber-chip">origem: ${escapeHtml(subscriber.source || 'manual')}</span>
+          <span class="subscriber-chip">criado em: ${escapeHtml(new Date(subscriber.createdAt).toLocaleDateString('pt-BR'))}</span>
+          <span class="subscriber-chip">usos este ciclo: ${usagesThisCycle} / ${totalAllowance}</span>
+          <span class="subscriber-chip">expira em: ${escapeHtml(expiresLabel)}</span>
+          <span class="subscriber-chip">senha: ${subscriber.passwordHash ? 'cadastrada' : 'não cadastrada'}</span>
+          ${subscriber.notes ? `<span class="subscriber-chip">${escapeHtml(subscriber.notes)}</span>` : ''}
+        </div>
+        <div class="pill-row">
+          <button class="mini-btn${subscriber.status==='pendente'?' active':''}" type="button" onclick="updateSubscriberStatus('${subscriber.id}','pendente')">Pendente</button>
+          <button class="mini-btn${subscriber.status==='ativo'?' active':''}" type="button" onclick="updateSubscriberStatus('${subscriber.id}','ativo')">Ativo</button>
+          <button class="mini-btn${subscriber.status==='pausado'?' active':''}" type="button" onclick="updateSubscriberStatus('${subscriber.id}','pausado')">Pausado</button>
+          <button class="mini-btn${subscriber.status==='expirado'?' active':''}" type="button" onclick="updateSubscriberStatus('${subscriber.id}','expirado')">Expirado</button>
+          <button class="mini-btn${subscriber.status==='cancelado'?' active':''}" type="button" onclick="updateSubscriberStatus('${subscriber.id}','cancelado')">Cancelado</button>
+          <button class="mini-btn" type="button" onclick="renewSubscriberPlan('${subscriber.id}')">Renovar Plano</button>
+          <button class="mini-btn" type="button" onclick="removeSubscriber('${subscriber.id}')">Remover</button>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+// ===== PLAN AUTH (login assinante no agendamento) =====
+function planLoginMsgEl(mode){
+  return document.getElementById('planLoginMsg' + (mode==='main'?'Main':'Modal'));
+}
+function planAuthBadgeEl(mode){
+  return document.getElementById('planAuthBadge' + (mode==='main'?'Main':'Modal'));
+}
+function setPlanLoginMsg(mode, text, type){
+  const el = planLoginMsgEl(mode);
+  if(!el) return;
+  el.textContent = text;
+  el.className = 'plan-login-msg ' + (type||'');
+}
+function clearPlanLoginMsg(mode){
+  const el = planLoginMsgEl(mode);
+  if(el){ el.textContent=''; el.className='plan-login-msg'; }
+}
+function togglePlanLoginPanel(mode){
+  const panel = document.getElementById('planLoginPanel' + (mode==='main'?'Main':'Modal'));
+  const arrow = document.getElementById('planLoginArrow' + (mode==='main'?'Main':'Modal'));
+  if(!panel) return;
+  const open = panel.style.display==='none' || !panel.style.display;
+  panel.style.display = open ? 'block' : 'none';
+  if(arrow) arrow.classList.toggle('open', open);
+  clearPlanLoginMsg(mode);
+}
+function planUsagesThisCycle(subscriber){
+  if(!subscriber||!subscriber.activatedAt) return 0;
+  const activated = new Date(subscriber.activatedAt);
+  return (subscriber.monthlyUsages||[]).filter(u => new Date(u.usedAt) >= activated).length;
+}
+function isPlanExpired(subscriber){
+  if(!subscriber.expiresAt) return false;
+  return new Date() > new Date(subscriber.expiresAt);
+}
+function planRemainingAllowance(subscriber){
+  const plan = getPlanById(subscriber.planId);
+  if(!plan) return 0;
+  const used = planUsagesThisCycle(subscriber);
+  return Math.max(0, plan.monthlyAllowance - used);
+}
+function normalizeName(v){ return String(v||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' '); }
+function normalizePhone(v){ return String(v||'').replace(/\D/g,''); }
+
+async function authenticateSubscriberForBooking(mode){
+  await loadSubscribers();
+  const nameInput = document.getElementById('planLoginName'+(mode==='main'?'Main':'Modal'));
+  const phoneInput = document.getElementById('planLoginPhone'+(mode==='main'?'Main':'Modal'));
+  const passInput = document.getElementById('planLoginPassword'+(mode==='main'?'Main':'Modal'));
+  const badge = planAuthBadgeEl(mode);
+  const rawName = nameInput ? nameInput.value.trim() : '';
+  const rawPhone = phoneInput ? phoneInput.value.trim() : '';
+  const rawPass = passInput ? passInput.value : '';
+  if(!rawName){ setPlanLoginMsg(mode,'Informe o nome cadastrado no plano.','error'); return; }
+  if(!rawPhone){ setPlanLoginMsg(mode,'Informe o WhatsApp cadastrado no plano.','error'); return; }
+  if(!rawPass){ setPlanLoginMsg(mode,'Informe sua senha de acesso.','error'); return; }
+  const normName = normalizeName(rawName);
+  const normPhone = normalizePhone(rawPhone);
+  const passwordHash = await sha256Hex(rawPass);
+  const match = state.subscribers.find(sub => normalizeName(sub.name)===normName && normalizePhone(sub.phone)===normPhone);
+  if(!match){ setPlanLoginMsg(mode,'Cadastro não encontrado. Verifique nome e WhatsApp informados.','error'); state.planAuth[mode]=null; if(badge){badge.style.display='none';badge.innerHTML='';} return; }
+  if(!match.passwordHash){ setPlanLoginMsg(mode,'Esse cadastro não possui senha definida. Assine um plano pelo site para criar seu acesso.','error'); state.planAuth[mode]=null; if(badge){badge.style.display='none';badge.innerHTML='';} return; }
+  if(match.passwordHash!==passwordHash){ setPlanLoginMsg(mode,'Senha incorreta. Tente novamente.','error'); state.planAuth[mode]=null; if(badge){badge.style.display='none';badge.innerHTML='';} return; }
+  if(match.status!=='ativo'){
+    const msgs={pendente:'Seu plano está pendente de ativação. Envie o comprovante pelo WhatsApp.',expirado:'Seu plano expirou. Renove para continuar agendando.',pausado:'Seu plano está pausado. Entre em contato pelo WhatsApp.',cancelado:'Seu plano foi cancelado. Assine novamente para retomar os benefícios.'};
+    setPlanLoginMsg(mode,msgs[match.status]||'Plano inativo. Entre em contato pelo WhatsApp.','error'); state.planAuth[mode]=null; if(badge){badge.style.display='none';badge.innerHTML='';} return;
+  }
+  if(isPlanExpired(match)){
+    const expDate = new Date(match.expiresAt).toLocaleDateString('pt-BR');
+    setPlanLoginMsg(mode,'Seu plano expirou em '+expDate+'. Renove sua assinatura para continuar agendando pelo plano.','error');
+    await upsertSubscriberRecord({...match, status:'expirado', updatedAt:new Date().toISOString()});
+    state.planAuth[mode]=null; if(badge){badge.style.display='none';badge.innerHTML='';} return;
+  }
+  const plan = getPlanById(match.planId);
+  const used = planUsagesThisCycle(match);
+  const allowance = plan ? plan.monthlyAllowance : 0;
+  const remaining = Math.max(0, allowance - used);
+  if(remaining<=0){
+    const expDate = match.expiresAt ? new Date(match.expiresAt).toLocaleDateString('pt-BR') : 'fim do mês';
+    setPlanLoginMsg(mode,'Você já utilizou todos os '+allowance+' atendimentos deste ciclo ('+plan.name+'). O limite se renova em '+expDate+'. Para agendar agora, utilize o pagamento avulso abaixo.','error');
+    state.planAuth[mode]=null; if(badge){badge.style.display='none';badge.innerHTML='';} return;
+  }
+  state.planAuth[mode]={subscriberId:match.id, name:match.name, phone:match.phone, planId:match.planId};
+  const expDate = match.expiresAt ? new Date(match.expiresAt).toLocaleDateString('pt-BR') : '—';
+  clearPlanLoginMsg(mode);
+  setPlanLoginMsg(mode,'✓ Plano identificado. Preencha a data e horário para confirmar o agendamento.','success');
+  if(badge){
+    badge.style.display='block';
+    badge.innerHTML=`<strong>${escapeHtml(plan?plan.name:match.planId)}</strong>Bem-vindo, <strong>${escapeHtml(match.name.split(' ')[0])}</strong> — você tem <strong>${remaining} atendimento${remaining!==1?'s':''}</strong> restante${remaining!==1?'s':''} neste ciclo.<br><span class="plan-auth-limit">Ciclo encerra em ${expDate}</span>`;
+  }
+  const nameField = document.getElementById(mode==='main'?'clientName':'clientNameModal');
+  const phoneField = document.getElementById(mode==='main'?'clientPhone':'clientPhoneModal');
+  if(nameField) nameField.value = match.name;
+  if(phoneField) phoneField.value = match.phone;
+  // Unlock form stage
+  const stage = document.getElementById(mode==='main'?'bookingDataStageMain':'bookingDataStageModal');
+  if(stage) stage.classList.remove('is-disabled');
+  renderBookingSummary(mode);
+}
+
+async function recordPlanUsage(mode, dateStr, slot, serviceId){
+  const auth = state.planAuth[mode];
+  if(!auth) return;
+  const subscriber = state.subscribers.find(s => s.id===auth.subscriberId);
+  if(!subscriber) return;
+  const usage = {usedAt:new Date().toISOString(), date:dateStr, slot, serviceId};
+  const usages = Array.isArray(subscriber.monthlyUsages) ? [...subscriber.monthlyUsages, usage] : [usage];
+  await upsertSubscriberRecord({...subscriber, monthlyUsages:usages, updatedAt:new Date().toISOString()});
+}
+
+function isBookingViaPlan(mode){
+  return !!(state.planAuth && state.planAuth[mode]);
+}
+
+function clearPlanAuth(mode){
+  state.planAuth[mode]=null;
+  const badge = planAuthBadgeEl(mode);
+  if(badge){badge.style.display='none';badge.innerHTML='';}
+  clearPlanLoginMsg(mode);
+  const passInput = document.getElementById('planLoginPassword'+(mode==='main'?'Main':'Modal'));
+  if(passInput) passInput.value='';
+  const arrow = document.getElementById('planLoginArrow'+(mode==='main'?'Main':'Modal'));
+  const panel = document.getElementById('planLoginPanel'+(mode==='main'?'Main':'Modal'));
+  if(panel) panel.style.display='none';
+  if(arrow) arrow.classList.remove('open');
+}
+
+
 async function init(){
   loadState();
   await syncStateFromSupabase();
@@ -6973,207 +7007,6 @@ async function init(){
   document.querySelectorAll('.booking-success h4').forEach(node => node.innerHTML = '✦ Horário reservado');
   observeReveals();
   initSeoSectionTitles();
-}
-
-/* ============================================================
-   SISTEMA DE AUTENTICAÇÃO DE ASSINANTES
-   ============================================================ */
-
-function normalizeName(value){
-  return String(value || '').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ');
-}
-
-function normalizePhone(value){
-  return String(value || '').replace(/\D/g,'');
-}
-
-function planLoginMsgEl(mode){
-  return document.getElementById('planLoginMsg' + (mode === 'main' ? 'Main' : 'Modal'));
-}
-function planAuthBadgeEl(mode){
-  return document.getElementById('planAuthBadge' + (mode === 'main' ? 'Main' : 'Modal'));
-}
-
-function setPlanLoginMsg(mode, text, type){
-  const el = planLoginMsgEl(mode);
-  if(!el) return;
-  el.textContent = text;
-  el.className = 'plan-login-msg ' + (type || '');
-}
-
-function clearPlanLoginMsg(mode){
-  const el = planLoginMsgEl(mode);
-  if(el){ el.textContent = ''; el.className = 'plan-login-msg'; }
-}
-
-function togglePlanLoginPanel(mode){
-  const panel = document.getElementById('planLoginPanel' + (mode === 'main' ? 'Main' : 'Modal'));
-  const arrow = document.getElementById('planLoginArrow' + (mode === 'main' ? 'Main' : 'Modal'));
-  if(!panel) return;
-  const open = panel.style.display === 'none' || !panel.style.display;
-  panel.style.display = open ? 'block' : 'none';
-  if(arrow) arrow.classList.toggle('open', open);
-  clearPlanLoginMsg(mode);
-}
-
-function planUsagesThisCycle(subscriber){
-  if(!subscriber || !subscriber.activatedAt) return 0;
-  const activated = new Date(subscriber.activatedAt);
-  return (subscriber.monthlyUsages || []).filter(u => new Date(u.usedAt) >= activated).length;
-}
-
-function isPlanExpired(subscriber){
-  if(!subscriber.expiresAt) return false;
-  return new Date() > new Date(subscriber.expiresAt);
-}
-
-function planRemainingAllowance(subscriber){
-  const plan = getPlanById(subscriber.planId);
-  if(!plan) return 0;
-  const used = planUsagesThisCycle(subscriber);
-  return Math.max(0, plan.monthlyAllowance - used);
-}
-
-async function authenticateSubscriberForBooking(mode){
-  await loadSubscribers();
-  const nameInput = document.getElementById('planLoginName' + (mode === 'main' ? 'Main' : 'Modal'));
-  const phoneInput = document.getElementById('planLoginPhone' + (mode === 'main' ? 'Main' : 'Modal'));
-  const passInput = document.getElementById('planLoginPassword' + (mode === 'main' ? 'Main' : 'Modal'));
-  const badge = planAuthBadgeEl(mode);
-
-  const rawName = nameInput ? nameInput.value.trim() : '';
-  const rawPhone = phoneInput ? phoneInput.value.trim() : '';
-  const rawPass = passInput ? passInput.value : '';
-
-  if(!rawName){ setPlanLoginMsg(mode, 'Informe o nome cadastrado no plano.', 'error'); return; }
-  if(!rawPhone){ setPlanLoginMsg(mode, 'Informe o WhatsApp cadastrado no plano.', 'error'); return; }
-  if(!rawPass){ setPlanLoginMsg(mode, 'Informe sua senha de acesso.', 'error'); return; }
-
-  const normName = normalizeName(rawName);
-  const normPhone = normalizePhone(rawPhone);
-  const passwordHash = await sha256Hex(rawPass);
-
-  // Find matching subscriber
-  const match = state.subscribers.find(sub => {
-    const subName = normalizeName(sub.name);
-    const subPhone = normalizePhone(sub.phone);
-    return subName === normName && subPhone === normPhone;
-  });
-
-  if(!match){
-    setPlanLoginMsg(mode, 'Cadastro não encontrado. Verifique nome e WhatsApp informados.', 'error');
-    state.planAuth[mode] = null;
-    if(badge){ badge.style.display = 'none'; badge.innerHTML = ''; }
-    return;
-  }
-
-  if(!match.passwordHash){
-    setPlanLoginMsg(mode, 'Esse cadastro não possui senha definida. Assine um plano pelo site para criar seu acesso.', 'error');
-    state.planAuth[mode] = null;
-    if(badge){ badge.style.display = 'none'; badge.innerHTML = ''; }
-    return;
-  }
-
-  if(match.passwordHash !== passwordHash){
-    setPlanLoginMsg(mode, 'Senha incorreta. Tente novamente.', 'error');
-    state.planAuth[mode] = null;
-    if(badge){ badge.style.display = 'none'; badge.innerHTML = ''; }
-    return;
-  }
-
-  // Check plan status
-  if(match.status !== 'ativo'){
-    const statusMessages = {
-      pendente: 'Seu plano ainda está pendente de ativação. Envie o comprovante de pagamento pelo WhatsApp.',
-      expirado: 'Seu plano expirou. Renove sua assinatura para continuar agendando pelo plano.',
-      pausado: 'Seu plano está pausado. Entre em contato pelo WhatsApp para reativá-lo.',
-      cancelado: 'Seu plano foi cancelado. Assine um novo plano para retomar os benefícios.'
-    };
-    setPlanLoginMsg(mode, statusMessages[match.status] || 'Plano inativo. Entre em contato pelo WhatsApp.', 'error');
-    state.planAuth[mode] = null;
-    if(badge){ badge.style.display = 'none'; badge.innerHTML = ''; }
-    return;
-  }
-
-  // Check expiration
-  if(isPlanExpired(match)){
-    const expDate = new Date(match.expiresAt).toLocaleDateString('pt-BR');
-    setPlanLoginMsg(mode, 'Seu plano expirou em ' + expDate + '. Renove sua assinatura para continuar agendando pelo plano.', 'error');
-    // Auto-update status to expired
-    await upsertSubscriberRecord({ ...match, status: 'expirado', updatedAt: new Date().toISOString() });
-    state.planAuth[mode] = null;
-    if(badge){ badge.style.display = 'none'; badge.innerHTML = ''; }
-    return;
-  }
-
-  // Check remaining allowance
-  const plan = getPlanById(match.planId);
-  const used = planUsagesThisCycle(match);
-  const allowance = plan ? plan.monthlyAllowance : 0;
-  const remaining = Math.max(0, allowance - used);
-
-  if(remaining <= 0){
-    const expDate = match.expiresAt ? new Date(match.expiresAt).toLocaleDateString('pt-BR') : 'fim do mês';
-    setPlanLoginMsg(mode,
-      'Você já utilizou todos os ' + allowance + ' atendimentos deste ciclo (' + plan.name + '). ' +
-      'O limite se renova em ' + expDate + '. Para agendar agora, utilize o pagamento avulso abaixo.',
-      'error');
-    state.planAuth[mode] = null;
-    if(badge){ badge.style.display = 'none'; badge.innerHTML = ''; }
-    return;
-  }
-
-  // SUCCESS
-  state.planAuth[mode] = { subscriberId: match.id, name: match.name, phone: match.phone, planId: match.planId };
-  const expDate = match.expiresAt ? new Date(match.expiresAt).toLocaleDateString('pt-BR') : '—';
-  clearPlanLoginMsg(mode);
-  setPlanLoginMsg(mode,
-    '✓ Plano identificado. Preencha a data e horário para confirmar o agendamento.',
-    'success');
-
-  if(badge){
-    badge.style.display = 'block';
-    badge.innerHTML = `
-      <strong>${escapeHtml(plan ? plan.name : match.planId)}</strong>
-      Bem-vindo, <strong>${escapeHtml(match.name.split(' ')[0])}</strong> —
-      você tem <strong>${remaining} atendimento${remaining !== 1 ? 's' : ''}</strong> restante${remaining !== 1 ? 's' : ''} neste ciclo.
-      <br><span class="plan-auth-limit">Ciclo encerra em ${expDate}</span>
-    `;
-  }
-
-  // Pre-fill name/phone in booking form
-  const nameField = document.getElementById(mode === 'main' ? 'clientName' : 'clientNameModal');
-  const phoneField = document.getElementById(mode === 'main' ? 'clientPhone' : 'clientPhoneModal');
-  if(nameField) nameField.value = match.name;
-  if(phoneField) phoneField.value = match.phone;
-  renderBookingSummary(mode);
-}
-
-async function recordPlanUsage(mode, dateStr, slot, serviceId){
-  const auth = state.planAuth[mode];
-  if(!auth) return;
-  const subscriber = state.subscribers.find(s => s.id === auth.subscriberId);
-  if(!subscriber) return;
-  const usage = { usedAt: new Date().toISOString(), date: dateStr, slot, serviceId };
-  const usages = Array.isArray(subscriber.monthlyUsages) ? [...subscriber.monthlyUsages, usage] : [usage];
-  await upsertSubscriberRecord({ ...subscriber, monthlyUsages: usages, updatedAt: new Date().toISOString() });
-}
-
-function isBookingViaPlan(mode){
-  return !!(state.planAuth && state.planAuth[mode]);
-}
-
-function clearPlanAuth(mode){
-  state.planAuth[mode] = null;
-  const badge = planAuthBadgeEl(mode);
-  if(badge){ badge.style.display = 'none'; badge.innerHTML = ''; }
-  clearPlanLoginMsg(mode);
-  const passInput = document.getElementById('planLoginPassword' + (mode === 'main' ? 'Main' : 'Modal'));
-  if(passInput) passInput.value = '';
-  const arrow = document.getElementById('planLoginArrow' + (mode === 'main' ? 'Main' : 'Modal'));
-  const panel = document.getElementById('planLoginPanel' + (mode === 'main' ? 'Main' : 'Modal'));
-  if(panel) panel.style.display = 'none';
-  if(arrow) arrow.classList.remove('open');
 }
 
 init();
