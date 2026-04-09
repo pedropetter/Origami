@@ -6281,6 +6281,12 @@ async function cancelBooking(date, slot, name){
   if(state.bookings[date] && !Object.keys(state.bookings[date]).length) delete state.bookings[date];
   const key = getBookingKey(date, slot);
   state.removedBookings[key] = new Date().toISOString();
+  ['main','modal'].forEach(mode => {
+    const calendarState = state.calendar[mode];
+    if(calendarState.selectedDate === date && calendarState.selectedSlot === slot){
+      calendarState.selectedSlot = '';
+    }
+  });
   delete state.statuses[key];
   const proofId = 'proof-' + key;
   state.paymentProofs = state.paymentProofs.filter(item => item.bookingKey !== key && item.id !== proofId);
@@ -6298,6 +6304,7 @@ async function cancelBooking(date, slot, name){
       setSyncText('Falha ao remover no Supabase · cancelamento preservado localmente');
     }
   }
+  await refreshCalendarBookings(false);
   updateVacancies();
   buildCalendar('main');
   buildCalendar('modal');
