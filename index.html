@@ -5126,10 +5126,12 @@ async function confirmBooking(mode){
       } else {
         console.error('[Supabase REST] Falha ao criar agendamento:', result.errorText);
         setSyncText('Falha ao salvar no Supabase — salvando localmente');
+        showToast('ERRO SUPABASE: ' + (result.errorText || 'sem detalhes'), 8000);
       }
     }catch(e){
       console.error('[Supabase REST] Exceção ao criar agendamento:', e);
       setSyncText('Erro de conexão — salvando localmente');
+      showToast('ERRO CONEXÃO: ' + (e && e.message ? e.message : String(e)), 8000);
     }
   }
 
