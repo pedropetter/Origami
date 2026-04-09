@@ -13,14 +13,23 @@ on public.bookings (booking_date, slot);
 
 alter table public.bookings enable row level security;
 
+drop policy if exists "public_can_read_bookings" on public.bookings;
 create policy "public_can_read_bookings"
 on public.bookings
 for select
 to anon
 using (true);
 
+drop policy if exists "public_can_insert_bookings" on public.bookings;
 create policy "public_can_insert_bookings"
 on public.bookings
 for insert
 to anon
 with check (true);
+
+drop policy if exists "public_can_delete_bookings" on public.bookings;
+create policy "public_can_delete_bookings"
+on public.bookings
+for delete
+to anon
+using (true);
