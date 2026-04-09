@@ -6299,6 +6299,14 @@ async function cancelBooking(date, slot, name){
     }
   }
   updateVacancies();
+  buildCalendar('main');
+  buildCalendar('modal');
+  renderSlots('main');
+  renderSlots('modal');
+  renderBookingSummary('main');
+  renderBookingSummary('modal');
+  updateBookingStage('main');
+  updateBookingStage('modal');
   renderAdmin();
   showToast('Agendamento cancelado');
 }
