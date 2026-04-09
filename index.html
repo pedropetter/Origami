@@ -4419,22 +4419,12 @@ async function syncStateFromSupabase(){
       readSupabaseBookings(),
       readSupabaseAdminState()
     ]);
-    // Merge remote with local: remote is authoritative but keep local-only slots
-    const remote = purgeOldBookings(remoteBookings || {});
-    const local = purgeOldBookings(readStore(STORAGE.bookings, {}));
-    const merged = { ...remote };
-    Object.keys(local).forEach(date => {
-      if(!merged[date]) merged[date] = {};
-      Object.keys(local[date]).forEach(slot => {
-        if(!merged[date][slot]) merged[date][slot] = local[date][slot];
-      });
-    });
-    state.bookings = merged;
+    // Na carga inicial, remoto é autoritativo
+    state.bookings = purgeOldBookings(remoteBookings || {});
     if(adminState){
       if(Array.isArray(adminState.stock)) state.stock = adminState.stock;
       if(adminState.booking_statuses && typeof adminState.booking_statuses === 'object'){
-        // Merge remote statuses with local (local takes priority for freshly saved ones)
-        state.statuses = Object.assign({}, adminState.booking_statuses, state.statuses);
+        state.statuses = adminState.booking_statuses;
       }
     }
     state.statuses = pruneStatusesMap(state.bookings, state.statuses);
@@ -4443,7 +4433,7 @@ async function syncStateFromSupabase(){
     setSyncText('Agenda sincronizada com Supabase');
     return true;
   }catch(error){
-    console.error(error);
+    console.error('[Supabase] Falha na sincronização inicial:', error);
     setSyncText('Falha no Supabase → usando modo local');
     return false;
   }
@@ -5076,10 +5066,9 @@ async function confirmBooking(mode){
   if(!calendarState.selectedDate || !calendarState.selectedSlot){ showToast('Selecione data e horário'); return; }
   if(!professional){ showToast('Selecione o profissional'); return; }
 
-  // === PLANO: verificar auth antes de prosseguir ===
+  // === Verificação de autenticação por plano ===
   const viaPlan = isBookingViaPlan(mode);
   if(viaPlan){
-    // Re-validate plan is still ok (could have changed since login)
     const auth = state.planAuth[mode];
     await loadSubscribers();
     const subscriber = state.subscribers.find(s => s.id === auth.subscriberId);
@@ -5105,119 +5094,83 @@ async function confirmBooking(mode){
     renderBookingSummary(mode);
     return;
   }
+
+  const dateStr = calendarState.selectedDate;
+  const slot = calendarState.selectedSlot;
   const bookingRecord = { name, phone, serviceId, professionalId, createdAt: new Date().toISOString(), paymentProofPendingAt: new Date().toISOString() };
+  const bookingStatus = viaPlan ? 'confirmado' : 'aguardando';
+
+  // === SALVAR NO SUPABASE (REST direto, sem depender de Edge Function) ===
+  let savedToSupabase = false;
   if(hasSupabaseConfig()){
+    setSyncText('Salvando agendamento...');
     try{
-      const payload = await invokeEdgeFunction('create-booking', {
-        method: 'POST',
-        body: {
-          bookingDate: calendarState.selectedDate,
-          slot: calendarState.selectedSlot,
-          name,
-          phone,
-          serviceId,
-          professionalId
-        }
-      });
-      if(payload.conflict){
+      const result = await createSupabaseBooking(dateStr, slot, bookingRecord);
+      if(result.conflict){
         await refreshCalendarBookings(false);
         renderSlots(mode);
         showToast('Esse horário acabou de ser reservado');
         return;
       }
-      if(!state.bookings[calendarState.selectedDate]) state.bookings[calendarState.selectedDate] = {};
-      state.bookings[calendarState.selectedDate][calendarState.selectedSlot] = bookingRecord;
-      state.statuses[getBookingKey(calendarState.selectedDate, calendarState.selectedSlot)] = viaPlan ? 'confirmado' : (payload.status || 'aguardando');
-      saveBookings();
-      saveStatuses();
-      await syncAdminState();
-      renderSlots(mode);
-      renderAdmin();
-      updateVacancies();
-      setSyncText(viaPlan ? 'Agendamento via plano confirmado' : 'Agendamento em análise salvo pela Function');
-      const payloadWa = { name, phone, serviceName: service.name, servicePrice: service.price, professionalName: professional.name, date: calendarState.selectedDate, slot: calendarState.selectedSlot };
-      const link = waLink(buildWhatsAppBookingMessage(payloadWa));
-      bookingField(mode, 'success').classList.add('show');
-      document.getElementById('bookingPixGate_' + mode).classList.remove('show');
-      if(viaPlan){
-        await recordPlanUsage(mode, calendarState.selectedDate, calendarState.selectedSlot, serviceId);
-        const auth = state.planAuth[mode];
-        const sub = state.subscribers.find(s => s.id === auth.subscriberId);
-        const plan = sub ? getPlanById(sub.planId) : null;
-        const remaining = sub ? planRemainingAllowance(sub) : 0;
-        bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi confirmado pelo seu plano ' + (plan ? plan.name : '') + '. Ainda restam ' + remaining + ' atendimento(s) neste ciclo.';
-        clearPlanAuth(mode);
+      if(result.ok){
+        savedToSupabase = true;
       } else {
-        bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi registrado em análise pela Function para ' + service.name + ' com ' + professional.name + '. Envie o comprovante abaixo para confirmar automaticamente.';
+        console.error('[Supabase REST] Falha ao criar agendamento:', result.errorText);
+        setSyncText('Falha ao salvar no Supabase — salvando localmente');
       }
-      bookingField(mode, 'successLink').href = link;
-      const proofInput = proofField(mode, 'input');
-      const proofName = proofField(mode, 'name');
-      if(proofInput) proofInput.value = '';
-      if(proofName) proofName.textContent = 'Nenhum comprovante selecionado.';
-      // Hide proof upload area if booked via plan
-      const successEl = bookingField(mode, 'success');
-      if(successEl){
-        const proofUpload = successEl.querySelector('.proof-upload');
-        if(proofUpload) proofUpload.style.display = viaPlan ? 'none' : '';
-      }
-      return;
-    }catch(error){
-      console.error(error);
-      setSyncText('Falha na Function → usando fluxo local');
+    }catch(e){
+      console.error('[Supabase REST] Exceção ao criar agendamento:', e);
+      setSyncText('Erro de conexão — salvando localmente');
     }
   }
-  if(hasSupabaseConfig()){
-    setSyncText('Registrando agendamento...');
-    try{
-      const result = await createSupabaseBooking(calendarState.selectedDate, calendarState.selectedSlot, bookingRecord);
-      if(!result.ok){
-        if(result.conflict){
-          await refreshCalendarBookings(false);
-          renderSlots(mode);
-          showToast('Esse horário acabou de ser reservado');
-          return;
-        }
-        throw new Error(result.errorText || 'Falha ao criar agendamento remoto');
-      }
-    }catch(error){
-      console.error(error);
-      setSyncText('Falha no Supabase → agendamento salvo localmente');
-    }
-  }
-  if(!state.bookings[calendarState.selectedDate]) state.bookings[calendarState.selectedDate] = {};
-  state.bookings[calendarState.selectedDate][calendarState.selectedSlot] = bookingRecord;
-  state.statuses[getBookingKey(calendarState.selectedDate, calendarState.selectedSlot)] = viaPlan ? 'confirmado' : 'aguardando';
+
+  // Atualizar estado local em memória
+  if(!state.bookings[dateStr]) state.bookings[dateStr] = {};
+  state.bookings[dateStr][slot] = bookingRecord;
+  state.statuses[getBookingKey(dateStr, slot)] = bookingStatus;
   saveBookings();
   saveStatuses();
-  await syncAdminState();
+
+  // Sincronizar status e estoque com admin_state no Supabase
+  if(savedToSupabase){
+    try{
+      await writeSupabaseAdminState();
+    }catch(e){
+      console.error('[Supabase] Falha ao salvar admin_state:', e);
+    }
+    setSyncText(viaPlan ? 'Agendamento via plano confirmado e salvo' : 'Agendamento salvo no Supabase');
+  } else if(!hasSupabaseConfig()){
+    setSyncText('Agendamento salvo localmente');
+  }
+
   renderSlots(mode);
   renderAdmin();
   updateVacancies();
-  setSyncText(viaPlan
-    ? 'Agendamento via plano confirmado'
-    : (hasSupabaseConfig() ? 'Agendamento em análise e sincronizado' : 'Agendamento em análise salvo localmente'));
-  const payload = { name, phone, serviceName: service.name, servicePrice: service.price, professionalName: professional.name, date: calendarState.selectedDate, slot: calendarState.selectedSlot };
-  const link = waLink(buildWhatsAppBookingMessage(payload));
+
+  // Montar link WhatsApp
+  const waPayload = { name, phone, serviceName: service.name, servicePrice: service.price, professionalName: professional.name, date: dateStr, slot };
+  const link = waLink(buildWhatsAppBookingMessage(waPayload));
+
   bookingField(mode, 'success').classList.add('show');
   document.getElementById('bookingPixGate_' + mode).classList.remove('show');
+
   if(viaPlan){
-    await recordPlanUsage(mode, calendarState.selectedDate, calendarState.selectedSlot, serviceId);
+    await recordPlanUsage(mode, dateStr, slot, serviceId);
     const auth = state.planAuth[mode];
     const sub = state.subscribers.find(s => s.id === auth.subscriberId);
     const plan = sub ? getPlanById(sub.planId) : null;
     const remaining = sub ? planRemainingAllowance(sub) : 0;
-    bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi confirmado pelo seu plano ' + (plan ? plan.name : '') + '. Ainda restam ' + remaining + ' atendimento(s) neste ciclo.';
+    bookingField(mode, 'successText').textContent = name + ', seu horário de ' + slot + ' em ' + longDate(dateStr) + ' foi confirmado pelo seu plano ' + (plan ? plan.name : '') + '. Ainda restam ' + remaining + ' atendimento(s) neste ciclo.';
     clearPlanAuth(mode);
   } else {
-    bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi registrado em análise para ' + service.name + ' com ' + professional.name + '. Envie o comprovante abaixo para confirmar automaticamente.';
+    bookingField(mode, 'successText').textContent = name + ', seu horário de ' + slot + ' em ' + longDate(dateStr) + ' foi registrado em análise para ' + service.name + ' com ' + professional.name + '. Envie o comprovante abaixo para confirmar automaticamente.';
   }
+
   bookingField(mode, 'successLink').href = link;
   const proofInput = proofField(mode, 'input');
   const proofName = proofField(mode, 'name');
   if(proofInput) proofInput.value = '';
   if(proofName) proofName.textContent = 'Nenhum comprovante selecionado.';
-  // Hide proof upload area if booked via plan
   const successEl = bookingField(mode, 'success');
   if(successEl){
     const proofUpload = successEl.querySelector('.proof-upload');
@@ -5241,23 +5194,14 @@ async function refreshCalendarBookings(updateSyncText = true){
   try{
     if(hasSupabaseConfig()){
       const remote = purgeOldBookings(await readSupabaseBookings());
-      // Merge: keep local entries that aren't in remote (just saved, not yet synced)
-      const local = purgeOldBookings(readStore(STORAGE.bookings, {}));
-      const merged = { ...remote };
-      Object.keys(local).forEach(date => {
-        if(!merged[date]) merged[date] = {};
-        Object.keys(local[date]).forEach(slot => {
-          if(!merged[date][slot]) merged[date][slot] = local[date][slot];
-        });
-      });
-      state.bookings = merged;
+      state.bookings = remote;
       state.statuses = pruneStatusesMap(state.bookings, state.statuses);
       persistStateLocally();
       if(updateSyncText) setSyncText('Horários sincronizados');
       return;
     }
   }catch(error){
-    console.error(error);
+    console.error('[Supabase] Falha ao atualizar horários:', error);
     if(updateSyncText) setSyncText('Falha ao consultar o Supabase → usando agenda local');
   }
   state.bookings = purgeOldBookings(readStore(STORAGE.bookings, {}));
@@ -5507,7 +5451,15 @@ function renderAdminStats(entries){
 async function updateBookingStatus(date, slot, status){
   state.statuses[getBookingKey(date, slot)] = status;
   saveStatuses();
-  await syncAdminState();
+  if(hasSupabaseConfig()){
+    try{
+      await writeSupabaseAdminState();
+      setSyncText('Status atualizado no Supabase');
+    }catch(e){
+      console.error('[Supabase] Falha ao atualizar status:', e);
+      setSyncText('Status salvo localmente — falha no Supabase');
+    }
+  }
   renderAdmin();
   showToast('Status atualizado');
 }
@@ -6471,10 +6423,13 @@ async function cancelBooking(date, slot, name){
   if(hasSupabaseConfig()){
     try{
       await deleteSupabaseBooking(date, slot);
-      await syncAdminState();
     }catch(error){
-      console.error(error);
-      setSyncText('Falha ao remover no Supabase ? cancelamento salvo localmente');
+      console.error('[Supabase] Falha ao remover agendamento:', error);
+    }
+    try{
+      await writeSupabaseAdminState();
+    }catch(error){
+      console.error('[Supabase] Falha ao atualizar admin_state após cancelamento:', error);
     }
   }
   updateVacancies();
