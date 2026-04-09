@@ -4249,9 +4249,10 @@ function addThirtyDaysIso(baseIso){
 function pruneStatusesMap(bookings, statuses){
   const next = {};
   Object.keys(statuses || {}).forEach(key => {
-    const parts = key.split('|');
-    const date = parts[0];
-    const slot = parts.slice(1).join('|');
+    const pipeIdx = key.indexOf('|');
+    if(pipeIdx === -1) return;
+    const date = key.slice(0, pipeIdx);
+    const slot = key.slice(pipeIdx + 1);
     if(bookings[date] && bookings[date][slot]) next[key] = statuses[key];
   });
   return next;
@@ -4418,11 +4419,22 @@ async function syncStateFromSupabase(){
       readSupabaseBookings(),
       readSupabaseAdminState()
     ]);
-    state.bookings = purgeOldBookings(remoteBookings || {});
+    // Merge remote with local: remote is authoritative but keep local-only slots
+    const remote = purgeOldBookings(remoteBookings || {});
+    const local = purgeOldBookings(readStore(STORAGE.bookings, {}));
+    const merged = { ...remote };
+    Object.keys(local).forEach(date => {
+      if(!merged[date]) merged[date] = {};
+      Object.keys(local[date]).forEach(slot => {
+        if(!merged[date][slot]) merged[date][slot] = local[date][slot];
+      });
+    });
+    state.bookings = merged;
     if(adminState){
       if(Array.isArray(adminState.stock)) state.stock = adminState.stock;
       if(adminState.booking_statuses && typeof adminState.booking_statuses === 'object'){
-        state.statuses = adminState.booking_statuses;
+        // Merge remote statuses with local (local takes priority for freshly saved ones)
+        state.statuses = Object.assign({}, adminState.booking_statuses, state.statuses);
       }
     }
     state.statuses = pruneStatusesMap(state.bookings, state.statuses);
@@ -4432,7 +4444,7 @@ async function syncStateFromSupabase(){
     return true;
   }catch(error){
     console.error(error);
-    setSyncText('Falha no Supabase ? usando modo local');
+    setSyncText('Falha no Supabase → usando modo local');
     return false;
   }
 }
@@ -4564,8 +4576,16 @@ async function loadSubscribers(forceLocal = false){
 
 function saveBookings(){
   state.bookings = purgeOldBookings(state.bookings);
-  state.statuses = pruneStatusesMap(state.bookings, state.statuses);
   writeStore(STORAGE.bookings, state.bookings);
+  // Only prune statuses for dates that no longer have any bookings, not per-slot
+  const next = {};
+  Object.keys(state.statuses || {}).forEach(key => {
+    const parts = key.split('|');
+    const date = parts[0];
+    if(state.bookings[date]) next[key] = state.statuses[key];
+  });
+  state.statuses = next;
+  writeStore(STORAGE.statuses, state.statuses);
   updateVacancies();
 }
 
@@ -4581,6 +4601,7 @@ function disableStoreFeatures(){
 }
 function saveStock(){ writeStore(STORAGE.stock, state.stock); }
 function saveStatuses(){
+  // Prune only entries whose booking slot no longer exists
   state.statuses = pruneStatusesMap(state.bookings, state.statuses);
   writeStore(STORAGE.statuses, state.statuses);
 }
@@ -5109,6 +5130,7 @@ async function confirmBooking(mode){
       state.statuses[getBookingKey(calendarState.selectedDate, calendarState.selectedSlot)] = viaPlan ? 'confirmado' : (payload.status || 'aguardando');
       saveBookings();
       saveStatuses();
+      await syncAdminState();
       renderSlots(mode);
       renderAdmin();
       updateVacancies();
@@ -5218,7 +5240,17 @@ function updateBookingStage(mode){
 async function refreshCalendarBookings(updateSyncText = true){
   try{
     if(hasSupabaseConfig()){
-      state.bookings = purgeOldBookings(await readSupabaseBookings());
+      const remote = purgeOldBookings(await readSupabaseBookings());
+      // Merge: keep local entries that aren't in remote (just saved, not yet synced)
+      const local = purgeOldBookings(readStore(STORAGE.bookings, {}));
+      const merged = { ...remote };
+      Object.keys(local).forEach(date => {
+        if(!merged[date]) merged[date] = {};
+        Object.keys(local[date]).forEach(slot => {
+          if(!merged[date][slot]) merged[date][slot] = local[date][slot];
+        });
+      });
+      state.bookings = merged;
       state.statuses = pruneStatusesMap(state.bookings, state.statuses);
       persistStateLocally();
       if(updateSyncText) setSyncText('Horários sincronizados');
@@ -5226,7 +5258,7 @@ async function refreshCalendarBookings(updateSyncText = true){
     }
   }catch(error){
     console.error(error);
-    if(updateSyncText) setSyncText('Falha ao consultar o Supabase ? usando agenda local');
+    if(updateSyncText) setSyncText('Falha ao consultar o Supabase → usando agenda local');
   }
   state.bookings = purgeOldBookings(readStore(STORAGE.bookings, {}));
   state.statuses = pruneStatusesMap(state.bookings, readStore(STORAGE.statuses, {}));
