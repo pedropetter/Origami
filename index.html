@@ -4421,8 +4421,9 @@ async function syncStateFromSupabase(){
     ]);
     // DIAGNÓSTICO TEMPORÁRIO
     const _totalRemote = Object.values(remoteBookings || {}).reduce((acc, slots) => acc + Object.keys(slots).length, 0);
+    const _datas = Object.keys(remoteBookings || {}).join(', ') || 'nenhuma';
     console.log('[DIAG] Bookings do Supabase:', _totalRemote, JSON.stringify(remoteBookings));
-    showToast('Supabase: ' + _totalRemote + ' agendamento(s) recebido(s)', 6000);
+    showToast('Supabase: ' + _totalRemote + ' agendamento(s) | datas: ' + _datas, 8000);
     // Merge: remoto é autoritativo, mas preserva entradas locais ainda não sincronizadas
     const remote = purgeOldBookings(remoteBookings || {});
     const merged = Object.assign({}, state.bookings);
