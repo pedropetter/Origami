@@ -4419,12 +4419,19 @@ async function syncStateFromSupabase(){
       readSupabaseBookings(),
       readSupabaseAdminState()
     ]);
-    // Na carga inicial, remoto é autoritativo
-    state.bookings = purgeOldBookings(remoteBookings || {});
+    // Merge: remoto é autoritativo, mas preserva entradas locais ainda não sincronizadas
+    const remote = purgeOldBookings(remoteBookings || {});
+    const merged = Object.assign({}, state.bookings);
+    Object.keys(remote).forEach(date => {
+      if(!merged[date]) merged[date] = {};
+      Object.assign(merged[date], remote[date]);
+    });
+    state.bookings = purgeOldBookings(merged);
     if(adminState){
       if(Array.isArray(adminState.stock)) state.stock = adminState.stock;
       if(adminState.booking_statuses && typeof adminState.booking_statuses === 'object'){
-        state.statuses = adminState.booking_statuses;
+        // Merge: statuses remotos + locais, remoto vence em conflito
+        state.statuses = Object.assign({}, state.statuses, adminState.booking_statuses);
       }
     }
     state.statuses = pruneStatusesMap(state.bookings, state.statuses);
@@ -4567,12 +4574,14 @@ async function loadSubscribers(forceLocal = false){
 function saveBookings(){
   state.bookings = purgeOldBookings(state.bookings);
   writeStore(STORAGE.bookings, state.bookings);
-  // Only prune statuses for dates that no longer have any bookings, not per-slot
+  // Mantém statuses cujo slot ainda existe em state.bookings
   const next = {};
   Object.keys(state.statuses || {}).forEach(key => {
-    const parts = key.split('|');
-    const date = parts[0];
-    if(state.bookings[date]) next[key] = state.statuses[key];
+    const pipeIdx = key.indexOf('|');
+    if(pipeIdx === -1) return;
+    const date = key.slice(0, pipeIdx);
+    const slot = key.slice(pipeIdx + 1);
+    if(state.bookings[date] && state.bookings[date][slot]) next[key] = state.statuses[key];
   });
   state.statuses = next;
   writeStore(STORAGE.statuses, state.statuses);
@@ -5194,7 +5203,17 @@ async function refreshCalendarBookings(updateSyncText = true){
   try{
     if(hasSupabaseConfig()){
       const remote = purgeOldBookings(await readSupabaseBookings());
-      state.bookings = remote;
+      // Merge: remoto é autoritativo, mas nunca apaga entradas locais
+      // que ainda não chegaram ao Supabase (ex: recém-agendados)
+      const merged = Object.assign({}, state.bookings);
+      Object.keys(remote).forEach(date => {
+        if(!merged[date]) merged[date] = {};
+        Object.assign(merged[date], remote[date]);
+      });
+      state.bookings = purgeOldBookings(merged);
+      // Mantém statuses existentes e adiciona os que vieram do remoto
+      const localStatuses = readStore(STORAGE.statuses, {});
+      state.statuses = Object.assign({}, localStatuses, state.statuses);
       state.statuses = pruneStatusesMap(state.bookings, state.statuses);
       persistStateLocally();
       if(updateSyncText) setSyncText('Horários sincronizados');
@@ -5204,8 +5223,16 @@ async function refreshCalendarBookings(updateSyncText = true){
     console.error('[Supabase] Falha ao atualizar horários:', error);
     if(updateSyncText) setSyncText('Falha ao consultar o Supabase → usando agenda local');
   }
-  state.bookings = purgeOldBookings(readStore(STORAGE.bookings, {}));
-  state.statuses = pruneStatusesMap(state.bookings, readStore(STORAGE.statuses, {}));
+  // Fallback local: só lê, não descarta o que já está em memória
+  const local = purgeOldBookings(readStore(STORAGE.bookings, {}));
+  Object.keys(local).forEach(date => {
+    if(!state.bookings[date]) state.bookings[date] = {};
+    Object.assign(state.bookings[date], local[date]);
+  });
+  state.bookings = purgeOldBookings(state.bookings);
+  const localStatuses = readStore(STORAGE.statuses, {});
+  state.statuses = Object.assign({}, localStatuses, state.statuses);
+  state.statuses = pruneStatusesMap(state.bookings, state.statuses);
   persistStateLocally();
   if(updateSyncText && !hasSupabaseConfig()) setSyncText('Agenda local pronta');
 }
