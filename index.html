@@ -113,6 +113,61 @@ img{max-width:100%;display:block}
 }
 .origami-shadow{box-shadow:var(--shadow-fold)}
 .origami-corner{position:relative}
+/* ===== PLAN LOGIN PANEL ===== */
+.plan-login-banner{
+  margin-bottom:16px;
+  border:1px solid rgba(201,168,76,.28);
+  background:rgba(201,168,76,.04);
+}
+.plan-login-toggle{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 16px;
+  cursor:pointer;
+  font-size:.72rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:700;
+  user-select:none;
+  transition:background .2s;
+}
+.plan-login-toggle:hover{background:rgba(201,168,76,.08)}
+.plan-login-arrow{margin-left:auto;transition:transform .2s}
+.plan-login-arrow.open{transform:rotate(90deg)}
+.plan-login-panel{padding:0 16px 16px}
+.plan-login-msg{
+  margin-top:10px;
+  padding:10px 12px;
+  font-size:.76rem;
+  line-height:1.7;
+  display:none;
+}
+.plan-login-msg.error{display:block;background:rgba(139,26,26,.18);border:1px solid rgba(139,26,26,.4);color:#f2c7c7}
+.plan-login-msg.success{display:block;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.35);color:var(--gold)}
+.plan-auth-badge{
+  margin-top:12px;
+  padding:12px 14px;
+  background:rgba(201,168,76,.08);
+  border:1px solid rgba(201,168,76,.3);
+  border-left:3px solid var(--gold);
+  font-size:.76rem;
+  line-height:1.7;
+  color:var(--paper);
+}
+.plan-auth-badge strong{color:var(--gold);display:block;margin-bottom:4px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
+.plan-auth-badge .plan-auth-limit{
+  display:inline-block;
+  margin-top:6px;
+  padding:4px 10px;
+  background:rgba(201,168,76,.18);
+  border:1px solid rgba(201,168,76,.28);
+  font-size:.66rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
 .origami-corner::after{
   content:"";
   position:absolute;
@@ -2736,6 +2791,25 @@ details[open] summary{margin-bottom:0}
       <div class="booking-form-card origami-corner origami-shadow reveal">
         <h3>Finalize o agendamento</h3>
         <p>Preencha seus dados, escolha o serviço e o profissional. Depois de confirmar, o site abre o WhatsApp com a mensagem pronta.</p>
+
+        <!-- PAINEL DE LOGIN ASSINANTE -->
+        <div class="plan-login-banner" id="planLoginBannerMain">
+          <div class="plan-login-toggle" onclick="togglePlanLoginPanel('main')">
+            <span>⬢</span> Sou assinante — agendar pelo meu plano
+            <span class="plan-login-arrow" id="planLoginArrowMain">▸</span>
+          </div>
+          <div class="plan-login-panel" id="planLoginPanelMain" style="display:none">
+            <div class="field-grid" style="margin-top:12px">
+              <div class="field"><label>Nome completo</label><input id="planLoginNameMain" type="text" placeholder="Nome cadastrado no plano"></div>
+              <div class="field"><label>WhatsApp</label><input id="planLoginPhoneMain" type="tel" placeholder="Telefone do cadastro"></div>
+            </div>
+            <div class="field" style="margin-top:10px"><label>Senha do plano</label><input id="planLoginPasswordMain" type="password" placeholder="Sua senha de acesso"></div>
+            <div class="plan-login-msg" id="planLoginMsgMain"></div>
+            <button class="btn" style="width:100%;margin-top:12px" type="button" onclick="authenticateSubscriberForBooking('main')">Entrar com meu plano</button>
+            <div class="plan-auth-badge" id="planAuthBadgeMain" style="display:none"></div>
+          </div>
+        </div>
+
         <div class="booking-data-stage is-disabled" id="bookingDataStageMain">
         <div class="field-grid">
           <div class="field"><label for="clientName">Nome</label><input id="clientName" type="text" placeholder="Seu nome"></div>
@@ -3086,6 +3160,25 @@ details[open] summary{margin-bottom:0}
         </div>
         <div class="booking-form-card origami-corner origami-shadow">
           <h3>Dados da reserva</h3>
+
+          <!-- PAINEL DE LOGIN ASSINANTE (MODAL) -->
+          <div class="plan-login-banner" id="planLoginBannerModal">
+            <div class="plan-login-toggle" onclick="togglePlanLoginPanel('modal')">
+              <span>⬢</span> Sou assinante — agendar pelo meu plano
+              <span class="plan-login-arrow" id="planLoginArrowModal">▸</span>
+            </div>
+            <div class="plan-login-panel" id="planLoginPanelModal" style="display:none">
+              <div class="field-grid" style="margin-top:12px">
+                <div class="field"><label>Nome completo</label><input id="planLoginNameModal" type="text" placeholder="Nome cadastrado no plano"></div>
+                <div class="field"><label>WhatsApp</label><input id="planLoginPhoneModal" type="tel" placeholder="Telefone do cadastro"></div>
+              </div>
+              <div class="field" style="margin-top:10px"><label>Senha do plano</label><input id="planLoginPasswordModal" type="password" placeholder="Sua senha de acesso"></div>
+              <div class="plan-login-msg" id="planLoginMsgModal"></div>
+              <button class="btn" style="width:100%;margin-top:12px" type="button" onclick="authenticateSubscriberForBooking('modal')">Entrar com meu plano</button>
+              <div class="plan-auth-badge" id="planAuthBadgeModal" style="display:none"></div>
+            </div>
+          </div>
+
           <div class="booking-data-stage is-disabled" id="bookingDataStageModal">
           <div class="field"><label for="clientNameModal">Nome</label><input id="clientNameModal" type="text" placeholder="Seu nome"></div>
           <div class="field"><label for="clientPhoneModal">WhatsApp</label><input id="clientPhoneModal" type="tel" placeholder="(61) 99425-9943"></div>
@@ -3479,6 +3572,7 @@ const state = {
   pendingPlanProof: null,
   pendingTestPlanId: null,
   pendingBooking: null,
+  planAuth: { main: null, modal: null },
   calendar: {
     main: { month: new Date().getMonth(), year: new Date().getFullYear(), selectedDate: '', selectedSlot: '', professional: '' },
     modal: { month: new Date().getMonth(), year: new Date().getFullYear(), selectedDate: '', selectedSlot: '', professional: '' }
@@ -4960,6 +5054,28 @@ async function confirmBooking(mode){
   if(!service){ showToast('Selecione um serviço'); return; }
   if(!calendarState.selectedDate || !calendarState.selectedSlot){ showToast('Selecione data e horário'); return; }
   if(!professional){ showToast('Selecione o profissional'); return; }
+
+  // === PLANO: verificar auth antes de prosseguir ===
+  const viaPlan = isBookingViaPlan(mode);
+  if(viaPlan){
+    // Re-validate plan is still ok (could have changed since login)
+    const auth = state.planAuth[mode];
+    await loadSubscribers();
+    const subscriber = state.subscribers.find(s => s.id === auth.subscriberId);
+    if(!subscriber || subscriber.status !== 'ativo' || isPlanExpired(subscriber)){
+      showToast('Seu plano não está mais ativo. Refaça o login ou use pagamento avulso.');
+      clearPlanAuth(mode);
+      return;
+    }
+    const remaining = planRemainingAllowance(subscriber);
+    if(remaining <= 0){
+      const plan = getPlanById(subscriber.planId);
+      showToast('Limite de ' + (plan ? plan.monthlyAllowance : '?') + ' atendimentos do ciclo atingido. Use o pagamento avulso.');
+      clearPlanAuth(mode);
+      return;
+    }
+  }
+
   await refreshCalendarBookings(false);
   if(isSlotTaken(calendarState.selectedDate, calendarState.selectedSlot) || isSlotExpired(calendarState.selectedDate, calendarState.selectedSlot)){
     showToast('Esse horário não está mais disponível');
@@ -4990,27 +5106,43 @@ async function confirmBooking(mode){
       }
       if(!state.bookings[calendarState.selectedDate]) state.bookings[calendarState.selectedDate] = {};
       state.bookings[calendarState.selectedDate][calendarState.selectedSlot] = bookingRecord;
-      state.statuses[getBookingKey(calendarState.selectedDate, calendarState.selectedSlot)] = payload.status || 'aguardando';
+      state.statuses[getBookingKey(calendarState.selectedDate, calendarState.selectedSlot)] = viaPlan ? 'confirmado' : (payload.status || 'aguardando');
       saveBookings();
       saveStatuses();
       renderSlots(mode);
       renderAdmin();
       updateVacancies();
-      setSyncText('Agendamento em análise salvo pela Function');
+      setSyncText(viaPlan ? 'Agendamento via plano confirmado' : 'Agendamento em análise salvo pela Function');
       const payloadWa = { name, phone, serviceName: service.name, servicePrice: service.price, professionalName: professional.name, date: calendarState.selectedDate, slot: calendarState.selectedSlot };
       const link = waLink(buildWhatsAppBookingMessage(payloadWa));
       bookingField(mode, 'success').classList.add('show');
       document.getElementById('bookingPixGate_' + mode).classList.remove('show');
-      bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi registrado em análise pela Function para ' + service.name + ' com ' + professional.name + '. Envie o comprovante abaixo para confirmar automaticamente.';
+      if(viaPlan){
+        await recordPlanUsage(mode, calendarState.selectedDate, calendarState.selectedSlot, serviceId);
+        const auth = state.planAuth[mode];
+        const sub = state.subscribers.find(s => s.id === auth.subscriberId);
+        const plan = sub ? getPlanById(sub.planId) : null;
+        const remaining = sub ? planRemainingAllowance(sub) : 0;
+        bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi confirmado pelo seu plano ' + (plan ? plan.name : '') + '. Ainda restam ' + remaining + ' atendimento(s) neste ciclo.';
+        clearPlanAuth(mode);
+      } else {
+        bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi registrado em análise pela Function para ' + service.name + ' com ' + professional.name + '. Envie o comprovante abaixo para confirmar automaticamente.';
+      }
       bookingField(mode, 'successLink').href = link;
       const proofInput = proofField(mode, 'input');
       const proofName = proofField(mode, 'name');
       if(proofInput) proofInput.value = '';
       if(proofName) proofName.textContent = 'Nenhum comprovante selecionado.';
+      // Hide proof upload area if booked via plan
+      const successEl = bookingField(mode, 'success');
+      if(successEl){
+        const proofUpload = successEl.querySelector('.proof-upload');
+        if(proofUpload) proofUpload.style.display = viaPlan ? 'none' : '';
+      }
       return;
     }catch(error){
       console.error(error);
-      setSyncText('Falha na Function ? usando fluxo local');
+      setSyncText('Falha na Function → usando fluxo local');
     }
   }
   if(hasSupabaseConfig()){
@@ -5028,31 +5160,48 @@ async function confirmBooking(mode){
       }
     }catch(error){
       console.error(error);
-      setSyncText('Falha no Supabase ? agendamento salvo localmente');
+      setSyncText('Falha no Supabase → agendamento salvo localmente');
     }
   }
   if(!state.bookings[calendarState.selectedDate]) state.bookings[calendarState.selectedDate] = {};
   state.bookings[calendarState.selectedDate][calendarState.selectedSlot] = bookingRecord;
-  state.statuses[getBookingKey(calendarState.selectedDate, calendarState.selectedSlot)] = 'aguardando';
+  state.statuses[getBookingKey(calendarState.selectedDate, calendarState.selectedSlot)] = viaPlan ? 'confirmado' : 'aguardando';
   saveBookings();
   saveStatuses();
   await syncAdminState();
   renderSlots(mode);
   renderAdmin();
   updateVacancies();
-  setSyncText(hasSupabaseConfig() ? 'Agendamento em análise e sincronizado' : 'Agendamento em análise salvo localmente');
+  setSyncText(viaPlan
+    ? 'Agendamento via plano confirmado'
+    : (hasSupabaseConfig() ? 'Agendamento em análise e sincronizado' : 'Agendamento em análise salvo localmente'));
   const payload = { name, phone, serviceName: service.name, servicePrice: service.price, professionalName: professional.name, date: calendarState.selectedDate, slot: calendarState.selectedSlot };
   const link = waLink(buildWhatsAppBookingMessage(payload));
   bookingField(mode, 'success').classList.add('show');
   document.getElementById('bookingPixGate_' + mode).classList.remove('show');
-  bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi registrado em análise para ' + service.name + ' com ' + professional.name + '. Envie o comprovante abaixo para confirmar automaticamente.';
+  if(viaPlan){
+    await recordPlanUsage(mode, calendarState.selectedDate, calendarState.selectedSlot, serviceId);
+    const auth = state.planAuth[mode];
+    const sub = state.subscribers.find(s => s.id === auth.subscriberId);
+    const plan = sub ? getPlanById(sub.planId) : null;
+    const remaining = sub ? planRemainingAllowance(sub) : 0;
+    bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi confirmado pelo seu plano ' + (plan ? plan.name : '') + '. Ainda restam ' + remaining + ' atendimento(s) neste ciclo.';
+    clearPlanAuth(mode);
+  } else {
+    bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi registrado em análise para ' + service.name + ' com ' + professional.name + '. Envie o comprovante abaixo para confirmar automaticamente.';
+  }
   bookingField(mode, 'successLink').href = link;
   const proofInput = proofField(mode, 'input');
   const proofName = proofField(mode, 'name');
   if(proofInput) proofInput.value = '';
   if(proofName) proofName.textContent = 'Nenhum comprovante selecionado.';
+  // Hide proof upload area if booked via plan
+  const successEl = bookingField(mode, 'success');
+  if(successEl){
+    const proofUpload = successEl.querySelector('.proof-upload');
+    if(proofUpload) proofUpload.style.display = viaPlan ? 'none' : '';
+  }
 }
-
 function stopCalendarPolling(mode){
   if(calendarPolling[mode]){
     clearInterval(calendarPolling[mode]);
@@ -6823,6 +6972,207 @@ async function init(){
   document.querySelectorAll('.booking-success h4').forEach(node => node.innerHTML = '✦ Horário reservado');
   observeReveals();
   initSeoSectionTitles();
+}
+
+/* ============================================================
+   SISTEMA DE AUTENTICAÇÃO DE ASSINANTES
+   ============================================================ */
+
+function normalizeName(value){
+  return String(value || '').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ');
+}
+
+function normalizePhone(value){
+  return String(value || '').replace(/\D/g,'');
+}
+
+function planLoginMsgEl(mode){
+  return document.getElementById('planLoginMsg' + (mode === 'main' ? 'Main' : 'Modal'));
+}
+function planAuthBadgeEl(mode){
+  return document.getElementById('planAuthBadge' + (mode === 'main' ? 'Main' : 'Modal'));
+}
+
+function setPlanLoginMsg(mode, text, type){
+  const el = planLoginMsgEl(mode);
+  if(!el) return;
+  el.textContent = text;
+  el.className = 'plan-login-msg ' + (type || '');
+}
+
+function clearPlanLoginMsg(mode){
+  const el = planLoginMsgEl(mode);
+  if(el){ el.textContent = ''; el.className = 'plan-login-msg'; }
+}
+
+function togglePlanLoginPanel(mode){
+  const panel = document.getElementById('planLoginPanel' + (mode === 'main' ? 'Main' : 'Modal'));
+  const arrow = document.getElementById('planLoginArrow' + (mode === 'main' ? 'Main' : 'Modal'));
+  if(!panel) return;
+  const open = panel.style.display === 'none' || !panel.style.display;
+  panel.style.display = open ? 'block' : 'none';
+  if(arrow) arrow.classList.toggle('open', open);
+  clearPlanLoginMsg(mode);
+}
+
+function planUsagesThisCycle(subscriber){
+  if(!subscriber || !subscriber.activatedAt) return 0;
+  const activated = new Date(subscriber.activatedAt);
+  return (subscriber.monthlyUsages || []).filter(u => new Date(u.usedAt) >= activated).length;
+}
+
+function isPlanExpired(subscriber){
+  if(!subscriber.expiresAt) return false;
+  return new Date() > new Date(subscriber.expiresAt);
+}
+
+function planRemainingAllowance(subscriber){
+  const plan = getPlanById(subscriber.planId);
+  if(!plan) return 0;
+  const used = planUsagesThisCycle(subscriber);
+  return Math.max(0, plan.monthlyAllowance - used);
+}
+
+async function authenticateSubscriberForBooking(mode){
+  await loadSubscribers();
+  const nameInput = document.getElementById('planLoginName' + (mode === 'main' ? 'Main' : 'Modal'));
+  const phoneInput = document.getElementById('planLoginPhone' + (mode === 'main' ? 'Main' : 'Modal'));
+  const passInput = document.getElementById('planLoginPassword' + (mode === 'main' ? 'Main' : 'Modal'));
+  const badge = planAuthBadgeEl(mode);
+
+  const rawName = nameInput ? nameInput.value.trim() : '';
+  const rawPhone = phoneInput ? phoneInput.value.trim() : '';
+  const rawPass = passInput ? passInput.value : '';
+
+  if(!rawName){ setPlanLoginMsg(mode, 'Informe o nome cadastrado no plano.', 'error'); return; }
+  if(!rawPhone){ setPlanLoginMsg(mode, 'Informe o WhatsApp cadastrado no plano.', 'error'); return; }
+  if(!rawPass){ setPlanLoginMsg(mode, 'Informe sua senha de acesso.', 'error'); return; }
+
+  const normName = normalizeName(rawName);
+  const normPhone = normalizePhone(rawPhone);
+  const passwordHash = await sha256Hex(rawPass);
+
+  // Find matching subscriber
+  const match = state.subscribers.find(sub => {
+    const subName = normalizeName(sub.name);
+    const subPhone = normalizePhone(sub.phone);
+    return subName === normName && subPhone === normPhone;
+  });
+
+  if(!match){
+    setPlanLoginMsg(mode, 'Cadastro não encontrado. Verifique nome e WhatsApp informados.', 'error');
+    state.planAuth[mode] = null;
+    if(badge){ badge.style.display = 'none'; badge.innerHTML = ''; }
+    return;
+  }
+
+  if(!match.passwordHash){
+    setPlanLoginMsg(mode, 'Esse cadastro não possui senha definida. Assine um plano pelo site para criar seu acesso.', 'error');
+    state.planAuth[mode] = null;
+    if(badge){ badge.style.display = 'none'; badge.innerHTML = ''; }
+    return;
+  }
+
+  if(match.passwordHash !== passwordHash){
+    setPlanLoginMsg(mode, 'Senha incorreta. Tente novamente.', 'error');
+    state.planAuth[mode] = null;
+    if(badge){ badge.style.display = 'none'; badge.innerHTML = ''; }
+    return;
+  }
+
+  // Check plan status
+  if(match.status !== 'ativo'){
+    const statusMessages = {
+      pendente: 'Seu plano ainda está pendente de ativação. Envie o comprovante de pagamento pelo WhatsApp.',
+      expirado: 'Seu plano expirou. Renove sua assinatura para continuar agendando pelo plano.',
+      pausado: 'Seu plano está pausado. Entre em contato pelo WhatsApp para reativá-lo.',
+      cancelado: 'Seu plano foi cancelado. Assine um novo plano para retomar os benefícios.'
+    };
+    setPlanLoginMsg(mode, statusMessages[match.status] || 'Plano inativo. Entre em contato pelo WhatsApp.', 'error');
+    state.planAuth[mode] = null;
+    if(badge){ badge.style.display = 'none'; badge.innerHTML = ''; }
+    return;
+  }
+
+  // Check expiration
+  if(isPlanExpired(match)){
+    const expDate = new Date(match.expiresAt).toLocaleDateString('pt-BR');
+    setPlanLoginMsg(mode, 'Seu plano expirou em ' + expDate + '. Renove sua assinatura para continuar agendando pelo plano.', 'error');
+    // Auto-update status to expired
+    await upsertSubscriberRecord({ ...match, status: 'expirado', updatedAt: new Date().toISOString() });
+    state.planAuth[mode] = null;
+    if(badge){ badge.style.display = 'none'; badge.innerHTML = ''; }
+    return;
+  }
+
+  // Check remaining allowance
+  const plan = getPlanById(match.planId);
+  const used = planUsagesThisCycle(match);
+  const allowance = plan ? plan.monthlyAllowance : 0;
+  const remaining = Math.max(0, allowance - used);
+
+  if(remaining <= 0){
+    const expDate = match.expiresAt ? new Date(match.expiresAt).toLocaleDateString('pt-BR') : 'fim do mês';
+    setPlanLoginMsg(mode,
+      'Você já utilizou todos os ' + allowance + ' atendimentos deste ciclo (' + plan.name + '). ' +
+      'O limite se renova em ' + expDate + '. Para agendar agora, utilize o pagamento avulso abaixo.',
+      'error');
+    state.planAuth[mode] = null;
+    if(badge){ badge.style.display = 'none'; badge.innerHTML = ''; }
+    return;
+  }
+
+  // SUCCESS
+  state.planAuth[mode] = { subscriberId: match.id, name: match.name, phone: match.phone, planId: match.planId };
+  const expDate = match.expiresAt ? new Date(match.expiresAt).toLocaleDateString('pt-BR') : '—';
+  clearPlanLoginMsg(mode);
+  setPlanLoginMsg(mode,
+    '✓ Plano identificado. Preencha a data e horário para confirmar o agendamento.',
+    'success');
+
+  if(badge){
+    badge.style.display = 'block';
+    badge.innerHTML = `
+      <strong>${escapeHtml(plan ? plan.name : match.planId)}</strong>
+      Bem-vindo, <strong>${escapeHtml(match.name.split(' ')[0])}</strong> —
+      você tem <strong>${remaining} atendimento${remaining !== 1 ? 's' : ''}</strong> restante${remaining !== 1 ? 's' : ''} neste ciclo.
+      <br><span class="plan-auth-limit">Ciclo encerra em ${expDate}</span>
+    `;
+  }
+
+  // Pre-fill name/phone in booking form
+  const nameField = document.getElementById(mode === 'main' ? 'clientName' : 'clientNameModal');
+  const phoneField = document.getElementById(mode === 'main' ? 'clientPhone' : 'clientPhoneModal');
+  if(nameField) nameField.value = match.name;
+  if(phoneField) phoneField.value = match.phone;
+  renderBookingSummary(mode);
+}
+
+async function recordPlanUsage(mode, dateStr, slot, serviceId){
+  const auth = state.planAuth[mode];
+  if(!auth) return;
+  const subscriber = state.subscribers.find(s => s.id === auth.subscriberId);
+  if(!subscriber) return;
+  const usage = { usedAt: new Date().toISOString(), date: dateStr, slot, serviceId };
+  const usages = Array.isArray(subscriber.monthlyUsages) ? [...subscriber.monthlyUsages, usage] : [usage];
+  await upsertSubscriberRecord({ ...subscriber, monthlyUsages: usages, updatedAt: new Date().toISOString() });
+}
+
+function isBookingViaPlan(mode){
+  return !!(state.planAuth && state.planAuth[mode]);
+}
+
+function clearPlanAuth(mode){
+  state.planAuth[mode] = null;
+  const badge = planAuthBadgeEl(mode);
+  if(badge){ badge.style.display = 'none'; badge.innerHTML = ''; }
+  clearPlanLoginMsg(mode);
+  const passInput = document.getElementById('planLoginPassword' + (mode === 'main' ? 'Main' : 'Modal'));
+  if(passInput) passInput.value = '';
+  const arrow = document.getElementById('planLoginArrow' + (mode === 'main' ? 'Main' : 'Modal'));
+  const panel = document.getElementById('planLoginPanel' + (mode === 'main' ? 'Main' : 'Modal'));
+  if(panel) panel.style.display = 'none';
+  if(arrow) arrow.classList.remove('open');
 }
 
 init();
