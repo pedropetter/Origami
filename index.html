@@ -5577,7 +5577,6 @@ function selectSlot(mode, slot){
 }
 
 function openBookingModal(){
-  resetBookingExperience('modal');
   document.getElementById('bookingSuccessModal').classList.remove('show');
   document.getElementById('bookingPixGate_modal').classList.remove('show');
   document.getElementById('bookingModalOverlay').classList.add('open');
@@ -5591,7 +5590,6 @@ function openBookingModal(){
 
 function closeBookingModal(){
   stopCalendarPolling('modal');
-  resetBookingExperience('modal');
   document.getElementById('bookingModalOverlay').classList.remove('open');
   document.getElementById('bookingModalWrap').classList.remove('open');
   document.body.classList.remove('no-scroll');
@@ -7178,7 +7176,6 @@ async function init(){
   initCalendarControls();
   initAdminFilters();
   initEvents();
-  initBookingExitReset();
   disableStoreFeatures();
   renderSubscriberPlanOptions();
   renderSkeletonGrid('servicesGrid');
