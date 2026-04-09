@@ -3589,8 +3589,7 @@ const STORAGE = {
   stock: 'origami_stock_v1',
   statuses: 'origami_booking_status_v1',
   admin: 'origami_admin_session_v1',
-  subscribersFallback: 'origami_plan_subscribers_fallback_v1',
-  bookingRemovals: 'origami_booking_removals_v1'
+  subscribersFallback: 'origami_plan_subscribers_fallback_v1'
 };
 
 const DB_CONFIG = {
@@ -3716,7 +3715,6 @@ PLANS.find(plan => plan.id === 'black').items = ['4 atendimentos flexíveis por 
 
 const state = {
   bookings: {},
-  removedBookings: {},
   cart: [],
   stock: [],
   statuses: {},
@@ -4342,12 +4340,10 @@ function pruneStatusesMap(bookings, statuses){
 
 function persistStateLocally(){
   state.bookings = purgeOldBookings(state.bookings);
-  state.removedBookings = pruneRemovedBookings(state.removedBookings);
   state.statuses = pruneStatusesMap(state.bookings, state.statuses);
   writeStore(STORAGE.bookings, state.bookings);
   writeStore(STORAGE.stock, state.stock);
   writeStore(STORAGE.statuses, state.statuses);
-  writeStore(STORAGE.bookingRemovals, state.removedBookings);
 }
 
 async function readSupabaseBookings(){
@@ -4549,51 +4545,6 @@ function getBookingKey(dateStr, slot){
   return dateStr + '|' + slot;
 }
 
-function pruneRemovedBookings(removals){
-  const today = todayISO();
-  const next = {};
-  Object.keys(removals || {}).forEach(key => {
-    const date = String(key || '').split('|')[0];
-    const removedAt = removals[key];
-    if(date >= today && removedAt) next[key] = removedAt;
-  });
-  return next;
-}
-
-function saveRemovedBookings(){
-  state.removedBookings = pruneRemovedBookings(state.removedBookings);
-  writeStore(STORAGE.bookingRemovals, state.removedBookings);
-}
-
-function clearRemovedBooking(key){
-  if(!key || !state.removedBookings[key]) return;
-  delete state.removedBookings[key];
-  saveRemovedBookings();
-}
-
-function shouldIgnoreRemovedBooking(dateStr, slot, booking){
-  const removedAt = state.removedBookings[getBookingKey(dateStr, slot)];
-  if(!removedAt) return false;
-  const removedTimestamp = new Date(removedAt).getTime();
-  if(!Number.isFinite(removedTimestamp)) return false;
-  const bookingTimestamp = booking && booking.createdAt ? new Date(booking.createdAt).getTime() : 0;
-  if(!Number.isFinite(bookingTimestamp) || bookingTimestamp <= 0) return true;
-  return bookingTimestamp <= removedTimestamp;
-}
-
-function applyRemovedBookings(bookings){
-  const next = {};
-  Object.keys(bookings || {}).forEach(date => {
-    Object.keys(bookings[date] || {}).forEach(slot => {
-      const booking = bookings[date][slot];
-      if(shouldIgnoreRemovedBooking(date, slot, booking)) return;
-      if(!next[date]) next[date] = {};
-      next[date][slot] = booking;
-    });
-  });
-  return next;
-}
-
 function getBookingSlots(){
   const slots = [];
   for(let hour = CONFIG.startHour; hour <= CONFIG.endHour; hour += 1){
@@ -4615,8 +4566,7 @@ function purgeOldBookings(bookings){
 }
 
 function loadState(){
-  state.removedBookings = pruneRemovedBookings(readStore(STORAGE.bookingRemovals, {}));
-  state.bookings = applyRemovedBookings(purgeOldBookings(readStore(STORAGE.bookings, {})));
+  state.bookings = purgeOldBookings(readStore(STORAGE.bookings, {}));
   state.cart = readStore(STORAGE.cart, []);
   state.stock = readStore(STORAGE.stock, DEFAULT_STOCK);
   state.statuses = pruneStatusesMap(state.bookings, readStore(STORAGE.statuses, {}));
@@ -5239,7 +5189,6 @@ async function confirmBooking(mode){
       if(!state.bookings[calendarState.selectedDate]) state.bookings[calendarState.selectedDate] = {};
       state.bookings[calendarState.selectedDate][calendarState.selectedSlot] = bookingRecord;
       const bookingKey = getBookingKey(calendarState.selectedDate, calendarState.selectedSlot);
-      clearRemovedBooking(bookingKey);
       state.statuses[bookingKey] = payload.status || 'aguardando';
       saveBookings();
       saveStatuses();
@@ -5284,7 +5233,6 @@ async function confirmBooking(mode){
   if(!state.bookings[calendarState.selectedDate]) state.bookings[calendarState.selectedDate] = {};
   state.bookings[calendarState.selectedDate][calendarState.selectedSlot] = bookingRecord;
   const bookingKey = getBookingKey(calendarState.selectedDate, calendarState.selectedSlot);
-  clearRemovedBooking(bookingKey);
   state.statuses[bookingKey] = 'aguardando';
   saveBookings();
   saveStatuses();
@@ -5321,7 +5269,7 @@ function updateBookingStage(mode){
 async function refreshCalendarBookings(updateSyncText = true){
   try{
     if(hasSupabaseConfig()){
-      state.bookings = applyRemovedBookings(purgeOldBookings(await readSupabaseBookings()));
+      state.bookings = purgeOldBookings(await readSupabaseBookings());
       state.statuses = pruneStatusesMap(state.bookings, state.statuses);
       persistStateLocally();
       if(updateSyncText) setSyncText('Horários sincronizados');
@@ -5331,8 +5279,7 @@ async function refreshCalendarBookings(updateSyncText = true){
     console.error(error);
     if(updateSyncText) setSyncText('Falha ao consultar o Supabase ? usando agenda local');
   }
-  state.removedBookings = pruneRemovedBookings(readStore(STORAGE.bookingRemovals, state.removedBookings || {}));
-  state.bookings = applyRemovedBookings(purgeOldBookings(readStore(STORAGE.bookings, {})));
+  state.bookings = purgeOldBookings(readStore(STORAGE.bookings, {}));
   state.statuses = pruneStatusesMap(state.bookings, readStore(STORAGE.statuses, {}));
   persistStateLocally();
   if(updateSyncText && !hasSupabaseConfig()) setSyncText('Agenda local pronta');
@@ -6278,34 +6225,26 @@ async function cancelBooking(date, slot, name){
   const msg = 'Cancelar agendamento de ' + name + ' em ' + longDate(date) + ' às ' + slot + '';
   if(!confirm(msg)) return;
   if(state.bookings[date]) delete state.bookings[date][slot];
-  if(state.bookings[date] && !Object.keys(state.bookings[date]).length) delete state.bookings[date];
   const key = getBookingKey(date, slot);
-  state.removedBookings[key] = new Date().toISOString();
+  delete state.statuses[key];
+  saveBookings();
+  saveStatuses();
+  if(hasSupabaseConfig()){
+    try{
+      await deleteSupabaseBooking(date, slot);
+      await syncAdminState();
+    }catch(error){
+      console.error(error);
+      setSyncText('Falha ao remover no Supabase ? cancelamento salvo localmente');
+    }
+  }
+  updateVacancies();
   ['main','modal'].forEach(mode => {
     const calendarState = state.calendar[mode];
     if(calendarState.selectedDate === date && calendarState.selectedSlot === slot){
       calendarState.selectedSlot = '';
     }
   });
-  delete state.statuses[key];
-  const proofId = 'proof-' + key;
-  state.paymentProofs = state.paymentProofs.filter(item => item.bookingKey !== key && item.id !== proofId);
-  await dbDelete(DB_CONFIG.paymentProofsStore, proofId);
-  saveBookings();
-  saveStatuses();
-  saveRemovedBookings();
-  if(hasSupabaseConfig()){
-    try{
-      await deleteSupabaseBooking(date, slot);
-      await syncAdminState();
-      clearRemovedBooking(key);
-    }catch(error){
-      console.error(error);
-      setSyncText('Falha ao remover no Supabase · cancelamento preservado localmente');
-    }
-  }
-  await refreshCalendarBookings(false);
-  updateVacancies();
   buildCalendar('main');
   buildCalendar('modal');
   renderSlots('main');
