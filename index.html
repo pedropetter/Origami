@@ -4419,24 +4419,11 @@ async function syncStateFromSupabase(){
       readSupabaseBookings(),
       readSupabaseAdminState()
     ]);
-    // DIAGNÓSTICO TEMPORÁRIO
-    const _totalRemote = Object.values(remoteBookings || {}).reduce((acc, slots) => acc + Object.keys(slots).length, 0);
-    const _datas = Object.keys(remoteBookings || {}).join(', ') || 'nenhuma';
-    console.log('[DIAG] Bookings do Supabase:', _totalRemote, JSON.stringify(remoteBookings));
-    showToast('Supabase: ' + _totalRemote + ' agendamento(s) | datas: ' + _datas, 8000);
-    // Merge: remoto é autoritativo, mas preserva entradas locais ainda não sincronizadas
-    const remote = purgeOldBookings(remoteBookings || {});
-    const merged = Object.assign({}, state.bookings);
-    Object.keys(remote).forEach(date => {
-      if(!merged[date]) merged[date] = {};
-      Object.assign(merged[date], remote[date]);
-    });
-    state.bookings = purgeOldBookings(merged);
+    state.bookings = purgeOldBookings(remoteBookings || {});
     if(adminState){
       if(Array.isArray(adminState.stock)) state.stock = adminState.stock;
       if(adminState.booking_statuses && typeof adminState.booking_statuses === 'object'){
-        // Merge: statuses remotos + locais, remoto vence em conflito
-        state.statuses = Object.assign({}, state.statuses, adminState.booking_statuses);
+        state.statuses = adminState.booking_statuses;
       }
     }
     state.statuses = pruneStatusesMap(state.bookings, state.statuses);
@@ -4445,7 +4432,7 @@ async function syncStateFromSupabase(){
     setSyncText('Agenda sincronizada com Supabase');
     return true;
   }catch(error){
-    console.error('[Supabase] Falha na sincronização inicial:', error);
+    console.error(error);
     setSyncText('Falha no Supabase → usando modo local');
     return false;
   }
@@ -4578,18 +4565,8 @@ async function loadSubscribers(forceLocal = false){
 
 function saveBookings(){
   state.bookings = purgeOldBookings(state.bookings);
+  state.statuses = pruneStatusesMap(state.bookings, state.statuses);
   writeStore(STORAGE.bookings, state.bookings);
-  // Mantém statuses cujo slot ainda existe em state.bookings
-  const next = {};
-  Object.keys(state.statuses || {}).forEach(key => {
-    const pipeIdx = key.indexOf('|');
-    if(pipeIdx === -1) return;
-    const date = key.slice(0, pipeIdx);
-    const slot = key.slice(pipeIdx + 1);
-    if(state.bookings[date] && state.bookings[date][slot]) next[key] = state.statuses[key];
-  });
-  state.statuses = next;
-  writeStore(STORAGE.statuses, state.statuses);
   updateVacancies();
 }
 
@@ -5112,54 +5089,78 @@ async function confirmBooking(mode){
   const dateStr = calendarState.selectedDate;
   const slot = calendarState.selectedSlot;
   const bookingRecord = { name, phone, serviceId, professionalId, createdAt: new Date().toISOString(), paymentProofPendingAt: new Date().toISOString() };
-  const bookingStatus = viaPlan ? 'confirmado' : 'aguardando';
-
-  // === SALVAR NO SUPABASE (REST direto, sem depender de Edge Function) ===
-  let savedToSupabase = false;
   if(hasSupabaseConfig()){
-    setSyncText('Salvando agendamento...');
     try{
-      const result = await createSupabaseBooking(dateStr, slot, bookingRecord);
-      if(result.conflict){
+      const payload = await invokeEdgeFunction('create-booking', {
+        method: 'POST',
+        body: {
+          bookingDate: calendarState.selectedDate,
+          slot: calendarState.selectedSlot,
+          name,
+          phone,
+          serviceId,
+          professionalId
+        }
+      });
+      if(payload.conflict){
         await refreshCalendarBookings(false);
         renderSlots(mode);
         showToast('Esse horário acabou de ser reservado');
         return;
       }
-      if(result.ok){
-        savedToSupabase = true;
-      } else {
-        console.error('[Supabase REST] Falha ao criar agendamento:', result.errorText);
-        setSyncText('Falha ao salvar no Supabase — salvando localmente');
-      }
-    }catch(e){
-      console.error('[Supabase REST] Exceção ao criar agendamento:', e);
-      setSyncText('Erro de conexão — salvando localmente');
+      if(!state.bookings[calendarState.selectedDate]) state.bookings[calendarState.selectedDate] = {};
+      state.bookings[calendarState.selectedDate][calendarState.selectedSlot] = bookingRecord;
+      state.statuses[getBookingKey(calendarState.selectedDate, calendarState.selectedSlot)] = payload.status || 'aguardando';
+      saveBookings();
+      saveStatuses();
+      renderSlots(mode);
+      renderAdmin();
+      updateVacancies();
+      setSyncText('Agendamento em análise salvo pela Function');
+      const payloadWa = { name, phone, serviceName: service.name, servicePrice: service.price, professionalName: professional.name, date: calendarState.selectedDate, slot: calendarState.selectedSlot };
+      const link = waLink(buildWhatsAppBookingMessage(payloadWa));
+      bookingField(mode, 'success').classList.add('show');
+      document.getElementById('bookingPixGate_' + mode).classList.remove('show');
+      bookingField(mode, 'successText').textContent = name + ', seu horário de ' + calendarState.selectedSlot + ' em ' + longDate(calendarState.selectedDate) + ' foi registrado em análise pela Function para ' + service.name + ' com ' + professional.name + '. Envie o comprovante abaixo para confirmar automaticamente.';
+      bookingField(mode, 'successLink').href = link;
+      const proofInput = proofField(mode, 'input');
+      const proofName = proofField(mode, 'name');
+      if(proofInput) proofInput.value = '';
+      if(proofName) proofName.textContent = 'Nenhum comprovante selecionado.';
+      return;
+    }catch(error){
+      console.error(error);
+      setSyncText('Falha na Function → usando fluxo local');
     }
   }
-
-  // Atualizar estado local em memória
-  if(!state.bookings[dateStr]) state.bookings[dateStr] = {};
-  state.bookings[dateStr][slot] = bookingRecord;
-  state.statuses[getBookingKey(dateStr, slot)] = bookingStatus;
+  if(hasSupabaseConfig()){
+    setSyncText('Registrando agendamento...');
+    try{
+      const result = await createSupabaseBooking(calendarState.selectedDate, calendarState.selectedSlot, bookingRecord);
+      if(!result.ok){
+        if(result.conflict){
+          await refreshCalendarBookings(false);
+          renderSlots(mode);
+          showToast('Esse horário acabou de ser reservado');
+          return;
+        }
+        throw new Error(result.errorText || 'Falha ao criar agendamento remoto');
+      }
+    }catch(error){
+      console.error(error);
+      setSyncText('Falha no Supabase → agendamento salvo localmente');
+    }
+  }
+  if(!state.bookings[calendarState.selectedDate]) state.bookings[calendarState.selectedDate] = {};
+  state.bookings[calendarState.selectedDate][calendarState.selectedSlot] = bookingRecord;
+  state.statuses[getBookingKey(calendarState.selectedDate, calendarState.selectedSlot)] = 'aguardando';
   saveBookings();
   saveStatuses();
-
-  // Sincronizar status e estoque com admin_state no Supabase
-  if(savedToSupabase){
-    try{
-      await writeSupabaseAdminState();
-    }catch(e){
-      console.error('[Supabase] Falha ao salvar admin_state:', e);
-    }
-    setSyncText(viaPlan ? 'Agendamento via plano confirmado e salvo' : 'Agendamento salvo no Supabase');
-  } else if(!hasSupabaseConfig()){
-    setSyncText('Agendamento salvo localmente');
-  }
-
+  await syncAdminState();
   renderSlots(mode);
   renderAdmin();
   updateVacancies();
+  setSyncText(hasSupabaseConfig() ? 'Agendamento em análise e sincronizado' : 'Agendamento em análise salvo localmente');
 
   // Montar link WhatsApp
   const waPayload = { name, phone, serviceName: service.name, servicePrice: service.price, professionalName: professional.name, date: dateStr, slot };
@@ -5207,37 +5208,18 @@ function updateBookingStage(mode){
 async function refreshCalendarBookings(updateSyncText = true){
   try{
     if(hasSupabaseConfig()){
-      const remote = purgeOldBookings(await readSupabaseBookings());
-      // Merge: remoto é autoritativo, mas nunca apaga entradas locais
-      // que ainda não chegaram ao Supabase (ex: recém-agendados)
-      const merged = Object.assign({}, state.bookings);
-      Object.keys(remote).forEach(date => {
-        if(!merged[date]) merged[date] = {};
-        Object.assign(merged[date], remote[date]);
-      });
-      state.bookings = purgeOldBookings(merged);
-      // Mantém statuses existentes e adiciona os que vieram do remoto
-      const localStatuses = readStore(STORAGE.statuses, {});
-      state.statuses = Object.assign({}, localStatuses, state.statuses);
+      state.bookings = purgeOldBookings(await readSupabaseBookings());
       state.statuses = pruneStatusesMap(state.bookings, state.statuses);
       persistStateLocally();
       if(updateSyncText) setSyncText('Horários sincronizados');
       return;
     }
   }catch(error){
-    console.error('[Supabase] Falha ao atualizar horários:', error);
+    console.error(error);
     if(updateSyncText) setSyncText('Falha ao consultar o Supabase → usando agenda local');
   }
-  // Fallback local: só lê, não descarta o que já está em memória
-  const local = purgeOldBookings(readStore(STORAGE.bookings, {}));
-  Object.keys(local).forEach(date => {
-    if(!state.bookings[date]) state.bookings[date] = {};
-    Object.assign(state.bookings[date], local[date]);
-  });
-  state.bookings = purgeOldBookings(state.bookings);
-  const localStatuses = readStore(STORAGE.statuses, {});
-  state.statuses = Object.assign({}, localStatuses, state.statuses);
-  state.statuses = pruneStatusesMap(state.bookings, state.statuses);
+  state.bookings = purgeOldBookings(readStore(STORAGE.bookings, {}));
+  state.statuses = pruneStatusesMap(state.bookings, readStore(STORAGE.statuses, {}));
   persistStateLocally();
   if(updateSyncText && !hasSupabaseConfig()) setSyncText('Agenda local pronta');
 }
